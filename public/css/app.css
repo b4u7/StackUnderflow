@@ -1,0 +1,39 @@
+@import "components/navbar.css";
+
+html, body {
+    background-color: #f8f9fa;
+    color: #333333;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Table */
+.table td, .table th {
+    padding: .7em .95em;
+}
+
+.table thead td, .table thead th {
+    border-width: 0 0 2px;
+    color: #818181;
+    border-color: #f5f5f5;
+    text-transform: uppercase;
+}
+
+    /* Form controls */
+.input {
+    box-shadow: none;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 0;
+    border-color: transparent;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.input::placeholder {
+    color: #b7b7b7;
+    font-weight: 700;
+}
+
+.input:hover, .input:active, .input:focus {
+    box-shadow: none;
+    border-color: transparent;
+}

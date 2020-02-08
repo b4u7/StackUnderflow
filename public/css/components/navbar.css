@@ -1,0 +1,28 @@
+.navbar {
+    background-color: #000;
+    padding: 22px 42px;
+}
+
+.navbar .navbar-item {
+    color: #FFF;
+    font-weight: 500;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    line-height: 1.6rem;
+}
+
+.navbar .navbar-brand {
+    width: -moz-min-content;
+    width: min-content;
+    display: table-caption;
+    display: -ms-grid;
+    -ms-grid-columns: min-content;
+}
+
+.navbar .navbar-brand a {
+    color: #FFF;
+}
+
+.navbar .input {
+    font-size: 1.2rem;
+}
