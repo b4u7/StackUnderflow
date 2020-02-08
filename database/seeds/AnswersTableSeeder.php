@@ -1,5 +1,6 @@
 <?php
 
+use App\Answer;
 use Illuminate\Database\Seeder;
 
 class AnswersTableSeeder extends Seeder
@@ -11,6 +12,6 @@ class AnswersTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(Answer::class, 50)->create();
     }
 }

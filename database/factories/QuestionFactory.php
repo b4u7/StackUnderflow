@@ -9,7 +9,7 @@ use Faker\Generator as Faker;
 $factory->define(Question::class, function (Faker $faker) {
     return [
         'user_id' => User::all()->random()->id,
-        'title' => $faker->title,
+        'title' => $faker->sentence,
         'body' => $faker->paragraph,
     ];
 });

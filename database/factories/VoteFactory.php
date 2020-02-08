@@ -15,7 +15,7 @@ $factory->define(Vote::class, function (Faker $faker) {
     ];
 
     $votableType = $faker->randomElement($votables);
-    $votableId = call_user_func($votableType, '::all')->random()->id;
+    $votableId = call_user_func($votableType . '::all')->random()->id;
 
     return [
         'user_id' => User::all()->random()->id,
