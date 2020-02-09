@@ -33,17 +33,27 @@
         <input class="input" type="text" placeholder="Search">
     </div>
     <div class="navbar-end">
-        <div class="navbar-item">
-            HuntingVillager
-        </div>
-        <div class="navbar-item">
-            <!--- test -->
-            <figure class="image">
-                <div class="has-background-danger"
-                     style="width: 43px; height: 43px; border-radius: 290486px;">
-                </div>
-            </figure>
-        </div>
+        @auth
+            <div class="navbar-item">
+                {{ Auth::user()->name }}
+            </div>
+            <div class="navbar-item">
+                <!--- test -->
+                <figure class="image">
+                    <div class="has-background-danger"
+                         style="width: 43px; height: 43px; border-radius: 290486px;">
+                    </div>
+                </figure>
+            </div>
+        @endauth
+        @guest
+            <a class="navbar-item" href="{{ route('login') }}">
+                Login
+            </a>
+            <a class="navbar-item" href="{{ route('register') }}">
+                Register
+            </a>
+        @endguest
     </div>
 </nav>
 

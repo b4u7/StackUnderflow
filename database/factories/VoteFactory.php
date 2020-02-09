@@ -19,6 +19,7 @@ $factory->define(Vote::class, function (Faker $faker) {
 
     return [
         'user_id' => User::all()->random()->id,
+        'vote' => $faker->randomElement([-1, 1]),
         'votable_id' => $votableId,
         'votable_type' => $votableType,
     ];

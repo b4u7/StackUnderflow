@@ -6,19 +6,54 @@ html, body {
     font-family: 'Roboto', sans-serif;
 }
 
+/* Tags */
+.tags {
+    margin-top: 10px;
+}
+
+.tag, .tag:not(body) {
+    text-transform: uppercase;
+    border-radius: 0;
+    color: #FFF;
+    font-size: 0.85rem;
+}
+
+.test {
+    width: 54px;
+    height: 54px;
+    border-radius: 290486px;
+    font-size: 50px;
+    color: #fff;
+    line-height: 54px;
+    text-align: center;
+}
+
 /* Table */
+.table td h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
 .table td, .table th {
-    padding: .7em .95em;
+    /* padding: 1.0625rem 1.25rem; */
+    padding: 0.7rem 1.7rem 0.45rem 1.7rem;
+    border-color: #f5f5f5;
+    border-bottom-width: 2px;
+    font-weight: 700;
+}
+
+.table td {
+    /* padding: 2.3125rem 1.5rem; */
+    padding: 2.3125rem 1.7rem;
 }
 
 .table thead td, .table thead th {
     border-width: 0 0 2px;
     color: #818181;
-    border-color: #f5f5f5;
     text-transform: uppercase;
 }
 
-    /* Form controls */
+/* Form controls */
 .input {
     box-shadow: none;
     font-family: 'Roboto', sans-serif;
