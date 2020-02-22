@@ -26,17 +26,17 @@
             @foreach ($questions as $question)
                 <tr>
                     <td>
-                        <h1>
+                        <a class="title" href="{{ route('questions.show', $question->id) }}">
                             {{ $question->title }}
-                        </h1>
-                        <a class="tags">
+                        </a>
+                        <div class="tags">
                             @foreach($question->tags as $tag)
-                                <span class="tag"
+                                <a class="tag"
                                       style="background-color: {{ $tag->colour ?? '#29abe2' }}">
                                     {{ $tag->name }}
-                                </span>
+                                </a>
                             @endforeach
-                        </a>
+                        </div>
                     </td>
                     <td>
                         @php
@@ -48,7 +48,7 @@
                             ];
                         @endphp
                         <div
-                            class="test"
+                            class="avatar_placeholder"
                             style="background-color: {{ $colours[rand(0, 3)] }}">
                             <h1>
                                 {{ mb_substr($question->user->name, 0, 1, 'utf-8') }}

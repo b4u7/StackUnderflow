@@ -11,7 +11,7 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -34,7 +34,6 @@ class QuestionController extends Controller
      */
     public function create()
     {
-
     }
 
     /**
@@ -52,11 +51,13 @@ class QuestionController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
+        $question = Question::where('id', $id)->first();
 
+        return view('questions.show', compact('question'));
     }
 
     /**

@@ -6,19 +6,40 @@ html, body {
     font-family: 'Roboto', sans-serif;
 }
 
+.content {
+    padding: 1.7rem;
+    background-color: #FFF;
+}
+
+.question__header {
+    border-bottom: 2px solid #f5f5f5;
+}
+
+.question__body {
+
+}
+
+.answers_body {
+
+}
+
 /* Tags */
 .tags {
     margin-top: 10px;
 }
 
-.tag, .tag:not(body) {
+.tag,
+.tag:not(body),
+.tag:not(body):hover {
     text-transform: uppercase;
     border-radius: 0;
     color: #FFF;
     font-size: 0.85rem;
+    text-decoration: none;
 }
 
-.test {
+/* avatar placeholder */
+.avatar_placeholder {
     width: 54px;
     height: 54px;
     border-radius: 290486px;
@@ -29,7 +50,8 @@ html, body {
 }
 
 /* Table */
-.table td h1 {
+.table td h1,
+.table td a.title {
     font-size: 1.5rem;
     font-weight: 700;
 }
