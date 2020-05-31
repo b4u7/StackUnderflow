@@ -2,12 +2,10 @@
 
 @section('content')
     <div class="container">
-        <div class="buttons has-text-weight-bold is-right">
-            <a class="button is-primary is-uppercase" href="{{ route('questions.create') }}">
-                Ask Question
-            </a>
-        </div>
-        <!-- TODO: Probably make a sidebar on the left side that contains the question categories -->
+        <!-- Todo: Edit this later -->
+        <h5 style="margin-bottom: 10px;">
+            Search results for "{{ Request::get('search') }}"
+        </h5>
         <table class="table is-hoverable is-fullwidth">
             <thead>
             <tr>
@@ -45,7 +43,7 @@
                         </div>
                     </td>
                     <td>
-                        <!--- TODO: Avatars -->
+                        <!-- TODO: Avatars -->
                         <img src="{{ Avatar::create($question->user->name)->toBase64() }}"
                              height="46px"
                              width="46px"

@@ -38,17 +38,18 @@ return [
     'height' => 100,
 
     // Number of characters used as initials. If name consists of single word, the first N character will be used
-    'chars' => 2,
+    'chars' => 1,
 
     // font size
     'fontSize' => 48,
 
     // convert initial letter in uppercase
-    'uppercase' => false,
+    'uppercase' => true,
 
     // Fonts used to render text.
     // If contains more than one fonts, randomly selected based on name supplied
-    'fonts' => [__DIR__ . '/../fonts/OpenSans-Bold.ttf', __DIR__ . '/../fonts/rockwell.ttf'],
+    // 'fonts' => [__DIR__ . '/../fonts/OpenSans-Bold.ttf', __DIR__ . '/../fonts/rockwell.ttf'],
+    'fonts' => [ 'https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap' ],
 
     // List of foreground colors to be used, randomly selected based on name supplied
     'foregrounds' => [
@@ -58,7 +59,7 @@ return [
     // List of background colors to be used, randomly selected based on name supplied
     'backgrounds' => [
         '#f44336',
-        '#E91E63',
+        '#d4145a',
         '#9C27B0',
         '#673AB7',
         '#3F51B5',

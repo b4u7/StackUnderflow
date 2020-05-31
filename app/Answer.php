@@ -2,36 +2,24 @@
 
 namespace App;
 
+use App\Scopes\AdminScope;
+use App\Traits\ResolvesWithTrashed;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * App\Answer
- *
- * @property int $id
- * @property int $user_id
- * @property int $question_id
- * @property string $body
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Comment[] $comments
- * @property-read int|null $comments_count
- * @property-read \App\Question $question
- * @property-read \App\User $user
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Vote[] $votes
- * @property-read int|null $votes_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereBody($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereQuestionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereUserId($value)
- * @mixin \Eloquent
- */
 class Answer extends Model
 {
+    use SoftDeletes, ResolvesWithTrashed;
+
+    protected $fillable = [
+        'user_id', 'question_id', 'body'
+    ];
+
+    public static function boot() {
+        static::addGlobalScope(new AdminScope);
+        parent::boot();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

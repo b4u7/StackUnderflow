@@ -2,26 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Answer;
 use App\Question;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use \Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+use \Exception;
 
 class QuestionController extends Controller
 {
     /**
+     * QuestionController constructor.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Question::class, 'question');
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
-        /*
-        $questions = Question::withSum('votes')
-            ->orderByRaw('SUM(vote) desc')
-            ->take(10)
-            ->get();
-        */
-
         $questions = Question::take(10)->get();
 
         return view('questions.index', compact('questions'));
@@ -30,67 +37,82 @@ class QuestionController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
+        return view('questions.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
+        $question = Question::create([
+            'title' => $request->input('title'),
+            'body' => $request->input('body'),
+            'user_id' => Auth::id()
+        ]);
 
+        return redirect()->route('questions.show', [$question]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Question $question
+     * @return Factory|View
      */
-    public function show($id)
+    public function show(Question $question)
     {
-        $question = Question::where('id', $id)->first();
+        $answers = Answer::withCount(['votes'])
+            ->with(['votes', 'user'])
+            ->where('question_id', '=', $question->id)
+            ->get();
 
-        return view('questions.show', compact('question'));
+        return view('questions.show', compact('question', 'answers'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Question $question
+     * @return View
      */
-    public function edit($id)
+    public function edit(Question $question)
     {
-
+        return view('questions.edit', compact('question'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Question $question
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Question $question)
     {
+        $question->update($request->all());
 
+        return redirect()->route('questions.show', [$question->id]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Question $question
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function destroy($id)
+    public function destroy(Question $question)
     {
+        $question->delete();
 
+        return redirect()->route('questions.index');
     }
 }

@@ -3,19 +3,20 @@
 @section('content')
     <div class="container">
         <div class="buttons has-text-weight-bold is-right">
-            <a class="button is-primary is-uppercase" href="{{ route('questions.index') }}">
+            <a class="button is-primary is-uppercase" href="{{ route('questions.show', $question->id) }}">
                 Go back
             </a>
         </div>
         <div class="box">
-            <form action="{{ route('questions.store') }}" method="POST">
+            <form action="{{ route('questions.update', [$question]) }}" method="POST">
                 @csrf
+                @method('PUT')
                 <div class="field">
                     <label class="label">
                         Title
                     </label>
                     <div class="control">
-                        <input class="input" type="text" name="title" placeholder="Title">
+                        <input class="input" type="text" name="title" placeholder="Title" value="{{ $question->title }}">
                     </div>
                 </div>
                 <div class="field">
@@ -42,7 +43,7 @@
     <script>
         var easyMDE = new EasyMDE({
             element: document.getElementById('emde'),
-            initialValue: '### Test\naksdjkads',
+            initialValue: @json($question->body),
             placeholder: 'Type here...',
         });
     </script>

@@ -1,0 +1,74 @@
+/*
+    Notes:
+    300 - Light
+    400 - Regular
+    500 - Medium
+    600 - SemiBold
+    700 - Bold
+    800 - ExtraBold
+
+    Links:
+    - https://www.smashingmagazine.com/2013/02/setting-weights-and-styles-at-font-face-declaration/
+    - https://htmldog.com/references/css/properties/font-weight/
+ */
+h1, h2, h3, h4, h5, h6,
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+    font-weight: 700;
+}
+
+h1, h2, h3,
+.content h1, .content h2, .content h3 {
+    color: #253858;
+}
+
+h4, h5, h6,
+.content h4, .content h5, .content h6 {
+    color: #42526E;
+}
+
+/*
+@font-face {
+    font-family: 'Metropolis';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Metropolis'),
+    local('Metropolis-Regular'),
+    url('../fonts/Metropolis-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Metropolis';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Metropolis'),
+    local('Metropolis-Medium'),
+    url('../fonts/Metropolis-Medium.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Metropolis';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Metropolis'),
+    local('Metropolis-SemiBold'),
+    url('../fonts/Metropolis-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Metropolis';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Metropolis'),
+    local('Metropolis-Bold'),
+    url('../fonts/Metropolis-Bold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Metropolis';
+    font-style: normal;
+    font-weight: 800;
+    src: local('Metropolis'),
+    local('Metropolis-ExtraBold'),
+    url('../fonts/Metropolis-ExtraBold.woff2') format('woff2');
+}
+*/
