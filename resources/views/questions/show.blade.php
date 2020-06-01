@@ -10,30 +10,36 @@
                     </h1>
                 </div>
                 <div class="question__body">
-                    {{--                    <div class="columns">
-                                            <div class="column">
-                                                <form action="{{ route('questions.upvote', [$question, $answer]) }}" method="POST">
-                                                    @csrf
-                                                    <button class="button is-icon is-rounded" type="submit">
-                                                        <i class="fas fa-arrow-circle-up"></i>
-                                                    </button>
-                                                </form>
-                                                <form action="{{ route('questions.downvote', [$question, $answer]) }}" method="POST">
-                                                    @csrf
-                                                    <button class="button is-icon is-rounded" type="submit">
-                                                        <i class="fas fa-arrow-circle-down"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                            <div class="column">
-                                                <p>
-                                                    @parsedown($question->body)
-                                                </p>
-                                            </div>
-                                        </div>--}}
-                    <p>
-                        @parsedown($question->body)
-                    </p>
+                    <div class="columns">
+                        <div class="column is-1">
+                            <p>
+                                {{ $question->votes_sum }}
+                            </p>
+                            <form action="{{ route('questions.upvote', $question) }}" method="POST">
+                                @csrf
+                                <button
+                                    class="button vote-button is-icon is-rounded @if($question->votes->where('user_id', '=', Auth::id())->where('vote', '=', '1')->count() === 1) is-active @endif"
+                                    type="submit"
+                                >
+                                    <i class="fas fa-arrow-circle-up"></i>
+                                </button>
+                            </form>
+                            <form action="{{ route('questions.downvote', $question) }}" method="POST">
+                                @csrf
+                                <button
+                                    class="button vote-button is-icon is-rounded @if($question->votes->where('user_id', '=', Auth::id())->where('vote', '=', '-1')->count() === 1) is-active @endif"
+                                    type="submit"
+                                >
+                                    <i class="fas fa-arrow-circle-down"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="column">
+                            <p>
+                                @parsedown($question->body)
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <div class="question__footer has-text-right">
                     <!-- TODO: Avatars -->
@@ -64,7 +70,7 @@
                         <div class="columns">
                             <div class="column is-1">
                                 <p>
-                                    {{ $answer->votes_count }}
+                                    {{ $answer->votes_sum }}
                                 </p>
                                 <form action="{{ route('answers.upvote', [$question, $answer]) }}" method="POST">
                                     @csrf

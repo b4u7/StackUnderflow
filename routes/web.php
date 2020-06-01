@@ -16,6 +16,13 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('questions', 'QuestionController');
+
+Route::post('questions/{question}/upvote', 'QuestionController@upvote')
+    ->name('questions.upvote');
+
+Route::post('questions/{question}/downvote', 'QuestionController@downvote')
+    ->name('questions.downvote');
+
 Route::resource('questions/{question}/answers', 'AnswerController')->only(
     ['store', 'edit', 'update', 'destroy']
 );
