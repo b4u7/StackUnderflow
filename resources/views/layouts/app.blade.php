@@ -21,22 +21,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <!-- EasyMDE Styles -->
+    <!-- EasyMDE -->
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-
-    <!-- EasyMDE Script -->
     <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
+    <!-- CreativeBulma/Bulma TagsInput -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@creativebulma/bulma-tagsinput@1.0.2/dist/css/bulma-tagsinput.min.css"/>
+    <script
+        src="https://cdn.jsdelivr.net/npm/@creativebulma/bulma-tagsinput@1.0.2/dist/js/bulma-tagsinput.min.js"></script>
 </head>
 <body>
 <nav class="navbar is-transparent">
     <div class="navbar-brand">
-        <a class="navbar-item" href="{{ route('home') }}">
+        <a class="navbar-logo navbar-item" href="{{ route('home') }}">
+            {{--<span>S</span>U--}}
             Stack Underflow
         </a>
     </div>
-    <div class="searchbar navbar-item is-expanded">
-        <!-- TODO: Remove the inline styling -->
-        <form style="flex: 1 0 auto;" method="GET" action="{{ route('search') }}">
+    <div class="navbar-item is-expanded">
+        <form class="search-bar" method="GET" action="{{ route('search') }}">
             @csrf
             <div class="control is-expanded">
                 <input class="input" type="text" name="search" placeholder="Search">
@@ -46,28 +50,24 @@
     <div class="navbar-end">
         @auth
             <div class="navbar-item">
-                <div class="dropdown is-right is-hoverable">
+                <div class="user-profile dropdown is-right is-hoverable">
                     <a class="dropdown-trigger">
-                        <figure class="image">
-                            <img src="{{ Avatar::create(Auth::user()->name)->toBase64() }}"
-                                 alt=""
-                            >
-                        </figure>
+                        <img src="{{ Auth::user()->avatar }}" alt="">
                     </a>
-                    <div class="dropdown-menu" id="dropdown-menu-user">
+                    <div class="dropdown-menu">
                         <div class="dropdown-content">
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" href="{{ route('user.show', Auth::user()) }}">
                                 Profile
                             </a>
-                            <a class="dropdown-item">
-                                Settings
+                            <a class="dropdown-item" href="{{ route('user.edit', Auth::user()) }}">
+                                Edit profile
                             </a>
                             <hr class="dropdown-divider">
-                            <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                            <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <a class="dropdown-item is-white"
                                    type="submit"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                   onclick="event.preventDefault(); this.parentElement.submit();">
                                     Logout
                                 </a>
                             </form>
@@ -86,9 +86,7 @@
         @endguest
     </div>
 </nav>
-<section class="section">
-    @yield('content')
-</section>
+@yield('content')
 @stack('scripts')
 </body>
 </html>

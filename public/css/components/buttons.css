@@ -1,3 +1,6 @@
+/*
+    Primary button
+*/
 button.button,
 a.button {
     font-family: 'Inter', sans-serif;
@@ -7,21 +10,40 @@ a.button {
     font-size: 0.85rem;
 }
 
+/*
+    Button primary
+*/
 button.button.is-primary,
 a.button.is-primary {
-    background-color: #0052CC; /* #0065FF */
+    background-color: #2b5bf4; /* #0065FF */
 }
 
 button.button.is-primary.is-hovered,
 a.button.is-primary.is-hovered,
 button.button.is-primary:hover,
 a.button.is-primary:hover {
-    background-color: #0047B3; /* #0052CC */
+    background-color: #0052CC; /* #0052CC */
 }
 
 button.button.is-primary.is-active,
 a.button.is-primary.is-active,
 button.button.is-primary:active,
 a.button.is-primary:active {
-    background-color: #004099; /* #0747A6 */
+    background-color: #0747A6; /* #0747A6 */
+}
+
+/*
+    Upvotes button
+*/
+button.button.vote-button {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+button.button.vote-button-positive.is-active {
+    color: #48c774;
+}
+
+button.button.vote-button-negative.is-active {
+    color: #f14668;
 }

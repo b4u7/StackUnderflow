@@ -26,6 +26,14 @@ h4, h5, h6,
     color: #42526E;
 }
 
+a {
+    color: #2b5bf4;
+}
+
+p {
+    color: #5b6987;
+}
+
 /*
 @font-face {
     font-family: 'Metropolis';

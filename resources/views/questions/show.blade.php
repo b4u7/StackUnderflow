@@ -1,159 +1,227 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="content box">
-            <div class="question">
-                <div class="question__header">
-                    <h1>
-                        {{ $question->title }}
-                    </h1>
+    <section class="section">
+        <div class="container">
+            <div class="content">
+                <div class="buttons has-text-weight-bold is-right">
+                    <a class="button is-primary is-uppercase" href="{{ route('questions.show', $question->id) }}">
+                        Go back
+                    </a>
                 </div>
-                <div class="question__body">
-                    <div class="columns">
-                        <div class="column is-1">
-                            <p>
-                                {{ $question->votes_sum }}
-                            </p>
-                            <form action="{{ route('questions.upvote', $question) }}" method="POST">
-                                @csrf
-                                <button
-                                    class="button vote-button is-icon is-rounded @if($question->votes->where('user_id', '=', Auth::id())->where('vote', '=', '1')->count() === 1) is-active @endif"
-                                    type="submit"
-                                >
+                <div class="columns is-vcentered">
+                    <div class="column has-text-centered is-narrow">
+                        <form action="{{ route('questions.upvote', $question) }}" method="POST">
+                            @csrf
+                            <button
+                                class="button vote-button vote-button-positive is-icon is-rounded is-large @if($question->votes->where('user_id', '=', Auth::id())->where('vote', '=', '1')->count() === 1) is-active @endif"
+                                type="submit"
+                            >
+                                <span class="icon is-large">
                                     <i class="fas fa-arrow-circle-up"></i>
-                                </button>
-                            </form>
-                            <form action="{{ route('questions.downvote', $question) }}" method="POST">
-                                @csrf
-                                <button
-                                    class="button vote-button is-icon is-rounded @if($question->votes->where('user_id', '=', Auth::id())->where('vote', '=', '-1')->count() === 1) is-active @endif"
-                                    type="submit"
-                                >
-                                    <i class="fas fa-arrow-circle-down"></i>
-                                </button>
-                            </form>
-                        </div>
-                        <div class="column">
+                                </span>
+                            </button>
+                        </form>
+                        <div>
                             <p>
-                                @parsedown($question->body)
+                                {{ $question->votes_sum ?? 0 }}
                             </p>
                         </div>
+                        <form action="{{ route('questions.downvote', $question) }}" method="POST">
+                            @csrf
+                            <button
+                                class="button vote-button vote-button-negative is-icon is-rounded is-large @if($question->votes->where('user_id', '=', Auth::id())->where('vote', '=', '-1')->count() === 1) is-active @endif"
+                                type="submit"
+                            >
+                                <span class="icon is-large">
+                                    <i class="fas fa-arrow-circle-down"></i>
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="column">
+                        <div class="box">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="content">
+                                        <h6 class="subtitle is-uppercase">
+                                            Question
+                                        </h6>
+                                        <h1 class="title">
+                                            {{ $question->title }}
+                                        </h1>
+                                        <div class="tags">
+                                            @foreach($question->tags as $tag)
+                                                <a class="tag"
+                                                   style="border-color: {{ $tag->colour ?? '#29abe2' }}; color: {{ $tag->colour ?? '#29abe2' }};">
+                                                    {{ $tag->name }}
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="content">
+                                        @parsedown($question->body)
+                                    </div>
+                                </div>
+                                <div class="card-foot">
+                                    <div class="columns is-vcentered">
+                                        <div class="card-foot-actions column is-auto">
+                                            <a id="actionShare">
+                                                Share
+                                            </a>
+                                            @can('update', $question)
+                                                <a href="{{ route('questions.edit', $question->id) }}">
+                                                    Edit
+                                                </a>
+                                            @endcan
+                                            @can('delete', $question)
+                                                <form class="form"
+                                                      action="{{ route('questions.destroy', $question->id) }}"
+                                                      method="POST"
+                                                >
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <a href="javascript:{}" onclick="this.parentElement.submit();">
+                                                        Delete
+                                                    </a>
+                                                </form>
+                                            @endcan
+                                        </div>
+                                        <div class="card-foot-user column has-text-right is-narrow">
+                                            <img class="user-avatar"
+                                                 src="{{ $question->user->avatar }}"
+                                                 alt="{{ $question->user->name }}'s user avatar"
+                                            >
+                                            <p>
+                                                Asked by
+                                                <a href="{{ route('user.show', $question->user) }}">
+                                                    {{ $question->user->name }}
+                                                </a>
+                                                at {{ $question->created_at->format('jS F Y') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="question__footer has-text-right">
-                    <!-- TODO: Avatars -->
-                    <img src="{{ Avatar::create($question->user->name)->toBase64() }}"
-                         height="54px"
-                         width="54px"
-                         alt=""
-                    >
-                    @can('update', $question)
-                        <a class="button is-icon is-rounded" href="{{ route('questions.edit', $question->id) }}">
-                            <i class="fas fa-pencil-alt"></i>
-                        </a>
-                    @endcan
-                </div>
-            </div>
-            <h1>
-                {{ count($answers) }} Answer(s)
-            </h1>
-            {{-- TODO: Edit the design here --}}
-            <div class="answers">
-                @foreach ($answers as $answer)
-                    <div class="question__header">
-                        <h1>
-                            {{ $answer->title }}
-                        </h1>
-                    </div>
-                    <div class="question__body">
-                        <div class="columns">
-                            <div class="column is-1">
-                                <p>
-                                    {{ $answer->votes_sum }}
-                                </p>
+                <h1 class="has-text-right">
+                    {{ count($answers) }} Answer(s)
+                </h1>
+                <div class="box">
+                    @foreach ($answers as $answer)
+                        <div class="columns answers @if($answer->trashed()) trashed @endif">
+                            <div class="column has-text-centered is-narrow">
                                 <form action="{{ route('answers.upvote', [$question, $answer]) }}" method="POST">
                                     @csrf
                                     <button
-                                        class="button vote-button is-icon is-rounded @if($answer->votes->where('user_id', '=', Auth::id())->where('vote', '=', '1')->count() === 1) is-active @endif"
+                                        class="button vote-button vote-button-positive is-icon is-rounded is-large @if($answer->votes->where('user_id', '=', Auth::id())->where('vote', '=', '1')->count() === 1) is-active @endif"
                                         type="submit"
                                     >
-                                        <i class="fas fa-arrow-circle-up"></i>
+                                        <span class="icon is-large">
+                                            <i class="fas fa-arrow-circle-up"></i>
+                                        </span>
                                     </button>
                                 </form>
+                                <div>
+                                    <p>
+                                        {{ $answer->votes_sum ?? 0 }}
+                                    </p>
+                                </div>
                                 <form action="{{ route('answers.downvote', [$question, $answer]) }}" method="POST">
                                     @csrf
                                     <button
-                                        class="button vote-button is-icon is-rounded @if($answer->votes->where('user_id', '=', Auth::id())->where('vote', '=', '-1')->count() === 1) is-active @endif"
+                                        class="button vote-button vote-button-negative is-icon is-rounded is-large @if($answer->votes->where('user_id', '=', Auth::id())->where('vote', '=', '-1')->count() === 1) is-active @endif"
                                         type="submit"
                                     >
-                                        <i class="fas fa-arrow-circle-down"></i>
+                                        <span class="icon ">
+                                            <i class="fas fa-arrow-circle-down"></i>
+                                        </span>
                                     </button>
                                 </form>
                             </div>
                             <div class="column">
-                                <p>
-                                    @parsedown($question->body)
-                                </p>
+                                <div class="card">
+                                    <div class="card-content">
+                                        <div class="content">
+                                            @parsedown($answer->body)
+                                        </div>
+                                    </div>
+                                    <div class="card-foot">
+                                        <div class="columns is-vcentered">
+                                            <div class="card-foot-actions column is-auto">
+                                                @can('update', $answer)
+                                                    <a href="{{ route('answers.edit', [$question, $answer]) }}">
+                                                        Edit
+                                                    </a>
+                                                @endcan
+                                                @can('delete', $answer)
+                                                    <form class="form"
+                                                          action="{{ route('answers.destroy', [$question, $answer]) }}"
+                                                          method="POST"
+                                                    >
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <a href="javascript:{}" onclick="this.parentElement.submit();">
+                                                            Delete
+                                                        </a>
+                                                    </form>
+                                                @endcan
+                                            </div>
+                                            <div class="card-foot-user column has-text-right is-narrow">
+                                                <img class="user-avatar"
+                                                     src="{{ $answer->user->avatar }}"
+                                                     alt="{{ $answer->user->name }}'s user avatar"
+                                                >
+                                                <p>
+                                                    Answered by
+                                                    <a href="{{ route('user.show', $answer->user) }}">
+                                                        {{ $answer->user->name }}
+                                                    </a>
+                                                    at {{ $answer->created_at->format('jS F Y') }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="question__footer has-text-right">
-                        <img src="{{ Avatar::create($answer->user->name)->toBase64() }}"
-                             height="54px"
-                             width="54px"
-                             alt=""
-                        >
-                        @can('update', $answer)
-                            <a class="button is-icon is-rounded"
-                               href="{{ route('answers.edit', [$question, $answer]) }}">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>
-                        @endcan
-                        @can('delete', $answer)
-                            @isset($answer->deleted_at)
-                                <form action="{{ route('answers.restore', [$question, $answer]) }}" method="POST">
-                                    @csrf
-                                    <button class="button is-success is-icon is-rounded" type="submit">
-                                        <i class="fas fa-trash-restore"></i>
-                                    </button>
-                                </form>
-                            @else
-                                <form action="{{ route('answers.destroy', [$question, $answer]) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="button is-danger is-icon is-rounded" type="submit">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
-                            @endisset
-                        @endcan
-                    </div>
-                @endforeach
-            </div>
-        </div>
-        @can('create', [App\Answer::class, $question])
-            <div class="answer">
-                <div class="box">
-                    <form action="{{ route('answers.store', $question) }}" method="POST">
-                        @csrf
-                        <div class="field">
-                            <div class="control">
-                                <textarea id="emde" class="textarea" name="body"></textarea>
-                            </div>
-                        </div>
-                        <div class="field is-grouped">
-                            <div class="control">
-                                <button type="submit" class="button is-primary is-uppercase">
-                                    Submit
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    @endforeach
                 </div>
             </div>
-        @endcan
-    </div>
+            @can('create', [App\Answer::class, $question])
+                <div class="answer">
+                    <div class="content mb-0">
+                        <h3>
+                            Post your answer
+                        </h3>
+                    </div>
+                    <div class="box">
+                        <div class="content">
+                            <form action="{{ route('answers.store', $question) }}" method="POST">
+                                @csrf
+                                <div class="field">
+                                    <div class="control">
+                                        <textarea id="emde" class="textarea" name="body"></textarea>
+                                    </div>
+                                </div>
+                                <div class="field is-grouped">
+                                    <div class="control">
+                                        <button type="submit" class="button is-primary is-uppercase">
+                                            Submit your answer
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endcan
+        </div>
+    </section>
 @endsection
 
 @push('scripts')

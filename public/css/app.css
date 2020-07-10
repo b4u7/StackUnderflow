@@ -1,86 +1,35 @@
 @import "typography.css";
+@import "helpers.css";
 @import "components/navbar.css";
 @import "components/buttons.css";
+@import "components/table.css";
 @import "components/form.css";
+@import "components/card.css";
+@import "components/box.css";
+@import "components/tags.css";
 
 html, body {
     background-color: #F4F5F7;
-    color: #333333;
+    color: rgba(3, 27, 78, 0.6);
     font-family: 'Inter', system-ui, sans-serif;
     font-weight: 400;
 }
 
-/* TODO: Fix this */
-.button.vote-button.is-active {
-    background-color: #00BCD4!important;
+.answer {
+    margin-top: 4rem !important;
 }
 
-.box {
+.editor-toolbar {
+    border-color: #ddd !important;
+}
+
+/* Temporary */
+.columns.answers:not(:last-child) {
+    border-bottom: 1px solid #dbe2e3;
+}
+
+.columns.trashed {
+    background-color: #f8e0e0;
     border-radius: 3px;
-    box-shadow: none;
-}
-
-.question__header {
-    border-bottom: 2px solid #f5f5f5;
-}
-
-.question__header .title {
-    font-weight: 600;
-}
-
-.question__body {
-    margin: 2rem 0 2rem 0;
-}
-
-.answers_body {
-
-}
-
-/* Table */
-.table {
-    border-radius: 3px;
-}
-
-.table thead th {
-    /*padding: 0.7 rem 1.7 rem 0.45 rem 1.7 rem;*/
-    padding: 0.5rem 1rem 0.45rem 1rem;
-    color: #818181;
-    text-transform: uppercase;
-    font-size: 0.90rem;
-}
-
-.table tbody td h1,
-.table tbody td a.title {
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
-.table tbody td,
-.table thead th {
-    border-color: #f5f5f5;
-    border-bottom-width: 1px;
-    font-weight: 700;
-}
-
-.table tbody td {
-    /*padding: 2.3125 rem 1.7rem;*/
-    padding: 2rem 1rem;
-}
-
-
-/* Tags */
-.tags {
-    margin-top: 10px;
-    border-radius: 3px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.tag,
-.tag:not(body),
-.tag:not(body):hover {
-    text-transform: uppercase;
-    color: #FFF;
-    text-decoration: none;
-
+    border-color: transparent;
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use Auth;
 use Exception;
 use App\Answer;
@@ -33,7 +34,10 @@ class QuestionController extends Controller
     {
         $this->authorize('viewAny', Question::class);
 
-        $questions = Question::take(10)->get();
+        // TODO: Change this to be actual top questions (one day)!!
+        $questions = Question::with(['votes', 'answers', 'user', 'tags'])
+            ->orderByDesc('id')
+            ->paginate(10);
 
         return view('questions.index', compact('questions'));
     }
@@ -68,6 +72,16 @@ class QuestionController extends Controller
             'user_id' => Auth::id()
         ]);
 
+        $tagNames = explode(',', $request->input('tags'));
+        foreach ($tagNames as $tagName) {
+            if (empty(trim($tagName))) {
+                continue;
+            }
+
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $question->tags()->attach($tag);
+        }
+
         return redirect()->route('questions.show', [$question]);
     }
 
@@ -89,6 +103,7 @@ class QuestionController extends Controller
             ->where('id', '=', $questionId)
             ->first();
 
+        views($question)->record();
         $this->authorize('view', $question);
 
         $answers = Answer::addSelect([
@@ -113,9 +128,19 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        $this->authorize('edit', $question);
+        $this->authorize('update', $question);
 
-        return view('questions.edit', compact('question'));
+        $question->load([
+            'tags' => function ($query) {
+                $query->select('name');
+            }
+        ]);
+
+        $tags = array_map(function ($a) {
+            return $a['name'];
+        }, $question->tags->makeHidden('pivot')->toArray());
+
+        return view('questions.edit', compact('question', 'tags'));
     }
 
     /**
@@ -128,9 +153,17 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        $this->authorize('edit', $question);
+        $this->authorize('update', $question);
 
         $question->update($request->all());
+
+        $question->tags()->detach();
+
+        $tagNames = explode(',', strtolower($request->input('tags')));
+        foreach ($tagNames as $tagName) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $question->tags()->attach($tag);
+        }
 
         return redirect()->route('questions.show', [$question->id]);
     }
@@ -172,10 +205,24 @@ class QuestionController extends Controller
      *
      * @param Question $question
      * @return RedirectResponse
-     *
+     * @throws Exception
      */
     public function upvote(Question $question)
     {
+        $this->authorize('vote', $question);
+
+        $find = $question->votes()->where([
+            'user_id' => Auth::id(),
+            'votable_id' => $question->id,
+            'votable_type' => Question::class,
+            'vote' => 1
+        ])->first();
+
+        if ($find) {
+            $find->delete();
+            return redirect()->back();
+        }
+
         $question->votes()->updateOrCreate(
             [
                 'user_id' => Auth::id(),
@@ -195,9 +242,24 @@ class QuestionController extends Controller
      *
      * @param Question $question
      * @return RedirectResponse
+     * @throws Exception
      */
     public function downvote(Question $question)
     {
+        $this->authorize('vote', $question);
+
+        $find = $question->votes()->where([
+            'user_id' => Auth::id(),
+            'votable_id' => $question->id,
+            'votable_type' => Question::class,
+            'vote' => -1
+        ])->first();
+
+        if ($find) {
+            $find->delete();
+            return redirect()->back();
+        }
+
         $question->votes()->updateOrCreate(
             [
                 'user_id' => Auth::id(),

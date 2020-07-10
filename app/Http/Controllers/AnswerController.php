@@ -111,10 +111,24 @@ class AnswerController extends Controller
      * @param Question $question
      * @param Answer $answer
      * @return RedirectResponse
-     *
+     * @throws Exception
      */
     public function upvote(Question $question, Answer $answer)
     {
+        $this->authorize('vote', $answer);
+
+        $find = $answer->votes()->where([
+            'user_id' => Auth::id(),
+            'votable_id' => $answer->id,
+            'votable_type' => Answer::class,
+            'vote' => 1
+        ])->first();
+
+        if ($find) {
+            $find->delete();
+            return redirect()->back();
+        }
+
         $answer->votes()->updateOrCreate(
             [
                 'user_id' => Auth::id(),
@@ -135,10 +149,24 @@ class AnswerController extends Controller
      * @param Question $question
      * @param Answer $answer
      * @return RedirectResponse
-     *
+     * @throws Exception
      */
     public function downvote(Question $question, Answer $answer)
     {
+        $this->authorize('vote', $answer);
+
+        $find = $answer->votes()->where([
+            'user_id' => Auth::id(),
+            'votable_id' => $answer->id,
+            'votable_type' => Answer::class,
+            'vote' => -1
+        ])->first();
+
+        if ($find) {
+            $find->delete();
+            return redirect()->back();
+        }
+
         $answer->votes()->updateOrCreate(
             [
                 'user_id' => Auth::id(),

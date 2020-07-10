@@ -8,7 +8,7 @@
             </a>
         </div>
         <div class="box">
-            <form action="{{ route('questions.update', [$question]) }}" method="POST">
+            <form id="form" action="{{ route('questions.update', [$question]) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="field">
@@ -16,7 +16,8 @@
                         Title
                     </label>
                     <div class="control">
-                        <input class="input" type="text" name="title" placeholder="Title" value="{{ $question->title }}">
+                        <input class="input" type="text" name="title" placeholder="Title"
+                               value="{{ $question->title }}">
                     </div>
                 </div>
                 <div class="field">
@@ -25,6 +26,20 @@
                     </label>
                     <div class="control">
                         <textarea id="emde" class="textarea" name="body"></textarea>
+                    </div>
+                </div>
+                <div class="field is-grouped is-grouped-multiline">
+                    <div class="control">
+                        <div class="tags has-addons">
+                            <input id="tags"
+                                   class="input"
+                                   type="text"
+                                   name="tags"
+                                   data-type="tags"
+                                   placeholder="Choose Tags"
+                                   value="{{ implode(",", $tags) }}"
+                            >
+                        </div>
                     </div>
                 </div>
                 <div class="field is-grouped">
@@ -41,10 +56,18 @@
 
 @push('scripts')
     <script>
-        var easyMDE = new EasyMDE({
-            element: document.getElementById('emde'),
-            initialValue: @json($question->body),
-            placeholder: 'Type here...',
-        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var easyMDE = new EasyMDE({
+                element: document.getElementById('emde'),
+                initialValue: @json($question->body),
+                placeholder: 'Type here...',
+            });
+
+            const tagsInput = document.getElementById('tags');
+            new BulmaTagsInput(tagsInput, {
+                // source: @json($question->tags->toArray()),
+                delimiter: ','
+            });
+        }, false);
     </script>
 @endpush

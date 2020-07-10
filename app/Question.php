@@ -3,13 +3,15 @@
 namespace App;
 
 use App\Scopes\AdminScope;
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
-class Question extends Model
+class Question extends Model implements Viewable
 {
-    use Searchable, SoftDeletes;
+    use Searchable, SoftDeletes, InteractsWithViews;
 
     protected $fillable = [
         'title', 'body', 'user_id'

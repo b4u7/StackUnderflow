@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Avatar;
 
 class User extends Authenticatable
 {
@@ -44,5 +45,10 @@ class User extends Authenticatable
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function getAvatarAttribute()
+    {
+        return Avatar::create($this->name)->toBase64();
     }
 }

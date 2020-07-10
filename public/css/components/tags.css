@@ -1,0 +1,14 @@
+.tags {
+    margin-top: 10px;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.tag,
+.tag:not(body),
+.tag:not(body):hover {
+    text-transform: uppercase;
+    color: #FFF;
+    text-decoration: none;
+}

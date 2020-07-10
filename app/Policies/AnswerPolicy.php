@@ -98,13 +98,26 @@ class AnswerPolicy
     }
 
     /**
+     * Determine whether the user can vote on the answer.
+     *
+     * @param User $user
+     * @param Answer $answer
+     * @return bool
+     */
+    public function vote(User $user, Answer $answer)
+    {
+        return true;
+    }
+
+    /**
      * Determine whether the user is an admin.
      *
      * @param User $user
      * @param $ability
      * @return bool
      */
-    public function before(User $user, $ability) {
+    public function before(User $user, $ability)
+    {
         if ($user->admin && $ability !== 'create') {
             return true;
         }

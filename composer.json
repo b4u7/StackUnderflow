@@ -11,6 +11,7 @@
         "php": "^7.2",
         "ext-json": "*",
         "algolia/algoliasearch-client-php": "2.2",
+        "cyrildewit/eloquent-viewable": "^5.2",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^7.0",
         "laravel/scout": "^8.0",

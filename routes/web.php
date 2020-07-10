@@ -37,3 +37,9 @@ Route::post('questions/{question}/answers/{answer}/downvote', 'AnswerController@
     ->name('answers.downvote');
 
 Route::get('search', 'SearchController@index')->name('search');
+
+Route::resource('user', 'UserController')->only(
+    ['index', 'show', 'edit', 'update']
+);
+
+
