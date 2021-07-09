@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -14,7 +14,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::take(10)->get();
+        $users = User::take(10)
+            ->orderBy('id')
+            ->paginate(10);
 
         return view('user.index', compact('users'));
     }
@@ -27,6 +29,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        // $votes = User::where('')
+
         return view('user.show', compact('user'));
     }
 

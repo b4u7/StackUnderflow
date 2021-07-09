@@ -1,17 +1,18 @@
 @if ($paginator->hasPages())
-    <nav class="pagination is-centered">
-        <a class="pagination-previous"
-           href="{{ $paginator->previousPageUrl() }}"
-           @if ($paginator->onFirstPage()) disabled @endif>
-            <span>
-                &lsaquo;
-            </span>
-        </a>
-        <ul class="pagination-list">
+    <nav class="card card--transparent pagination flex mt-4" aria-label="Pagination">
+        <ul class="pagination__list">
+            <li class="pagination__item">
+                <a class="pagination__link" href="{{ $paginator->previousPageUrl() }}"
+                   @if ($paginator->onFirstPage()) disabled @endif>
+                    <span>
+                        &lsaquo;
+                    </span>
+                </a>
+            </li>
             @foreach ($elements as $element)
                 @if (is_string($element))
-                    <li>
-                        <a disabled>
+                    <li class="pagination__item">
+                        <a class="pagination__link" disabled>
                             {{ $element }}
                         </a>
                     </li>
@@ -19,14 +20,14 @@
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <li>
-                                <a class="pagination-link is-current">
+                            <li class="pagination__item">
+                                <a class="pagination__link" aria-current="page">
                                     {{ $page }}
                                 </a>
                             </li>
                         @else
-                            <li>
-                                <a class="pagination-link" href="{{ $url }}">
+                            <li class="pagination__item">
+                                <a class="pagination__link" href="{{ $url }}">
                                     {{ $page }}
                                 </a>
                             </li>
@@ -34,13 +35,14 @@
                     @endforeach
                 @endif
             @endforeach
+            <li class="pagination__item">
+                <a class="pagination__link" href="{{ $paginator->nextPageUrl() }}"
+                   @if (!$paginator->hasMorePages()) disabled @endif>
+                    <span>
+                        &rsaquo;
+                    </span>
+                </a>
+            </li>
         </ul>
-        <a class="pagination-next"
-           href="{{ $paginator->previousPageUrl() }}"
-           @if (!$paginator->hasMorePages()) disabled @endif>
-            <span>
-                &rsaquo;
-            </span>
-        </a>
     </nav>
 @endif

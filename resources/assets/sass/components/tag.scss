@@ -1,0 +1,8 @@
+.tags {
+  @apply flex flex-row flex-wrap -m-1;
+
+  .tag {
+    @apply bg-lightBlue-50 text-lightBlue-700 hover:bg-lightBlue-100;
+    @apply text-sm leading-relaxed px-3 rounded-full cursor-pointer m-1;
+  }
+}

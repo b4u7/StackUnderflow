@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use Inertia\Inertia;
 
 class HomeController extends Controller
 {
     /**
      * Show the application dashboard.
      *
-     * @return RedirectResponse|View
+     * @return RedirectResponse | \Inertia\Response
      */
     public function index()
     {
@@ -19,6 +19,6 @@ class HomeController extends Controller
             return redirect()->route('questions.index');
         }
 
-        return view('index');
+        return Inertia::render('Index', []);
     }
 }

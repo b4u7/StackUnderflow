@@ -1,5 +1,7 @@
 <?php
 
+use App\Answer;
+
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -13,4 +15,8 @@
 
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
+});
+
+Broadcast::channel('questions.answers.{id}', function ($user, $answerId) {
+    return $user->id === Answer::findOrNew($answerId)->question->user_id;
 });

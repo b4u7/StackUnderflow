@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
 use Auth;
 use Exception;
-use App\Answer;
-use App\Question;
-use App\Vote;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Gate;
+use Inertia\Inertia;
+use App\Models\Answer;
+use App\Models\Bookmark;
+use App\Models\Question;
+use App\Models\Tag;
+use App\Models\Vote;
 
 class QuestionController extends Controller
 {
@@ -27,32 +28,35 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Factory|View
+     * @return \Inertia\Response
      * @throws AuthorizationException
      */
     public function index()
     {
         $this->authorize('viewAny', Question::class);
 
-        // TODO: Change this to be actual top questions (one day)!!
+        // TODO: Change this to be order by votes before demo
         $questions = Question::with(['votes', 'answers', 'user', 'tags'])
+            ->withCount('votes')
             ->orderByDesc('id')
             ->paginate(10);
 
-        return view('questions.index', compact('questions'));
+        dd($questions);
+
+        return Inertia::render('Questions/Index', compact('questions'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return View
+     * @return \Inertia\Response
      * @throws AuthorizationException
      */
     public function create()
     {
         $this->authorize('create', Question::class);
 
-        return view('questions.create');
+        return Inertia::render('Questions/Create');
     }
 
     /**
@@ -89,58 +93,88 @@ class QuestionController extends Controller
      * Display the specified resource.
      *
      * @param int $questionId
-     * @return Factory|View
+     * @return \Inertia\Response
      * @throws AuthorizationException
      */
     public function show(int $questionId)
     {
-        $question = Question::addSelect([
-            'votes_sum' =>
-                Vote::selectRaw('SUM(vote)')
-                    ->where('votable_type', '=', Question::class)
-                    ->whereColumn('votable_id', 'questions.id')
-        ])->with(['votes', 'user'])
+        $question = Question::with([
+            'answers' => fn($q) => $q->withSum('votes', 'vote'),
+            'answers.user',
+            'user',
+            'tags',
+            'bookmarks'
+        ])->withSum('votes', 'vote')
             ->where('id', '=', $questionId)
-            ->first();
+            ->when(Auth::user() !== null && Auth::user()->admin, function ($query) {
+                return $query->withTrashed();
+            })
+            ->firstOrFail();
 
         views($question)->record();
         $this->authorize('view', $question);
 
-        $answers = Answer::addSelect([
-            'votes_sum' =>
-                Vote::selectRaw('SUM(vote)')
-                    ->where('votable_type', '=', Answer::class)
-                    ->whereColumn('votable_id', 'answers.id')
-        ])->with(['votes', 'user'])
-            ->where('question_id', '=', $questionId)
-            ->get()
-            ->sortByDesc('votes_sum');
+        $userQuestionVote = Vote::query()
+            ->where('votable_type', '=', Question::class)
+            ->where('votable_id', '=', $question->id)
+            ->where('user_id', '=', Auth::id())
+            ->first();
 
-        return view('questions.show', compact('question', 'answers'));
+        $userAnswerVotes = (object)Vote::query()
+            ->where('votable_type', '=', Answer::class)
+            ->whereIn('votable_id', $question->answers->pluck('id'))
+            ->where('user_id', '=', Auth::id())
+            ->get()
+            ->keyBy('votable_id')
+            ->toArray();
+
+        $bookmark = optional(Auth::user(), fn($u) => $question->bookmarks()->where('user_id', '=', $u->id))->first();
+
+        $permissions = [
+            'question' => [
+                'canEdit' => Gate::check('edit', $question),
+                'canDelete' => Gate::check('delete', $question),
+                'canVote' => Gate::check('vote', $question),
+                'canRestore' => Gate::check('restore', $question),
+                'canBookmark' => Gate::check('create', [Bookmark::class, $question]),
+                'canUnbookmark' => optional($bookmark, fn($b) => Gate::check('delete', $b)) ?? false
+            ],
+            'answers' => []
+        ];
+
+        foreach ($question->answers as $answer) {
+            $permissions['answers'][$answer->id]['canEdit'] = Gate::check('edit', $answer);
+            $permissions['answers'][$answer->id]['canDelete'] = Gate::check('delete', $answer);
+            $permissions['answers'][$answer->id]['canVote'] = Gate::check('vote', $answer);
+            $permissions['answers'][$answer->id]['canRestore'] = Gate::check('restore', $question);
+        }
+
+        $isTrashed = $question->trashed();
+
+        return Inertia::render('Questions/Show', compact(
+            'question',
+            'isTrashed',
+            'bookmark',
+            'userQuestionVote',
+            'userAnswerVotes',
+            'permissions'
+        ));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param Question $question
-     * @return View
+     * @return \Inertia\Response
      * @throws AuthorizationException
      */
     public function edit(Question $question)
     {
         $this->authorize('update', $question);
 
-        $question->load([
-            'tags' => function ($query) {
-                $query->select('name');
-            }
-        ]);
+        $tags = $question->tags()->pluck('name');
 
-        $tags = array_map(function ($a) {
-            return $a['name'];
-        }, $question->tags->makeHidden('pivot')->toArray());
-
-        return view('questions.edit', compact('question', 'tags'));
+        return Inertia::render('Questions/Edit', compact('question', 'tags'));
     }
 
     /**

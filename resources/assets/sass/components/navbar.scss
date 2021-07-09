@@ -1,0 +1,78 @@
+.navbar {
+  @apply bg-primary-600 text-white z-0;
+
+  .container {
+    @apply relative flex items-center justify-between h-16;
+  }
+
+  &__start {
+    @apply flex justify-center sm:items-stretch sm:justify-start sm:mr-6;
+  }
+
+  &__end {
+    @apply absolute inset-y-0 right-0 flex pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0;
+  }
+
+  &__item {
+    @apply flex space-x-4 px-3 py-2;
+  }
+
+  &__search {
+    @apply flex-grow w-full hidden sm:inline;
+
+    &__control {
+      //@extend .form__group__control;
+
+      @apply block w-full rounded-md text-gray-700 bg-white placeholder-gray-400 border border-transparent;
+    }
+  }
+
+  &__dropdown {
+    @apply relative inline-block text-left z-10;
+
+    &__container {
+      @apply origin-top-right overflow-hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none;
+    }
+
+    &__item {
+      @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100;
+    }
+
+    &__transition {
+      &-enter-active {
+        @apply transition ease-out duration-100
+      }
+
+      &-enter-from {
+        @apply transform opacity-0 scale-95
+      }
+
+      &-enter-to {
+        @apply transform opacity-100 scale-100
+      }
+
+      &-leave-active {
+        @apply transition ease-in duration-75
+      }
+
+      &-leave-from {
+        @apply transform opacity-100 scale-100
+      }
+
+      &-leave-to {
+        @apply transform opacity-0 scale-95
+      }
+    }
+  }
+
+  &__user {
+    &__menu {
+      @apply bg-gray-200 flex text-sm rounded-full;
+      @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-600 focus:ring-white;
+    }
+
+    &__avatar {
+      @apply h-auto w-12 rounded-full;
+    }
+  }
+}

@@ -1,0 +1,70 @@
+.questions-feed {
+  &__card {
+    @extend .card;
+
+    @apply cursor-pointer hover:border-primary-500 border-transparent border;
+
+    &__header {
+      @extend .card__header;
+
+      @apply flex flex-col text-sm;
+    }
+
+    &__user {
+      @apply flex flex-row text-gray-500;
+
+      &__avatar {
+        @apply rounded-full h-10 w-10 ring-2 ring-white;
+      }
+
+      &__name {
+        @apply font-medium text-gray-900 hover:text-primary-700;
+      }
+    }
+
+    &__content {
+      @extend .card__content;
+    }
+
+    &__context {
+    }
+
+    &__title {
+      @apply font-semibold text-gray-800 text-2xl mt-2 mb-3;
+    }
+
+    &__body {
+      @apply text-gray-600 py-2;
+    }
+
+    &__tags {
+      @extend .tags;
+
+      @apply pt-4 pl-2;
+    }
+
+    &__footer {
+      @extend .card__footer;
+    }
+
+    &__stats {
+      @apply flex flex-row text-gray-700 -m-2;
+
+      > * {
+        @apply m-2;
+      }
+    }
+
+    &__icon {
+      @apply text-gray-700;
+    }
+
+    $parent: &;
+
+    &:hover {
+      #{$parent}__title {
+        @apply text-primary-700;
+      }
+    }
+  }
+}

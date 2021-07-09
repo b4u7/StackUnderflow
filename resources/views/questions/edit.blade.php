@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('app')
 
 @section('content')
     <div class="container">
@@ -30,7 +30,7 @@
                 </div>
                 <div class="field is-grouped is-grouped-multiline">
                     <div class="control">
-                        <div class="tags has-addons">
+                        <div class="tags">
                             <input id="tags"
                                    class="input"
                                    type="text"
@@ -59,13 +59,14 @@
         document.addEventListener('DOMContentLoaded', function () {
             var easyMDE = new EasyMDE({
                 element: document.getElementById('emde'),
-                initialValue: @json($question->body),
                 placeholder: 'Type here...',
+                initialValue: @json($question->body),
+                hideIcons: ["guide", "fullscreen", "side-by-side"],
+                tabSize: 4
             });
 
             const tagsInput = document.getElementById('tags');
             new BulmaTagsInput(tagsInput, {
-                // source: @json($question->tags->toArray()),
                 delimiter: ','
             });
         }, false);

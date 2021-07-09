@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use App\Answer;
-use App\Question;
-use App\User;
+use App\Models\Answer;
+use App\Models\Question;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AnswerPolicy
@@ -107,6 +107,18 @@ class AnswerPolicy
     public function vote(User $user, Answer $answer)
     {
         return true;
+    }
+
+    /**
+     * Determine whether the user can select the answer as the solution.
+     *
+     * @param User $user
+     * @param Answer $answer
+     * @return int|mixed
+     */
+    public function solution(User $user, Answer $answer)
+    {
+        return $user->id === $answer->question->user_id && $answer->question->solution !== $answer->id;
     }
 
     /**

@@ -1,16 +1,32 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Answer;
-use App\Question;
-use App\User;
-use Faker\Generator as Faker;
+use App\Models\Answer;
+use App\Models\Question;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Answer::class, function (Faker $faker) {
-    return [
-        'user_id' => User::all()->random()->id,
-        'question_id' => Question::all()->random()->id,
-        'body' => $faker->paragraph,
-    ];
-});
+class AnswerFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Answer::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'user_id' => User::all()->random()->id,
+            'question_id' => Question::all()->random()->id,
+            'body' => $this->faker->paragraph,
+        ];
+    }
+}

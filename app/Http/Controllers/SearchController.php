@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use App\Question;
 use Illuminate\Http\Request;
+use App\Models\Question;
 
 class SearchController extends Controller
 {

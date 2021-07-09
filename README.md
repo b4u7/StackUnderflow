@@ -1,78 +1,126 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# StackUnderflow
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+StackUnderflow is a Q&A web application based on StackOverflow built using Laravel and Vue for my final course project
+for school.
 
-## About Laravel
+# Getting Started
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This repository contains the PHP application code for StackUnderflow. This application uses the laravel/framework hence
+laravel/laravel can be treated as an upstream of sorts. Before working on the application it is recommended to fully
+read this document and to refer back to and edit throughout development.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Deploying
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# Local Development
 
-## Learning Laravel
+## Provisioning
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+We use Laravel Sail for local development.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+We need to install our composer dependencies in order to run Sail:
 
-## Laravel Sponsors
+```
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v $(pwd):/opt \
+    -w /opt \
+    laravelsail/php80-composer:latest \
+    composer install --ignore-platform-reqs
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+We should increase our max_map_count right away so Elasticsearch can run.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+### On native Linux
 
-## Contributing
+From the root user, run:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+sudo sysctl -w vm.max_map_count=262144
+```
 
-## Code of Conduct
+### On Windows with WSL2
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+The best way to make this persist over restarts right now is to create a bat file in the `shell:startup` folder, call it
+something like `fix-sysctl.bat` and have it contain the following:
 
-## Security Vulnerabilities
+```bat
+@echo off
+wsl -d docker-desktop sysctl -w vm.max_map_count=262144
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Starting sail
 
-## License
+```
+vendor/bin/sail up -d
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The only thing left is to add `127.0.0.1 stackunderflow.test` to your hosts file.
+
+### Aliasing Sail
+
+Add the following to `~/.bashrc`
+
+```
+alias sail='bash vendor/bin/sail'
+```
+
+## Dependencies
+
+Dependencies are automatically handled by Composer, a list of dependencies can be found in `composer.json`. To install
+the current dependencies for a project run
+`sail composer install`.
+
+If you wish to update the version of specific dependencies, make your change to
+`composer.json`, run `composer update` and then commit your changes to `composer.json`
+and `composer.lock`.
+
+## Database Seeding
+
+You can seed a development database by simply running: `sail artisan db:seed`.
+
+## Database Migrations
+
+Database migrations are stored in `database/migrations`, this is a version control for the schema. You can generate new
+migrations using the following command:
+`sail artisan make:migration create_users_table`
+
+## Asset Management
+
+We use Laravel Mix for asset management, you can rtfm here: https://laravel.com/docs/7.x
+
+## Using an IDE
+
+If you wish to use an IDE, [Jetbrains PHPStorm](https://www.jetbrains.com/phpstorm)
+is the supported IDE for StackUnderflow. It is strongly recommended to use the
+[Laravel Plugin](https://plugins.jetbrains.com/plugin/7532-laravel-plugin).
+
+The `_ide_helper.php` file is auto generated using the command `artisan ide-helper:generate`
+
+- this provides the IDE with vastly improved PHPDocs of the Laravel framework. Select `no` when asked to generate model
+  docblocks.
+
+## Import an existing database in Sail
+
+Put the stackunderflow.bak file in your project folder.
+
+Exec into the Sail docker container:
+
+```
+sail shell
+```
+
+Import the backup:
+
+```
+PGPASSWORD=secret psql --host=pgsql --username=root --dbname=stackunderflow -c 'DROP SCHEMA public CASCADE;' && \
+PGPASSWORD=secret psql --host=pgsql --username=root --dbname=stackunderflow -c 'CREATE SCHEMA public;' && \
+PGPASSWORD=secret pg_restore -Fc stackunderflow.bak --dbname=stackunderflow --username=root --role=root --host=pgsql -j 10
+```
+
+Re-assign the roles:
+
+```
+PGPASSWORD=secret psql --host=pgsql --username=root --dbname=stackunderflow -c 'REASSIGN OWNED BY stackunderflow TO root;'
+```
+
+Done.

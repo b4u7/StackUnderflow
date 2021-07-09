@@ -1,31 +1,29 @@
-@extends('layouts.app')
+@extends('app')
 
 @section('content')
-    <div class="container">
-        <div class="content box">
-            <h1 class="title">
+    <section class="section h-full stretch">
+        <div class="container">
+            <h1 class="text-3xl font-bold">
                 {{ _('Login') }}
             </h1>
 
-            <div class="">
+            <div class="card mt-5">
                 <form class="form" method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="field">
                         <label class="label">
                             Email
                         </label>
-                        <div class="control">
-                            <input id="email"
-                                   class="input @error('email') is-danger @enderror"
-                                   type="email"
-                                   name="email"
-                                   value="{{ old('email') }}"
-                                   placeholder="example@stackunderflow.com"
-                                   required
-                                   autocomplete="email"
-                                   autofocus
-                            >
-                        </div>
+                        <input id="email"
+                               class="form__control @error('email') is-danger @enderror"
+                               type="email"
+                               name="email"
+                               value="{{ old('email') }}"
+                               placeholder="example@stackunderflow.com"
+                               required
+                               autocomplete="email"
+                               autofocus
+                        >
                         @error('email')
                         <p class="help is-danger">
                             {{ $message }}
@@ -36,21 +34,19 @@
                         <label class="label">
                             Password
                         </label>
-                        <div class="control">
-                            <input id="password"
-                                   class="input @error('password') is-danger @enderror"
-                                   type="password"
-                                   name="password"
-                                   required
-                                   autocomplete="current-password"
-                            >
-                        </div>
-                        @error('password')
-                        <p class="help is-danger">
-                            {{ $message }}
-                        </p>
-                        @enderror
+                        <input id="password"
+                               class="form__control @error('password') is-danger @enderror"
+                               type="password"
+                               name="password"
+                               required
+                               autocomplete="current-password"
+                        >
                     </div>
+                    @error('password')
+                    <p class="help is-danger">
+                        {{ $message }}
+                    </p>
+                    @enderror
                     <div class="field">
                         <div class="control">
                             <label class="checkbox">
@@ -79,5 +75,5 @@
                 </form>
             </div>
         </div>
-    </div>
+    </section>
 @endsection

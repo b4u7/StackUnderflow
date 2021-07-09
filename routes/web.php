@@ -11,35 +11,55 @@
 |
 */
 
-Auth::routes();
-
 Route::get('/', 'HomeController@index')->name('home');
 
+
+/**
+ * Questions
+ */
 Route::resource('questions', 'QuestionController');
 
-Route::post('questions/{question}/upvote', 'QuestionController@upvote')
-    ->name('questions.upvote');
+Route::resource('questions.bookmarks', 'BookmarkController')->only('store', 'destroy');
 
-Route::post('questions/{question}/downvote', 'QuestionController@downvote')
-    ->name('questions.downvote');
+Route::group(['prefix' => 'questions', 'as' => 'questions.'], static function () {
+    Route::post('questions/{question}/upvote', 'QuestionController@upvote')
+        ->name('upvote');
 
+    Route::post('questions/{question}/downvote', 'QuestionController@downvote')
+        ->name('downvote');
+});
+
+/**
+ * Answers
+ */
 Route::resource('questions/{question}/answers', 'AnswerController')->only(
     ['store', 'edit', 'update', 'destroy']
 );
 
-Route::post('questions/{question}/answers/{answer}/restore', 'AnswerController@restore')
-    ->name('answers.restore');
+Route::group(['prefix' => 'answers', 'as' => 'answers.'], static function () {
+    Route::post('questions/{question}/answers/{answer}/restore', 'AnswerController@restore')
+        ->name('restore');
 
-Route::post('questions/{question}/answers/{answer}/upvote', 'AnswerController@upvote')
-    ->name('answers.upvote');
+    Route::post('questions/{question}/answers/{answer}/upvote', 'AnswerController@upvote')
+        ->name('upvote');
 
-Route::post('questions/{question}/answers/{answer}/downvote', 'AnswerController@downvote')
-    ->name('answers.downvote');
+    Route::post('questions/{question}/answers/{answer}/downvote', 'AnswerController@downvote')
+        ->name('downvote');
 
+    Route::post('questions/{question}/answers/{answer}/solution', 'AnswerController@solution')
+        ->name('solution');
+});
+
+
+/**
+ * Search
+ */
 Route::get('search', 'SearchController@index')->name('search');
 
+
+/**
+ * User
+ */
 Route::resource('user', 'UserController')->only(
     ['index', 'show', 'edit', 'update']
 );
-
-

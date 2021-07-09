@@ -1,0 +1,63 @@
+.question-card {
+  @extend .card;
+
+  @apply w-full;
+
+  &__header {
+    @extend .card__header;
+
+    @apply flex flex-col;
+  }
+
+  &__title {
+    @apply font-semibold text-gray-800 text-2xl;
+  }
+
+  &__stats {
+    @apply flex flex-row text-gray-500 text-sm;
+  }
+
+  &__content {
+    @extend .card__content;
+  }
+
+  &__body {
+    @apply text-gray-600 py-2;
+  }
+
+  &__tags {
+    @extend .tags;
+
+    @apply pt-4 pl-2;
+  }
+
+  &__tag {
+    @extend .tag;
+  }
+
+  &__footer {
+    @extend .card__footer;
+
+    @apply items-center text-gray-500 text-sm;
+  }
+
+  &__menu {
+    @apply flex flex-row -m-2;
+
+    > * {
+      @apply m-2;
+    }
+  }
+
+  &__user {
+    @apply flex flex-row ml-auto text-right;
+
+    &__avatar {
+      @apply hidden sm:block rounded-full h-10 w-10 ring-2 ring-white sm:ml-4;
+    }
+
+    &__name {
+      @apply text-gray-900 font-medium hover:text-primary-700;
+    }
+  }
+}

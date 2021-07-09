@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('app')
 
 @section('content')
     <section class="section">
@@ -40,7 +40,7 @@
                     </div>
                     <div class="field is-grouped is-grouped-multiline">
                         <div class="control">
-                            <div class="tags has-addons">
+                            <div class="tags">
                                 <input id="tags"
                                        class="input"
                                        type="text"
@@ -66,10 +66,18 @@
 
 @push('scripts')
     <script>
-        var easyMDE = new EasyMDE({
-            element: document.getElementById('emde'),
-            hideIcons: ["guide", "fullscreen", "side-by-side"],
-            tabSize: 4
-        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var easyMDE = new EasyMDE({
+                element: document.getElementById('emde'),
+                placeholder: 'Type here...',
+                hideIcons: ["guide", "fullscreen", "side-by-side"],
+                tabSize: 4
+            });
+
+            const tagsInput = document.getElementById('tags');
+            new BulmaTagsInput(tagsInput, {
+                delimiter: ','
+            });
+        }, false);
     </script>
 @endpush

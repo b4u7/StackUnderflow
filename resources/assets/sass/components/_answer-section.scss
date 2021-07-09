@@ -1,0 +1,7 @@
+.answer-section {
+  @apply flex flex-row;
+
+  &:not(:last-child) {
+    @apply mb-8;
+  }
+}

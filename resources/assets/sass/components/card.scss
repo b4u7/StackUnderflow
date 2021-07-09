@@ -1,0 +1,31 @@
+.card {
+  @apply bg-white shadow rounded-md sm:overflow-hidden;
+
+  &--transparent {
+    @apply bg-transparent shadow-none rounded-none;
+  }
+
+  &:not(:last-child) {
+    @apply mb-4;
+  }
+
+  &__header {
+    @apply flex flex-row py-3 px-4;
+
+    a {
+      @apply font-medium;
+    }
+
+    :not(:last-child) {
+      @apply mr-2;
+    }
+  }
+
+  &__content {
+    @apply px-4;
+  }
+
+  &__footer {
+    @apply flex flex-row py-3 px-4;
+  }
+}

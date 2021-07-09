@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use App\Answer;
-use App\Question;
+use App\Models\Answer;
+use App\Models\Question;
+use App\Events\UserAnswered;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Inertia\Inertia;
 
 class AnswerController extends Controller
 {
@@ -23,15 +22,17 @@ class AnswerController extends Controller
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function store(Request $request, Question $question)
+    public function store(Request $request, Question $question): RedirectResponse
     {
         $this->authorize('create', [Answer::class, $question]);
 
-        Answer::create([
+        $answer = Answer::create([
             'user_id' => Auth::id(),
             'question_id' => $question->id,
             'body' => $request->input('body'),
         ]);
+
+        UserAnswered::dispatch($answer);
 
         return redirect()->back();
     }
@@ -42,14 +43,14 @@ class AnswerController extends Controller
      * @param Request $request
      * @param Question $question
      * @param Answer $answer
-     * @return Application|Factory|View
+     * @return \Inertia\Response
      * @throws AuthorizationException
      */
     public function edit(Request $request, Question $question, Answer $answer)
     {
         $this->authorize('update', $answer);
 
-        return view('questions.answers.edit', compact('question', 'answer'));
+        return Inertia::render('questions.answers.edit', compact('question', 'answer'));
     }
 
     /**
@@ -177,6 +178,24 @@ class AnswerController extends Controller
                 'vote' => -1
             ]
         );
+
+        return redirect()->back();
+    }
+
+    /**
+     * Sets the current answer as a solution.
+     *
+     * @param Question $question
+     * @param Answer $answer
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function solution(Question $question, Answer $answer)
+    {
+        $this->authorize('solution', $answer);
+
+        $question->solution = $answer->id;
+        $question->save();
 
         return redirect()->back();
     }
