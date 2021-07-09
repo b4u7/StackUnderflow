@@ -52,7 +52,7 @@ export default {
       required: true,
     },
     bookmark: {
-      type: Object
+      type: Object,
     },
     permissions: {
       type: Object,

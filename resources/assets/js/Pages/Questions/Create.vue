@@ -1,13 +1,9 @@
-<template>
-
-</template>
+<template></template>
 
 <script>
 export default {
-  name: 'Create.vue'
+  name: 'Create.vue',
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

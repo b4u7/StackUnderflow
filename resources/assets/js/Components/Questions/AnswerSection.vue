@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     addVote() {
-      this.$inertia.post(route('answers.upvote', [this.answer.question_id,  this.answer] ))
+      this.$inertia.post(route('answers.upvote', [this.answer.question_id, this.answer]))
     },
     removeVote() {
       this.$inertia.post(route('answers.downvote', [this.answer.question_id, this.answer]))
