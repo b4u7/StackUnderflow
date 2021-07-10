@@ -41,8 +41,6 @@ class QuestionController extends Controller
             ->orderByDesc('id')
             ->paginate(10);
 
-        dd($questions);
-
         return Inertia::render('Questions/Index', compact('questions'));
     }
 
