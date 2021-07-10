@@ -1,5 +1,6 @@
 const mix = require('laravel-mix')
 const path = require('path')
+const del = require('del')
 
 /*
  |--------------------------------------------------------------------------
@@ -30,8 +31,11 @@ mix
       },
     },
   })
+  .before(() => {
+    del(['/public/js', '/public/css'])
+  })
 
 if (mix.inProduction()) {
   mix.version()
-  mix.disableNotifications()
+  mix.disableSuccessNotifications()
 }
