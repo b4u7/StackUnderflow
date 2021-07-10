@@ -4,7 +4,11 @@ namespace Tests\Feature;
 
 use App\Providers\RouteServiceProvider;
 
-it('renders the registration  screen')->get('/register')->assertStatus(200);
+it('renders the registration screen', function () {
+    $response = $this->get('/register');
+
+    $response->assertStatus(200);
+});
 
 it('registers new users', function () {
     $response = $this->post('/register', [
