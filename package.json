@@ -13,10 +13,13 @@
     "eslint": "eslint resources",
     "eslint-fix": "eslint --fix resources",
     "lint": "npm run eslint && npm run prettier",
-    "lint-fix": "npm run eslint-fix && npm run prettier-fix"
+    "lint-fix": "npm run eslint-fix && npm run prettier-fix",
+    "test": "cross-env NODE_ENV=test jest",
+    "tdd": "npm run test -- --watch --notify"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",
+    "babel-jest": "^27.0.6",
     "browser-sync": "^2.27.4",
     "browser-sync-webpack-plugin": "^2.3.0",
     "cross-env": "^7.0",
@@ -27,6 +30,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-vue": "^7.11.1",
+    "jest": "^27.0.6",
     "laravel-echo": "^1.10.0",
     "laravel-mix": "^6.0.20",
     "lodash": "^4.17.13",
