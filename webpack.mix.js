@@ -31,9 +31,6 @@ mix
       },
     },
   })
-  .before(() => {
-    del(['/public/js', '/public/css'])
-  })
 
 if (mix.inProduction()) {
   mix.version()
