@@ -161,6 +161,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/tightenco/ziggy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pestphp/pest-plugin" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pestphp/pest" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
