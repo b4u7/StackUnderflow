@@ -1,5 +1,5 @@
 .form {
-  @apply w-full;
+  @apply w-full space-y-4;
 
   &__group {
     &__label {
@@ -12,10 +12,6 @@
 
     &__description {
       @apply mt-1 text-sm text-gray-500;
-    }
-
-    &:not(:last-child) {
-      @apply mb-4;
     }
   }
 
@@ -36,6 +32,7 @@
   }
 
   &__footer {
-    @apply flex items-center justify-end mt-4;
+    @apply text-sm text-gray-500;
+    // @apply flex items-center justify-end;
   }
 }

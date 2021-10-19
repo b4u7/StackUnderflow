@@ -1,0 +1,69 @@
+$button-colors: (
+  primary: ('primary', 'white'),
+  success: ('green', 'white'),
+  danger: ('red', 'white')
+);
+
+.button {
+  @apply py-2 px-4 inline-block rounded-lg font-semibold bg-white;
+  @apply transition duration-200;
+  @apply border border-transparent;
+  @apply hover:bg-gray-100;
+  @apply active:outline-none active:ring-2 active:ring-gray-400 active:ring-opacity-75 active:ring active:ring-offset-2;
+  @apply focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 focus:ring-offset-2;
+
+  $parent: #{&};
+  @each $name, $pair in $button-colors {
+    $color: nth($pair, 1);
+    $color-inverted: nth($pair, 2);
+
+    &--#{$name} {
+      @apply bg-#{$color}-600 text-#{$color-inverted};
+      @apply hover:bg-#{$color}-700 hover:text-#{$color-inverted};
+      @apply active:ring-#{$color}-300;
+      @apply focus:ring-#{$color}-300;
+
+      &#{$parent}--outline {
+        @apply bg-transparent border-#{$color}-600 text-#{$color}-600;
+        @apply hover:bg-#{$color}-600 hover:text-#{$color-inverted};
+      }
+
+      &#{$parent}--invert {
+        @apply bg-#{$color-inverted} text-#{$color}-600;
+        @apply hover:bg-#{$color-inverted} hover:text-#{$color}-600;
+      }
+    }
+  }
+
+  &--shadow {
+    @apply shadow-md;
+  }
+
+  &--round {
+    @apply rounded-full;
+  }
+
+  &--small {
+    @apply text-sm;
+  }
+
+  &--fullwidth {
+    @apply w-full;
+  }
+
+  &--fullwidth-touch {
+    @apply flex w-full md:inline-block md:w-auto;
+  }
+}
+
+//.button {
+//  @apply py-2 px-4 inline-block bg-white font-semibold rounded-lg shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75;
+//
+//  &--primary {
+//    @apply bg-primary-600 text-white hover:bg-primary-700 hover:text-white focus:ring-primary-400;
+//  }
+//
+//  &--fullwidth-touch {
+//    @apply flex sm:inline-block;
+//  }
+//}
