@@ -1,12 +1,7 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  purge: [
-    './storage/framework/views/*.php',
-    './resources/**/*.blade.php',
-    './resources/**/*.js',
-    './resources/**/*.vue',
-  ],
+  purge: ['./resources/assets/**/*.{scss,js,vue}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
@@ -14,7 +9,7 @@ module.exports = {
       gray: colors.blueGray,
       green: colors.green,
       indigo: colors.indigo,
-      lightBlue: colors.lightBlue,
+      sky: colors.sky,
       primary: colors.blue,
       red: colors.red,
       transparent: 'transparent',
@@ -26,7 +21,7 @@ module.exports = {
       gray: colors.blueGray,
       green: colors.green,
       indigo: colors.indigo,
-      lightBlue: colors.lightBlue,
+      sky: colors.sky,
       primary: colors.blue,
       red: colors.red,
       transparent: 'transparent',
@@ -37,7 +32,7 @@ module.exports = {
       gray: colors.blueGray,
       green: colors.green,
       indigo: colors.indigo,
-      lightBlue: colors.lightBlue,
+      sky: colors.sky,
       primary: colors.blue,
       red: colors.red,
       transparent: 'transparent',
@@ -48,7 +43,7 @@ module.exports = {
       gray: colors.blueGray,
       green: colors.green,
       indigo: colors.indigo,
-      lightBlue: colors.lightBlue,
+      sky: colors.sky,
       primary: colors.blue,
       red: colors.red,
       transparent: 'transparent',
@@ -61,7 +56,13 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      outline: ['hover', 'active'],
+      ringWidth: ['active'],
+      ringColor: ['active'],
+      ringOpacity: ['active'],
+      ringOffsetWidth: ['active'],
+    },
     backgroundColor: ['responsive', 'hover', 'focus'],
   },
   plugins: [require('@tailwindcss/forms')],
