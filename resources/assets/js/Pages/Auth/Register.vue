@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="container mx-auto sm:max-w-md min-h-screen flex flex-col sm:justify-center items-center">
-      <h1 class="text-xl font-medium mb-4">Register</h1>
+      <h1 class="text-xl font-medium mb-4">Register an account</h1>
 
       <form class="form" @submit.prevent="submit">
         <div class="form__group">
@@ -15,6 +15,7 @@
             v-model="form.name"
             required
           />
+          <p v-if="errors.name" class="form__group__description" v-text="errors.name" />
         </div>
         <div class="form__group">
           <label for="email-address" class="form__group__label">Email address</label>
@@ -26,6 +27,7 @@
             v-model="form.email"
             required
           />
+          <p v-if="errors.email" class="form__group__description" v-text="errors.email" />
         </div>
         <div class="form__group">
           <label for="password" class="form__group__label">Password</label>
@@ -38,6 +40,7 @@
             autocomplete="new-password"
             required
           />
+          <p v-if="errors.password" class="form__group__description" v-text="errors.password" />
         </div>
         <div class="form__group">
           <label for="password-confirm" class="form__group__label">Confirm password</label>
@@ -50,12 +53,20 @@
             autocomplete="new-password"
             required
           />
+          <p
+            v-if="errors.password_confirmation"
+            class="form__group__description"
+            v-text="errors.password_confirmation"
+          />
         </div>
         <div class="form__footer">
-          <div class="form__group">
-            <a class="form__group__description underline" :href="route('login')">Already registered?</a>
-            <button type="submit" class="button button--primary ml-4" :disabled="form.processing">Register</button>
-          </div>
+          <button type="submit" class="button button--primary button--fullwidth mb-4" :disabled="form.processing">
+            Register
+          </button>
+          <p class="text-center">
+            Already have an account?
+            <a class="underline" :href="route('login')">Login here</a>
+          </p>
         </div>
       </form>
     </div>
@@ -66,6 +77,10 @@
 export default {
   name: 'Register',
   props: {
+    errors: {
+      type: Object,
+      required: false,
+    },
     status: {
       type: String,
       required: false,
@@ -94,5 +109,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

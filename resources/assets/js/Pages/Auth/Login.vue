@@ -6,7 +6,7 @@
 
       <form class="form" @submit.prevent="submit">
         <div class="form__group">
-          <label for="email-address" class="form__group__label">Email address</label>
+          <label for="email-address" class="form__group__label"> Email address </label>
           <input
             type="email"
             name="email-address"
@@ -16,7 +16,9 @@
             v-model="form.email"
             required
           />
+          <p v-if="errors.email" class="form__group__description" v-text="errors.email" />
         </div>
+
         <div class="form__group">
           <label for="password" class="form__group__label">Password</label>
           <input
@@ -28,27 +30,33 @@
             autocomplete="current-password"
             required
           />
+          <p v-if="errors.password" class="form__group__description" v-text="errors.email" />
         </div>
-        <div class="form__checkbox">
-          <div class="flex items-center h-6">
-            <input
-              id="remember"
-              name="remember"
-              type="checkbox"
-              class="form__checkbox__control"
-              v-model:checked="form.remember"
-            />
+        <div class="grid grid-cols-2">
+          <div class="form__checkbox">
+            <div class="flex items-center h-6">
+              <input
+                id="remember"
+                name="remember"
+                type="checkbox"
+                class="form__checkbox__control"
+                v-model:checked="form.remember"
+              />
+            </div>
+            <label for="remember" class="form__checkbox__label">Remember me</label>
           </div>
-          <label for="remember" class="form__checkbox__label">Remember me</label>
+          <p class="form__group__description text-right underline">
+            <a v-if="canResetPassword" :href="route('password.request')"> Forgot your password? </a>
+          </p>
         </div>
-
         <div class="form__footer">
-          <div class="form__group mt-4">
-            <a v-if="canResetPassword" class="form__group__description underline" :href="route('password.request')">
-              Forgot your password?
-            </a>
-            <button type="submit" class="button button--primary ml-4" :disabled="form.processing">Login</button>
-          </div>
+          <button type="submit" class="button button--primary button--fullwidth mb-4" :disabled="form.processing">
+            Let me in
+          </button>
+          <p class="text-center">
+            Don't have an account?
+            <a class="underline" :href="route('register')"> Create one here </a>
+          </p>
         </div>
       </form>
     </div>
@@ -59,6 +67,10 @@
 export default {
   name: 'Login',
   props: {
+    errors: {
+      type: Object,
+      required: false,
+    },
     canResetPassword: {
       type: Boolean,
       required: false,
