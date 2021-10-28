@@ -5,29 +5,84 @@
         <a class="button button--primary button--fullwidth-touch" :href="route('questions.create')"> Ask question </a>
       </div>
       <!-- TODO: Left sidebar with some question categories -->
-      <div class="questions-feed mt-8">
+      <div class="questions-feed mt-8" id="questions">
         <questions-feed-card
-          v-for="question in questions.data"
+          v-for="question in loadedQuestions"
           :key="question.id"
           :question="question"
+          :id="`question-${question.id}`"
         ></questions-feed-card>
       </div>
+      <button class="mt-4 button button--primary" @click="nextPage">LOAD MORE PLS</button>
     </div>
   </section>
 </template>
 
 <script>
 import QuestionsFeedCard from '@/Components/QuestionsFeedCard'
+import Pagination from '@/Components/Pagination'
 
 export default {
   name: 'Index',
-  components: { QuestionsFeedCard },
+  components: { QuestionsFeedCard, Pagination },
   props: {
     questions: {
       type: Object,
       required: true,
     },
   },
-  computed: {},
+  data() {
+    return {
+      loadedQuestions: this.questions.data,
+      loading: false,
+      observer: null,
+    }
+  },
+  mounted() {
+    this.observer = new IntersectionObserver(entries => {
+      const intersecting = entries.some(entry => entry.intersectionRatio > 0)
+
+      if (intersecting) {
+        this.nextPage()
+      }
+    })
+
+    this.$nextTick(() => this.updateObserver())
+  },
+  watch: {
+    questions({ data }) {
+      this.loadedQuestions.push.apply(this.loadedQuestions, data)
+    },
+    loadedQuestions() {
+      this.$nextTick(() => this.updateObserver())
+    },
+  },
+  methods: {
+    nextPage() {
+      if (!this.questions.next_page_url || this.loading) {
+        return
+      }
+
+      this.loading = true
+
+      this.$inertia.visit(this.questions.next_page_url, {
+        preserveScroll: true,
+        preserveState: true,
+        onFinish: () => (this.loading = false),
+      })
+    },
+    updateObserver() {
+      console.log('updateObserver')
+      this.observer.disconnect()
+      if (this.loadedQuestions.length < 1 || !this.questions.next_page_url) {
+        return
+      }
+
+      const lastQuestionId = `question-${this.loadedQuestions.slice(-1)[0].id}`
+      console.log(lastQuestionId)
+
+      this.observer.observe(document.getElementById(lastQuestionId))
+    },
+  },
 }
 </script>

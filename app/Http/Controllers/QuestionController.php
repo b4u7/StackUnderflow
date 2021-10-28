@@ -39,7 +39,7 @@ class QuestionController extends Controller
         $questions = Question::with(['votes', 'answers', 'user', 'tags'])
             ->withCount('votes')
             ->orderByDesc('id')
-            ->paginate(10);
+            ->cursorPaginate(10);
 
         return Inertia::render('Questions/Index', compact('questions'));
     }
