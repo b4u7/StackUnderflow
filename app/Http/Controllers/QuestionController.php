@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Gate;
-use Inertia\Inertia;
 use App\Models\Answer;
 use App\Models\Bookmark;
 use App\Models\Question;
 use App\Models\Tag;
 use App\Models\Vote;
+use Auth;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Inertia\Inertia;
 
 class QuestionController extends Controller
 {
@@ -104,9 +104,7 @@ class QuestionController extends Controller
             'bookmarks'
         ])->withSum('votes', 'vote')
             ->where('id', '=', $questionId)
-            ->when(Auth::user() !== null && Auth::user()->admin, function ($query) {
-                return $query->withTrashed();
-            })
+            ->when(Auth::user() !== null && Auth::user()->admin, fn($query) => $query->withTrashed())
             ->firstOrFail();
 
         views($question)->record();
