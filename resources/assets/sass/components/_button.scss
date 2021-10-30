@@ -1,7 +1,16 @@
 $button-colors: (
-  primary: ('primary', 'white'),
-  success: ('green', 'white'),
-  danger: ('red', 'white')
+  primary: (
+    'primary',
+    'white',
+  ),
+  success: (
+    'green',
+    'white',
+  ),
+  danger: (
+    'red',
+    'white',
+  ),
 );
 
 .button {
