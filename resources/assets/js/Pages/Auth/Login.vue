@@ -1,4 +1,3 @@
-<!-- TODO: Show errors -->
 <template>
   <section>
     <div class="container mx-auto sm:max-w-md min-h-screen flex flex-col sm:justify-center items-center">
@@ -16,7 +15,11 @@
             v-model="form.email"
             required
           />
-          <p v-if="errors.email" class="form__group__description" v-text="errors.email" />
+          <p
+            v-if="errors.email"
+            class="form__group__description form__group__description--error"
+            v-text="errors.email"
+          />
         </div>
 
         <div class="form__group">
@@ -30,7 +33,11 @@
             autocomplete="current-password"
             required
           />
-          <p v-if="errors.password" class="form__group__description" v-text="errors.email" />
+          <p
+            v-if="errors.password"
+            class="form__group__description form__group__description--error"
+            v-text="errors.email"
+          />
         </div>
         <div class="grid grid-cols-2">
           <div class="form__checkbox">

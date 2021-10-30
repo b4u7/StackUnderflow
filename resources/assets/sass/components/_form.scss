@@ -12,6 +12,10 @@
 
     &__description {
       @apply mt-1 text-sm text-gray-500;
+
+      &--error {
+        @apply text-red-500;
+      }
     }
   }
 

@@ -15,7 +15,7 @@
             v-model="form.name"
             required
           />
-          <p v-if="errors.name" class="form__group__description" v-text="errors.name" />
+          <p v-if="errors.name" class="form__group__description form__group__description--error" v-text="errors.name" />
         </div>
         <div class="form__group">
           <label for="email-address" class="form__group__label">Email address</label>
@@ -27,7 +27,11 @@
             v-model="form.email"
             required
           />
-          <p v-if="errors.email" class="form__group__description" v-text="errors.email" />
+          <p
+            v-if="errors.email"
+            class="form__group__description form__group__description--error"
+            v-text="errors.email"
+          />
         </div>
         <div class="form__group">
           <label for="password" class="form__group__label">Password</label>
@@ -40,7 +44,11 @@
             autocomplete="new-password"
             required
           />
-          <p v-if="errors.password" class="form__group__description" v-text="errors.password" />
+          <p
+            v-if="errors.password"
+            class="form__group__description form__group__description--error"
+            v-text="errors.password"
+          />
         </div>
         <div class="form__group">
           <label for="password-confirm" class="form__group__label">Confirm password</label>
@@ -55,7 +63,7 @@
           />
           <p
             v-if="errors.password_confirmation"
-            class="form__group__description"
+            class="form__group__description form__group__description--error"
             v-text="errors.password_confirmation"
           />
         </div>
