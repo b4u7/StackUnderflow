@@ -59,6 +59,5 @@ export default {
       required: true,
     },
   },
-  // TODO: Votes component
 }
 </script>
