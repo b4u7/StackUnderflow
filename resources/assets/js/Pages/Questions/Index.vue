@@ -13,18 +13,16 @@
           :id="`question-${question.id}`"
         ></questions-feed-card>
       </div>
-      <button class="mt-4 button button--primary" @click="nextPage">LOAD MORE PLS</button>
     </div>
   </section>
 </template>
 
 <script>
 import QuestionsFeedCard from '@/Components/QuestionsFeedCard'
-import Pagination from '@/Components/Pagination'
 
 export default {
   name: 'Index',
-  components: { QuestionsFeedCard, Pagination },
+  components: { QuestionsFeedCard },
   props: {
     questions: {
       type: Object,
