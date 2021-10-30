@@ -30,7 +30,7 @@
         <a> Share </a>
         <a v-if="permissions.canEdit" @submit.prevent="editQuestion"> Edit </a>
         <form v-if="permissions.canDelete" class="form" @submit.prevent="deleteQuestion">
-          <a> Delete </a>
+          <button type="submit">Delete</button>
         </form>
       </div>
       <div class="question-card__user">
@@ -92,8 +92,7 @@ export default {
       this.$inertia.post(route('questions.edit', this.question))
     },
     deleteQuestion() {
-      // TODO: this.$inertia.form()
-      this.$inertia.delete(route('questions.delete', this.question))
+      this.$inertia.delete(route('questions.destroy', this.question))
     },
   },
 }
