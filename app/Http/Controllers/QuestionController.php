@@ -97,7 +97,8 @@ class QuestionController extends Controller
     public function show(int $questionId)
     {
         $question = Question::with([
-            'answers' => fn($q) => $q->withSum('votes', 'vote'),
+            'answers' => fn($query) => $query->withSum('votes', 'vote')
+                ->when(Auth::user() !== null && Auth::user()->admin, fn($query) => $query->withTrashed()),
             'answers.user',
             'user',
             'tags',
