@@ -9,6 +9,7 @@
           <input class="navbar__search__control" type="text" name="search" placeholder="Search" />
         </form>
       </div>
+      <!-- TODO: Refactor -->
       <div class="navbar__end">
         <div
           v-if="user"
@@ -28,7 +29,6 @@
               <a :href="route('user.show', user)" class="navbar__dropdown__item"> Profile </a>
               <a :href="route('user.edit', user)" class="navbar__dropdown__item"> Edit profile </a>
               <form class="navbar__dropdown__item" @submit.prevent="logout">
-                <!-- TODO: Inertia -->
                 <button type="submit">Logout</button>
               </form>
             </div>
