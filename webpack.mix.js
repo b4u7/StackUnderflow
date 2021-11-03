@@ -1,6 +1,4 @@
 const mix = require('laravel-mix')
-const path = require('path')
-const del = require('del')
 
 /*
  |--------------------------------------------------------------------------
@@ -21,16 +19,7 @@ mix
     postCss: [require('tailwindcss'), require('autoprefixer')],
   })
   .browserSync('stackunderflow.test')
-  .webpackConfig({
-    output: {
-      chunkFilename: 'js/[name].js?id=[chunkhash]',
-    },
-    resolve: {
-      alias: {
-        '@': path.resolve('resources/assets/js'),
-      },
-    },
-  })
+  .webpackConfig(require('./webpack.config'))
 
 if (mix.inProduction()) {
   mix.version()
