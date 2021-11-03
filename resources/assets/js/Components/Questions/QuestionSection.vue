@@ -1,7 +1,13 @@
 <template>
   <section>
-    <div v-if="isTrashed" class="alert alert--danger my-8">This question was deleted, only admins can see it.</div>
+    <div v-if="isTrashed" class="alert alert--danger my-8">
+      <p>
+        <i class="fas fa-exclamation-triangle"></i>
+        This question was deleted, only admins can see it.
+      </p>
+    </div>
 
+    <!-- TODO: Clean up class bindings -->
     <div class="flex flex-row">
       <div class="question-controls">
         <form @submit.prevent="addVote">
@@ -47,7 +53,7 @@
         </form>
       </div>
 
-      <question-card :question="question" :permissions="permissions"></question-card>
+      <question-card :question="question" :isTrashed="isTrashed" :permissions="permissions"></question-card>
     </div>
   </section>
 </template>
