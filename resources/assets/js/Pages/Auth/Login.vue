@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="section">
     <div class="container mx-auto sm:max-w-md min-h-screen flex flex-col sm:justify-center items-center">
       <h1 class="text-xl font-medium mb-4">Login</h1>
 
@@ -110,5 +110,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>
