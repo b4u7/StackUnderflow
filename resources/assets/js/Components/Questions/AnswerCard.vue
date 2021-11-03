@@ -1,17 +1,30 @@
 <template>
-  <div class="answer-card">
+  <div :class="{ 'answer-card--trashed': isTrashed }" class="answer-card">
     <div class="answer-card__header"></div>
     <div class="answer-card__content">
       <div class="answer-card__body">
-        <div v-html="answer.body"></div>
+        <div v-html="answer.body" />
       </div>
     </div>
     <div class="answer-card__footer">
       <div class="answer-card__menu">
-        <a> Share </a>
-        <a v-if="permissions.canEdit" @submit.prevent="editAnswer"> Edit </a>
-        <form v-if="permissions.canDelete" class="form" @submit.prevent="deleteAnswer">
-          <a> Delete </a>
+        <button type="button"><i class="fas fa-link"></i> Share</button>
+        <form v-if="permissions.canEdit" @submit.prevent="editAnswer">
+          <button v-if="permissions.canEdit" @submit.prevent="editAnswer" type="submit">
+            <i class="fas fa-edit"></i>Edit
+          </button>
+        </form>
+        <form v-if="permissions.canDelete && !isTrashed" @submit.prevent="deleteAnswer">
+          <button type="submit" class="button button--danger button--invert-text button--small font-weight-normal">
+            <i class="fas fa-trash-alt"></i>
+            Delete
+          </button>
+        </form>
+        <form v-if="permissions.canRestore && isTrashed" @submit.prevent="restoreAnswer">
+          <button type="submit">
+            <i class="fas fa-trash-restore"></i>
+            Restore
+          </button>
         </form>
       </div>
       <div class="answer-card__user">
@@ -46,18 +59,25 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      isTrashed: !!this.answer.deleted_at,
+    }
+  },
   computed: {
     createdAt() {
       return DateTime.fromISO(this.answer.created_at).toLocaleString(DateTime.DATETIME_FULL)
     },
-    voteColour() {},
   },
   methods: {
     editAnswer() {
       this.$inertia.post(route('answers.edit', [this.answer.question_id, this.answer]))
     },
     deleteAnswer() {
-      this.$inertia.delete(route('answers.delete', [this.answer.question_id, this.answer]))
+      this.$inertia.delete(route('answers.destroy', [this.answer.question_id, this.answer]))
+    },
+    restoreAnswer() {
+      this.$inertia.post(route('answers.restore', [this.answer.question_id, this.answer]))
     },
   },
 }

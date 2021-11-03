@@ -3,6 +3,10 @@
 
   @apply w-full;
 
+  &--trashed {
+    @apply border border-red-500;
+  }
+
   &__header {
     @extend .card__header;
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="question-card">
+  <div :class="{ 'question-card--trashed': isTrashed }" class="question-card">
     <div class="question-card__header">
       <h1 class="question-card__title">
         {{ question.title }}
@@ -27,10 +27,23 @@
     </div>
     <div class="question-card__footer">
       <div class="question-card__menu">
-        <a> Share </a>
-        <a v-if="permissions.canEdit" @submit.prevent="editQuestion"> Edit </a>
-        <form v-if="permissions.canDelete" class="form" @submit.prevent="deleteQuestion">
-          <button type="submit">Delete</button>
+        <button type="button"><i class="fas fa-link"></i> Share</button>
+        <form v-if="permissions.canEdit" @submit.prevent="editAnswer">
+          <button v-if="permissions.canEdit" @submit.prevent="editAnswer" type="submit">
+            <i class="fas fa-edit"></i>Edit
+          </button>
+        </form>
+        <form v-if="permissions.canDelete && !isTrashed" @submit.prevent="deleteAnswer">
+          <button type="submit">
+            <i class="fas fa-trash-alt"></i>
+            Delete
+          </button>
+        </form>
+        <form v-if="permissions.canRestore && isTrashed" @submit.prevent="restoreAnswer">
+          <button type="submit">
+            <i class="fas fa-trash-restore"></i>
+            Restore
+          </button>
         </form>
       </div>
       <div class="question-card__user">
@@ -58,6 +71,10 @@ export default {
   props: {
     question: {
       type: Object,
+      required: true,
+    },
+    isTrashed: {
+      type: Boolean,
       required: true,
     },
     permissions: {
