@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="section">
     <div v-if="isTrashed" class="alert alert--danger my-8">
       <p>
         <i class="fas fa-exclamation-triangle"></i>
@@ -36,7 +36,6 @@
             <i class="fas fa-angle-down"></i>
           </button>
         </form>
-
         <form v-if="bookmark" @submit.prevent="removeBookmark">
           <button
             class="question-controls__bookmark question-controls__bookmark--active"
