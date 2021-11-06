@@ -2,7 +2,7 @@
   <section class="section">
     <div class="container">
       <h1 class="text-2xl font-medium mb-4">Ask a question</h1>
-      <form class="form">
+      <form class="form" @submit.prevent="submit">
         <div class="form__group">
           <label for="title" class="form__group__label"> Title </label>
           <input type="text" name="title" id="title" class="form__group__control" v-model="form.title" required />
@@ -14,10 +14,12 @@
         </div>
         <div class="form__group">
           <markdown-editor v-model="form.body" />
+          <p v-if="errors.body" class="form__group__description form__group__description--error" v-text="errors.body" />
         </div>
         <!-- TODO: Need to create a tag selector component -->
         <div class="form__group">
           <!-- Tags -->
+          <p v-if="errors.tags" class="form__group__description form__group__description--error" v-text="errors.tags" />
         </div>
         <div class="form__footer text-right">
           <button type="submit" class="button button--primary mb-4" :disabled="form.processing">Submit question</button>
@@ -44,13 +46,13 @@ export default {
       form: this.$inertia.form({
         title: '',
         body: '',
-        tags: [],
+        tags: null,
       }),
     }
   },
   methods: {
     submit() {
-      this.form.post(this.route('login'))
+      this.form.post(this.route('questions.store'))
     },
   },
 }
