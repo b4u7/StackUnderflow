@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="section">
     <p class="mt-12 mb-4 text-gray-800 text-xl font-medium">
       <i class="fas fa-comment-alt"></i> {{ answers.length }}
       {{ $tc('answer | answers', answers.length) }}
@@ -11,7 +11,7 @@
       :answer="answer"
       :permissions="permissions[answer.id]"
       :user-answer-vote="userAnswerVotes[answer.id]"
-    ></answer-section>
+    />
   </section>
 </template>
 
@@ -29,7 +29,7 @@ export default {
     },
     permissions: {
       type: Object,
-      required: true,
+      default: () => ({}),
     },
     userAnswerVotes: {
       type: Object,
@@ -38,5 +38,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>
