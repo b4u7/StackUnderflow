@@ -8,9 +8,9 @@ import EasyMDE from 'easymde'
 export default {
   name: 'MarkdownEditor',
   props: {
-    initialValue: {
+    placeholder: {
       type: String,
-      default: 'Write your **question** here',
+      default: 'Write your **text** here',
     },
     value: {
       type: String,
@@ -22,7 +22,7 @@ export default {
       markdownEditor: null,
       options: {
         autofocus: false,
-        initialValue: this.initialValue,
+        placeholder: this.placeholder,
         indentWithTabs: false,
       },
     }
