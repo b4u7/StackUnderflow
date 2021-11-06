@@ -2,28 +2,26 @@
 
 namespace App\Listeners;
 
-use App\Events\UserAnswered;
+use App\Events\AnswerCreated;
+use App\Notifications\AnsweredNotification;
+use Illuminate\Support\Facades\Notification;
 
 class SendAnsweredNotification
 {
     /**
      * Create the event listener.
-     *
-     * @return void
      */
     public function __construct()
     {
-        //
     }
 
     /**
      * Handle the event.
-     *
-     * @param  UserAnswered  $event
-     * @return void
      */
-    public function handle(UserAnswered $event)
+    public function handle(AnswerCreated $event)
     {
-        // Access the answer using $event->answer...
+        $user = $event->answer->question->user;
+
+        Notification::send($user, new AnsweredNotification($event->answer));
     }
 }

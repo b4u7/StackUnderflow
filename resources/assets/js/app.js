@@ -31,6 +31,7 @@ createInertiaApp({
   setup({ el, app, props }) {
     new Vue({
       i18n,
+      provide: { axios: window.axios, echo: window.Echo },
       render: h => h(app, props),
     }).$mount(el)
   },

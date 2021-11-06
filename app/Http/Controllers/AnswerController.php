@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+use App\Events\AnswerCreated;
 use App\Models\Answer;
 use App\Models\Question;
-use App\Events\UserAnswered;
+use Auth;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -14,6 +14,7 @@ use Inertia\Inertia;
 
 class AnswerController extends Controller
 {
+    // TODO: VALIDATION!!!!
     /**
      * Store a newly created resource in storage.
      *
@@ -26,13 +27,11 @@ class AnswerController extends Controller
     {
         $this->authorize('create', [Answer::class, $question]);
 
-        $answer = Answer::create([
+        Answer::create([
             'user_id' => Auth::id(),
             'question_id' => $question->id,
             'body' => $request->input('body'),
         ]);
-
-        UserAnswered::dispatch($answer);
 
         return redirect()->back();
     }

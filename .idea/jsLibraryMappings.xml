@@ -2,5 +2,6 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="PROJECT" libraries="{@creativebulma/bulma-tagsinput, @creativebulma/bulma-tooltip, @popperjs, @popperjs/core, bulma-tagsinput, easymde, font-awesome, simplemde, tippy.js}" />
+    <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>

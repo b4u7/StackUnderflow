@@ -3,7 +3,7 @@ version: '3'
 services:
   web:
     build:
-      context: ./vendor/laravel/sail/runtimes/8.0
+      context: ./docker/8.0
       dockerfile: Dockerfile
       args:
         WWWGROUP: '${WWWGROUP}'
@@ -33,7 +33,19 @@ services:
     networks:
       - sail
     healthcheck:
-      test: ['CMD', 'pg_isready', '-q', '-d', '${DB_DATABASE}', '-U', '${DB_USERNAME}']
+      test: [ 'CMD', 'pg_isready', '-q', '-d', '${DB_DATABASE}', '-U', '${DB_USERNAME}' ]
+      retries: 3
+      timeout: 5s
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - '${FORWARD_REDIS_PORT:-6379}:6379'
+    volumes:
+      - 'sailredis:/data'
+    networks:
+      - sail
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
       retries: 3
       timeout: 5s
 networks:
@@ -41,4 +53,6 @@ networks:
     driver: bridge
 volumes:
   sailpgsql:
+    driver: local
+  sailredis:
     driver: local

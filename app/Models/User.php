@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Avatar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Avatar;
 
 class User extends Authenticatable
 {
@@ -39,6 +39,11 @@ class User extends Authenticatable
     ];
 
     protected $appends = ['avatar'];
+
+    public function receivesBroadcastNotificationOn()
+    {
+        return 'users.' . $this->id;
+    }
 
     public function questions()
     {

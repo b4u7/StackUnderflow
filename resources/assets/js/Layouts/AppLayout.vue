@@ -1,19 +1,21 @@
 <template>
   <div>
-    <navbar></navbar>
-    <secondary-navbar></secondary-navbar>
+    <navbar />
+    <secondary-navbar />
     <main class="mt-8">
+      <notifications />
       <slot></slot>
     </main>
   </div>
 </template>
 
 <script>
-import Navbar from '../Components/Navbar'
-import SecondaryNavbar from '../Components/SecondaryNavbar'
+import Navbar from '@/Components/Navbar'
+import Notifications from '@/Components/Notifications'
+import SecondaryNavbar from '@/Components/SecondaryNavbar'
 
 export default {
   name: 'AppLayout',
-  components: { SecondaryNavbar, Navbar },
+  components: { SecondaryNavbar, Navbar, Notifications },
 }
 </script>

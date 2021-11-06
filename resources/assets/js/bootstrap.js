@@ -17,37 +17,13 @@ axios.defaults.withCredentials = true
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
+import Echo from 'laravel-echo'
 
-// window.Pusher = require('pusher-js')
-//
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     wsHost: process.env.MIX_PUSHER_HOST,
-//     wsPort: 6001,
-//     forceTLS: false,
-//     disableStats: true,
-//     scheme: process.env.MIX_PUSHER_SCHEME,
-// })
+window.Pusher = require('pusher-js')
 
-// TODO: Remember
-// import Echo from 'laravel-echo'
-
-// Notification stuff
-// window.Pusher = require('pusher-js')
-//
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     forceTLS: true,
-// })
-//
-// window.Echo.channel(`questions.answers`).listen('UserAnswered', e => {
-//     console.log(e)
-// })
-// window.Echo.channel(`questions.answers`).listen('UserAnswered', e => {
-//     console.log(e)
-// })
+window.Echo = new Echo({
+  broadcaster: 'pusher',
+  key: process.env.MIX_PUSHER_APP_KEY,
+  cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+  forceTLS: true,
+})

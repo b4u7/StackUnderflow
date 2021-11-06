@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\AnswerCreated;
 use App\Scopes\AdminScope;
 use App\Traits\ResolvesWithTrashed;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,11 +13,14 @@ class Answer extends Model
 {
     use SoftDeletes, ResolvesWithTrashed, HasFactory;
 
+    protected $dispatchesEvents = ['created' => AnswerCreated::class];
+
     protected $fillable = [
         'user_id', 'question_id', 'body'
     ];
 
-    public static function boot() {
+    public static function boot()
+    {
         static::addGlobalScope(new AdminScope);
         parent::boot();
     }
