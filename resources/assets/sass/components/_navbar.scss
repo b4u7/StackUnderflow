@@ -28,7 +28,7 @@
   }
 
   &__dropdown {
-    @apply relative inline-block text-left z-10;
+    @apply relative pt-12 inline-block text-left z-10;
 
     &__container {
       @apply origin-top-right overflow-hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none;
@@ -66,13 +66,7 @@
   }
 
   &__user {
-    &__menu {
-      @apply bg-gray-200 flex text-sm rounded-full;
-      @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-600 focus:ring-white;
-    }
-
-    &__avatar {
-      @apply h-auto w-12 rounded-full;
-    }
+    @apply border-2 border-white h-auto w-12 rounded-full;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-600 focus:ring-white;
   }
 }

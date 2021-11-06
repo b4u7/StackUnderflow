@@ -5,35 +5,30 @@
         <a class="navbar__item" :href="route('home')"> StackUnderflow </a>
       </div>
       <div class="navbar__search">
-        <form method="GET" :action="route('search')">
+        <form method="GET" @submit.prevent="search">
           <input class="navbar__search__control" type="text" name="search" placeholder="Search" />
         </form>
       </div>
       <!-- TODO: Refactor -->
       <div class="navbar__end">
-        <div
-          v-if="user"
-          class="navbar__item navbar__dropdown"
-          aria-expanded="false"
-          aria-haspopup="true"
-          @mouseover="showDropdownMenu"
-          @mouseleave="hideDropdownMenu"
-        >
-          <div>
-            <button class="navbar__user__menu">
-              <img :src="user.avatar" class="navbar__user__avatar" alt="Your user avatar" />
+        <template v-if="user">
+          <div class="navbar__item" @click="toggleDropdown">
+            <button type="button">
+              <img :src="user.avatar" class="navbar__user" alt="Your user avatar" />
             </button>
           </div>
           <transition name="navbar__dropdown__transition">
-            <div v-if="dropdownMenuVisible" class="navbar__dropdown__container">
-              <a :href="route('user.show', user)" class="navbar__dropdown__item"> Profile </a>
-              <a :href="route('user.edit', user)" class="navbar__dropdown__item"> Edit profile </a>
-              <form class="navbar__dropdown__item" @submit.prevent="logout">
-                <button type="submit">Logout</button>
-              </form>
+            <div class="navbar__dropdown">
+              <div v-if="dropdownMenuVisible" class="navbar__dropdown__container">
+                <a :href="route('user.show', user)" class="navbar__dropdown__item"> Profile </a>
+                <a :href="route('user.edit', user)" class="navbar__dropdown__item"> Edit profile </a>
+                <form class="navbar__dropdown__item" @submit.prevent="logout">
+                  <button type="submit">Logout</button>
+                </form>
+              </div>
             </div>
           </transition>
-        </div>
+        </template>
         <template v-else>
           <a class="navbar__item" :href="route('login')"> Login </a>
           <a class="navbar__item" :href="route('register')"> Register </a>
@@ -57,14 +52,14 @@ export default {
     },
   },
   methods: {
-    showDropdownMenu() {
-      this.dropdownMenuVisible = true
-    },
-    hideDropdownMenu() {
-      this.dropdownMenuVisible = false
+    toggleDropdown() {
+      this.dropdownMenuVisible = !this.dropdownMenuVisible
     },
     logout() {
       this.$inertia.post(route('logout'))
+    },
+    search() {
+      this.$inertia.get(route('search'))
     },
   },
 }
