@@ -28,26 +28,6 @@ docker run --rm \
     composer install --ignore-platform-reqs
 ```
 
-We should increase our max_map_count right away so Elasticsearch can run.
-
-### On native Linux
-
-From the root user, run:
-
-```
-sudo sysctl -w vm.max_map_count=262144
-```
-
-### On Windows with WSL2
-
-The best way to make this persist over restarts right now is to create a bat file in the `shell:startup` folder, call it
-something like `fix-sysctl.bat` and have it contain the following:
-
-```bat
-@echo off
-wsl -d docker-desktop sysctl -w vm.max_map_count=262144
-```
-
 ### Starting sail
 
 ```
@@ -67,12 +47,10 @@ alias sail='bash vendor/bin/sail'
 ## Dependencies
 
 Dependencies are automatically handled by Composer, a list of dependencies can be found in `composer.json`. To install
-the current dependencies for a project run
-`sail composer install`.
+the current dependencies for a project run `sail composer install`.
 
-If you wish to update the version of specific dependencies, make your change to
-`composer.json`, run `composer update` and then commit your changes to `composer.json`
-and `composer.lock`.
+If you wish to update the version of specific dependencies, make your change to `composer.json`, run `composer update`
+and then commit your changes to `composer.json` and `composer.lock`.
 
 ## Database Seeding
 
@@ -81,23 +59,20 @@ You can seed a development database by simply running: `sail artisan db:seed`.
 ## Database Migrations
 
 Database migrations are stored in `database/migrations`, this is a version control for the schema. You can generate new
-migrations using the following command:
-`sail artisan make:migration create_users_table`
+migrations using the following command: `sail artisan make:migration create_users_table`.
 
 ## Asset Management
 
-We use Laravel Mix for asset management, you can rtfm here: https://laravel.com/docs/7.x
+We use Laravel Mix for asset management, you can rtfm here: https://laravel.com/docs/8.x
 
 ## Using an IDE
 
-If you wish to use an IDE, [Jetbrains PHPStorm](https://www.jetbrains.com/phpstorm)
-is the supported IDE for StackUnderflow. It is strongly recommended to use the
-[Laravel Plugin](https://plugins.jetbrains.com/plugin/7532-laravel-plugin).
+If you wish to use an IDE, [Jetbrains PHPStorm](https://www.jetbrains.com/phpstorm) is the supported IDE for
+StackUnderflow. It is strongly recommended to use
+the [Laravel Plugin](https://plugins.jetbrains.com/plugin/7532-laravel-plugin).
 
-The `_ide_helper.php` file is auto generated using the command `artisan ide-helper:generate`
-
-- this provides the IDE with vastly improved PHPDocs of the Laravel framework. Select `no` when asked to generate model
-  docblocks.
+The `_ide_helper.php` file is auto generated using the command `artisan ide-helper:generate` - this provides the IDE
+with vastly improved PHPDocs of the Laravel framework. Select `no` when asked to generate model docblocks.
 
 ## Import an existing database in Sail
 
