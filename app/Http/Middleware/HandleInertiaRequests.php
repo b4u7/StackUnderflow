@@ -36,23 +36,26 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+        $user = $request->user();
+
         return array_merge(parent::share($request), [
-            'auth' => function () use ($request) {
+            'auth' => function () use ($request, $user) {
                 return [
-                    'user' => $request->user() ? [
-                        'id' => $request->user()->id,
-                        'avatar' => $request->user()->avatar,
-                        'name' => $request->user()->user,
-                        'email' => $request->user()->email,
-                        'admin' => $request->user()->admin,
-                        'status' => $request->user()->status,
-                        'biography' => $request->user()->biography,
-                        'location' => $request->user()->location,
-                        'facebook' => $request->user()->facebook,
-                        'twitter' => $request->user()->twitter,
-                        'github' => $request->user()->github,
-                        'gitlab' => $request->user()->gitlab,
-                        'instagram' => $request->user()->instagram
+                    'user' => $user ? [
+                        'id' => $user->id,
+                        'avatar' => $user->avatar,
+                        'name' => $user->user,
+                        'email' => $user->email,
+                        'admin' => $user->admin,
+                        'status' => $user->status,
+                        'biography' => $user->biography,
+                        'location' => $user->location,
+                        'facebook' => $user->facebook,
+                        'twitter' => $user->twitter,
+                        'github' => $user->github,
+                        'gitlab' => $user->gitlab,
+                        'instagram' => $user->instagram,
+                        'notifications' => $user->unreadNotifications,
                     ] : null
                 ];
             },
