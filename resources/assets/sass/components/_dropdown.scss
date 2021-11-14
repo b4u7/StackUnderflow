@@ -1,0 +1,47 @@
+.dropdown {
+  @apply absolute origin-top-right right-4 top-0 top-14 min-w-[200px];
+  @apply bg-white text-sm shadow-lg rounded-md block z-10;
+
+  &__container {
+    @apply p-2;
+  }
+
+  &__divider {
+    @apply mx-2 my-3;
+  }
+
+  &__heading {
+    @apply uppercase my-1.5 px-2 font-semibold text-blueGray-600;
+  }
+
+  &__item {
+    @apply flex flex-grow py-1.5 px-2 text-blueGray-900 rounded-md;
+    @apply hover:bg-gray-200;
+  }
+
+  &-transition {
+    &-enter-active {
+      @apply transition ease-out duration-100;
+    }
+
+    &-enter-from {
+      @apply transform opacity-0 scale-95;
+    }
+
+    &-enter-to {
+      @apply transform opacity-100 scale-100;
+    }
+
+    &-leave-active {
+      @apply transition ease-in duration-75;
+    }
+
+    &-leave-from {
+      @apply transform opacity-100 scale-100;
+    }
+
+    &-leave-to {
+      @apply transform opacity-0 scale-95;
+    }
+  }
+}
