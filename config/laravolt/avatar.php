@@ -29,7 +29,7 @@ return [
     'ascii' => false,
 
     // Image shape: circle or square
-    'shape' => 'circle',
+    'shape' => 'square',
 
     // Image width, in pixel
     'width' => 512,
@@ -50,7 +50,7 @@ return [
     // If contains more than one fonts, randomly selected based on name supplied
     // 'fonts' => [__DIR__ . '/../fonts/OpenSans-Bold.ttf', __DIR__ . '/../fonts/rockwell.ttf'],
     // 'fonts' => [ 'https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap' ],
-    'fonts' => [ 'https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap' ],
+    'fonts' => ['https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap'],
 
     // List of foreground colors to be used, randomly selected based on name supplied
     'foregrounds' => [
