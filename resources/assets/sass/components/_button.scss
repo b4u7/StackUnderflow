@@ -57,6 +57,10 @@ $button-colors: (
     @apply rounded-full;
   }
 
+  &--icon {
+    @apply py-1 px-2;
+  }
+
   &--small {
     @apply text-sm;
   }
