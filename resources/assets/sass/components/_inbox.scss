@@ -1,0 +1,32 @@
+.inbox {
+  @extend .dropdown;
+
+  @apply min-w-[400px] text-blueGray-800 overflow-hidden;
+
+  &__header {
+    @apply flex flex-row items-center min-h-[3rem] py-1 px-2;
+    @apply overflow-hidden shadow-sm;
+
+    &__left {
+      @apply w-16;
+    }
+
+    &__center {
+      @apply inline-flex flex-grow justify-center;
+    }
+
+    &__right {
+      @apply w-16;
+    }
+  }
+
+  $max-height: "calc(100vh-12rem)";
+
+  &__content {
+    @apply flex flex-grow flex-col h-[200px] p-4 max-h-[#{$max-height}];
+  }
+
+  &__footer {
+
+  }
+}
