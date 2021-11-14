@@ -1,30 +1,46 @@
 .navbar {
-  @apply bg-primary-600 text-white z-0;
+  @apply z-0 h-16 flex items-center justify-between;
 
-  .container {
-    @apply relative flex items-center justify-between h-16;
+  &--primary {
+    @apply bg-primary-600;
   }
 
   &__start {
-    @apply flex justify-center sm:items-stretch sm:justify-start sm:mr-6;
+    @apply h-full flex flex-shrink-2 flex-grow justify-start;
+    //@apply flex justify-center flex-shrink-2;
+    //@apply sm:items-stretch sm:justify-start sm:mr-6;
+  }
+
+  &__center {
+    @apply h-full flex flex-shrink flex-grow-2 justify-center;
   }
 
   &__end {
-    @apply absolute inset-y-0 right-0 flex pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0;
+    @apply h-full flex flex-shrink-2 flex-grow justify-end;
+    //@apply absolute inset-y-0 right-0 pr-2;
+    //@apply sm:static sm:inset-auto sm:ml-6 sm:pr-0;
   }
 
   &__item {
-    @apply flex space-x-4 px-3 py-2;
+    @apply relative h-full inline-flex items-center px-4 text-white font-medium;
+  }
+
+  &__icon {
+    @apply text-2xl;
+  }
+
+  &__logo {
+    @apply text-2xl font-bold;
   }
 
   &__search {
-    @apply flex-grow w-full hidden sm:inline;
-
-    &__control {
-      //@extend .form__group__control;
-
-      @apply block w-full rounded-md text-gray-700 bg-white placeholder-gray-400 border border-transparent;
-    }
+    @apply relative hidden sm:inline-flex sm:flex-shrink sm:flex-grow w-80 max-w-2xl;
+    @apply transition duration-200;
+    @apply bg-primary-500 text-sm placeholder-primary-300 text-primary-50 font-medium;
+    @apply rounded-md border-2 border-transparent;
+    @apply hover:border-primary-400;
+    @apply focus:outline-none focus:bg-white focus:border-blueGray-200 focus:placeholder-blueGray-400 focus:text-blueGray-600 focus:font-medium;
+    @apply active:outline-none active:bg-white active:border-blueGray-200 active:placeholder-blueGray-400 active:font-medium;
   }
 
   &__dropdown {
@@ -37,36 +53,26 @@
     &__item {
       @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100;
     }
-
-    &__transition {
-      &-enter-active {
-        @apply transition ease-out duration-100;
-      }
-
-      &-enter-from {
-        @apply transform opacity-0 scale-95;
-      }
-
-      &-enter-to {
-        @apply transform opacity-100 scale-100;
-      }
-
-      &-leave-active {
-        @apply transition ease-in duration-75;
-      }
-
-      &-leave-from {
-        @apply transform opacity-100 scale-100;
-      }
-
-      &-leave-to {
-        @apply transform opacity-0 scale-95;
-      }
-    }
   }
 
   &__user {
-    @apply border-2 border-white h-auto w-12 rounded-full;
+    @apply border-2 border-white h-auto w-9 rounded-full;
     @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-600 focus:ring-white;
   }
 }
+
+.inbox {
+  &__dropdown {
+    @extend .navbar__dropdown;
+
+    &__container {
+      @extend .navbar__dropdown__container;
+    }
+
+    &__item {
+      @extend .navbar__dropdown__item;
+    }
+  }
+}
+
+
