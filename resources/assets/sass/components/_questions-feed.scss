@@ -18,7 +18,10 @@
       }
 
       &__name {
-        @apply font-medium text-gray-900 hover:text-primary-700;
+        @apply font-medium text-gray-900;
+        @apply hover:underline;
+        @apply focus:underline;
+        @apply active:underline;
       }
     }
 
