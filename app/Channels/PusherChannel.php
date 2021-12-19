@@ -22,6 +22,7 @@ class PusherChannel
         BroadcastableNoticationEvent::dispatch(
             $notifiable,
             $notificationData['title'],
+            $notificationData['author'],
             $notificationData['body'],
             $notificationData['url']
         );
