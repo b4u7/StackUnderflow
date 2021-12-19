@@ -14,6 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class QuestionController extends Controller
 {
@@ -28,10 +29,9 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Inertia\Response
      * @throws AuthorizationException
      */
-    public function index()
+    public function index(): Response
     {
         $this->authorize('viewAny', Question::class);
 
@@ -47,10 +47,9 @@ class QuestionController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Inertia\Response
      * @throws AuthorizationException
      */
-    public function create()
+    public function create(): Response
     {
         $this->authorize('create', Question::class);
 
@@ -60,11 +59,9 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->authorize('create', Question::class);
 
@@ -90,11 +87,9 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $questionId
-     * @return \Inertia\Response
      * @throws AuthorizationException
      */
-    public function show(int $questionId)
+    public function show(int $questionId): Response
     {
         $question = Question::with([
             'answers' => fn($query) => $query->withSum('votes', 'vote')
@@ -125,11 +120,13 @@ class QuestionController extends Controller
             ->keyBy('votable_id')
             ->toArray();
 
-        $bookmark = optional(Auth::user(), fn($u) => $question->bookmarks()->where('user_id', '=', $u->id))->first();
+        $userAnswered = transform(Auth::user(), fn($u) => $question->answers()->where('user_id', '=', $u->id)->exists(), false);
+
+        $bookmark = optional(Auth::user(), fn($u) => $question->bookmarks()->where('user_id', '=', $u->id)->first());
 
         $permissions = [
             'question' => [
-                'canEdit' => Gate::check('edit', $question),
+                'canEdit' => Gate::check('update', $question),
                 'canDelete' => Gate::check('delete', $question),
                 'canVote' => Gate::check('vote', $question),
                 'canRestore' => Gate::check('restore', $question),
@@ -140,7 +137,7 @@ class QuestionController extends Controller
         ];
 
         foreach ($question->answers as $answer) {
-            $permissions['answers'][$answer->id]['canEdit'] = Gate::check('edit', $answer);
+            $permissions['answers'][$answer->id]['canEdit'] = Gate::check('update', $answer);
             $permissions['answers'][$answer->id]['canDelete'] = Gate::check('delete', $answer);
             $permissions['answers'][$answer->id]['canVote'] = Gate::check('vote', $answer);
             $permissions['answers'][$answer->id]['canRestore'] = Gate::check('restore', $question);
@@ -152,6 +149,7 @@ class QuestionController extends Controller
             'question',
             'isTrashed',
             'bookmark',
+            'userAnswered',
             'userQuestionVote',
             'userAnswerVotes',
             'permissions'
@@ -162,7 +160,7 @@ class QuestionController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Question $question
-     * @return \Inertia\Response
+     * @return Response
      * @throws AuthorizationException
      */
     public function edit(Question $question)
