@@ -10,12 +10,16 @@
       <div class="answer-card__menu">
         <button type="button"><i class="fas fa-link"></i> Share</button>
         <form v-if="permissions.canEdit" @submit.prevent="editAnswer">
-          <button v-if="permissions.canEdit" @submit.prevent="editAnswer" type="submit">
-            <i class="fas fa-edit"></i>Edit
+          <button type="submit">
+            <i class="fas fa-edit"></i>
+            Edit
           </button>
         </form>
         <form v-if="permissions.canDelete && !isTrashed" @submit.prevent="deleteAnswer">
-          <button type="submit" class="button button--danger button--invert-text button--small font-weight-normal">
+          <button
+            type="submit"
+            class="text-red-600 hover:text-red-700 font-semibold active:text-red-500 focus:text-red-500"
+          >
             <i class="fas fa-trash-alt"></i>
             Delete
           </button>
