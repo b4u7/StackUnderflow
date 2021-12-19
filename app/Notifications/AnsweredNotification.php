@@ -7,6 +7,7 @@ use App\Models\Answer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use JetBrains\PhpStorm\ArrayShape;
 
 class AnsweredNotification extends Notification
 {
@@ -43,21 +44,23 @@ class AnsweredNotification extends Notification
     /**
      * Get the array representation of the notification.
      */
-    public function toArray(mixed $notifiable): array
+    #[ArrayShape(['title' => "mixed|string", 'author' => "array", 'body' => "mixed|string", 'url' => "string"])]
+    public function toArray(): array
     {
         return [
             'title' => $this->answer->question->title,
-            'body' => $this->answer->body,
-            'url' => route('questions.show', $this->answer->question->id)
-        ];
-    }
-
-    public function toPusher(mixed $notifiable): array
-    {
-        return [
-            'title' => $this->answer->question->title,
+            'author' => [
+                'name' => $this->answer->user->name,
+                'url' => route('user.show', $this->answer->user)
+            ],
             'body' => $this->answer->body,
             'url' => route('questions.show', $this->answer->question)
         ];
+    }
+
+    #[ArrayShape(['title' => "mixed|string", 'author' => "array", 'body' => "\mixed|string", 'url' => "string"])]
+    public function toPusher(): array
+    {
+        return $this->toArray();
     }
 }

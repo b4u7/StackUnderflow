@@ -17,7 +17,7 @@ class BroadcastableNoticationEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(public User $user, public string $title, public string $body, public string $url)
+    public function __construct(public User $user, public string $title, public array $author, public string $body, public string $url)
     {
     }
 
@@ -45,6 +45,7 @@ class BroadcastableNoticationEvent implements ShouldBroadcast
         return [
             'userId' => $this->user->id,
             'title' => $this->title,
+            'author' => $this->author,
             'body' => $this->body,
             'url' => $this->url
         ];
