@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\AnswerCreated;
 use App\Models\Answer;
 use App\Models\Question;
 use Auth;
@@ -18,9 +17,6 @@ class AnswerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @param Question $question
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
     public function store(Request $request, Question $question): RedirectResponse
@@ -39,13 +35,9 @@ class AnswerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Request $request
-     * @param Question $question
-     * @param Answer $answer
-     * @return \Inertia\Response
      * @throws AuthorizationException
      */
-    public function edit(Request $request, Question $question, Answer $answer)
+    public function edit(Request $request, Question $question, Answer $answer): \Inertia\Response
     {
         $this->authorize('update', $answer);
 
@@ -55,13 +47,9 @@ class AnswerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Question $question
-     * @param Answer $answer
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(Request $request, Question $question, Answer $answer)
+    public function update(Request $request, Question $question, Answer $answer): RedirectResponse
     {
         $this->authorize('update', $answer);
 
@@ -73,13 +61,10 @@ class AnswerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Question $question
-     * @param Answer $answer
-     * @return RedirectResponse
      * @throws AuthorizationException
      * @throws Exception
      */
-    public function destroy(Question $question, Answer $answer)
+    public function destroy(Question $question, Answer $answer): RedirectResponse
     {
         $this->authorize('delete', $answer);
 
@@ -91,12 +76,9 @@ class AnswerController extends Controller
     /**
      * Restore the specified resource from storage.
      *
-     * @param Question $question
-     * @param Answer $answer
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function restore(Question $question, Answer $answer)
+    public function restore(Question $question, Answer $answer): RedirectResponse
     {
         $this->authorize('restore', $answer);
 
@@ -108,12 +90,9 @@ class AnswerController extends Controller
     /**
      * Upvotes the current answer.
      *
-     * @param Question $question
-     * @param Answer $answer
-     * @return RedirectResponse
      * @throws Exception
      */
-    public function upvote(Question $question, Answer $answer)
+    public function upvote(Question $question, Answer $answer): RedirectResponse
     {
         $this->authorize('vote', $answer);
 
@@ -146,12 +125,9 @@ class AnswerController extends Controller
     /**
      * Downvotes the current answer.
      *
-     * @param Question $question
-     * @param Answer $answer
-     * @return RedirectResponse
      * @throws Exception
      */
-    public function downvote(Question $question, Answer $answer)
+    public function downvote(Question $question, Answer $answer): RedirectResponse
     {
         $this->authorize('vote', $answer);
 
@@ -184,12 +160,9 @@ class AnswerController extends Controller
     /**
      * Sets the current answer as a solution.
      *
-     * @param Question $question
-     * @param Answer $answer
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function solution(Question $question, Answer $answer)
+    public function solution(Question $question, Answer $answer): RedirectResponse
     {
         $this->authorize('solution', $answer);
 
