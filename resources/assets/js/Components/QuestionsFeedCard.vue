@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       classes: {
-        success: 'text-green-600',
+        success: 'text-emerald-600',
         danger: 'text-red-600',
       },
     }

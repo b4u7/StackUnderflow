@@ -34,10 +34,10 @@
       </template>
       <template v-else>
         <li class="navbar__item">
-          <a :href="route('login')"> Login </a>
+          <a :href="route('login')" class="button button--primary-lighter button--small"> Login </a>
         </li>
         <li class="navbar__item">
-          <a :href="route('register')"> Register </a>
+          <a :href="route('register')" class="button button--light button--small"> Register </a>
         </li>
       </template>
     </ul>
@@ -45,31 +45,31 @@
 </template>
 
 <script>
-import Inbox from '@/Components/Navbar/Inbox'
+import Inbox from "@/Components/Navbar/Inbox";
 
 export default {
-  name: 'Navbar',
+  name: "Navbar",
   components: { Inbox },
   data() {
     return {
-      dropdownMenuVisible: false,
-    }
+      dropdownMenuVisible: false
+    };
   },
   computed: {
     user() {
-      return this.$page.props.auth ? this.$page.props.auth.user : null
-    },
+      return this.$page.props.auth.user ?? null;
+    }
   },
   methods: {
     toggleDropdown() {
-      this.dropdownMenuVisible = !this.dropdownMenuVisible
+      this.dropdownMenuVisible = !this.dropdownMenuVisible;
     },
     logout() {
-      this.$inertia.post(route('logout'))
+      this.$inertia.post(route("logout"));
     },
     search() {
-      this.$inertia.get(route('search'))
-    },
-  },
-}
+      this.$inertia.get(route("search"));
+    }
+  }
+};
 </script>

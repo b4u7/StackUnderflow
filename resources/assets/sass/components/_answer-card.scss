@@ -14,12 +14,12 @@
   }
 
   &__body {
-    @apply text-gray-600;
+    @apply text-zinc-600;
   }
 
   &__footer {
     @apply pb-3 px-4;
-    @apply flex flex-row items-center text-gray-500 text-sm;
+    @apply flex flex-row items-center text-zinc-500 text-sm;
   }
 
   &__menu {
@@ -38,7 +38,7 @@
     }
 
     &__name {
-      @apply text-gray-900 font-medium;
+      @apply text-zinc-900 font-medium;
       @apply hover:text-primary-700 hover:underline;
       @apply focus:text-primary-600 focus:underline;
       @apply active:text-primary-600 active:underline;

@@ -33,7 +33,7 @@ services:
     networks:
       - sail
     healthcheck:
-      test: [ 'CMD', 'pg_isready', '-q', '-d', '${DB_DATABASE}', '-U', '${DB_USERNAME}' ]
+      test: ['CMD', 'pg_isready', '-q', '-d', '${DB_DATABASE}', '-U', '${DB_USERNAME}']
       retries: 3
       timeout: 5s
   redis:
@@ -45,7 +45,7 @@ services:
     networks:
       - sail
     healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
+      test: ['CMD', 'redis-cli', 'ping']
       retries: 3
       timeout: 5s
 networks:

@@ -7,11 +7,11 @@
       <div class="question-card__stats">
         <p>
           {{ lastActionType }}
-          <span class="text-gray-700 font-medium">{{ lastActionRelativeTime }}</span>
+          <span class="text-zinc-700 font-medium">{{ lastActionRelativeTime }}</span>
         </p>
         <p>
           viewed
-          <span class="text-gray-700 font-medium"> {{ question.views_count }} times </span>
+          <span class="text-zinc-700 font-medium"> {{ question.views_count }} times </span>
         </p>
       </div>
     </div>

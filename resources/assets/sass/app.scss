@@ -4,6 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'utilities/all';
+
 @import 'base/generic';
 @import 'components/all';
-@import 'utilities/all';

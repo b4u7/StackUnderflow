@@ -11,12 +11,12 @@
   }
 
   &__heading {
-    @apply uppercase my-1.5 px-2 font-semibold text-blueGray-600;
+    @apply uppercase my-1.5 px-2 font-semibold text-slate-600;
   }
 
   &__item {
-    @apply flex flex-grow py-1.5 px-2 text-blueGray-900 rounded-md;
-    @apply hover:bg-gray-200;
+    @apply flex flex-grow py-1.5 px-2 text-slate-900 rounded-md;
+    @apply hover:bg-zinc-200;
   }
 
   &-transition {

@@ -1,6 +1,6 @@
 <template>
   <section class="section">
-    <p class="mt-12 mb-4 text-gray-800 text-xl font-medium">
+    <p class="mt-12 mb-4 text-zinc-800 text-xl font-medium">
       <i class="fas fa-comment-alt"></i> {{ answers.length }}
       {{ $tc('answer | answers', answers.length) }}
     </p>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import AnswerCard from './AnswerCard'
+import AnswerCard from './Answer'
 import AnswerSection from './AnswerSection'
 
 export default {

@@ -19,8 +19,7 @@
           :user-answer-votes="userAnswerVotes"
           :permissions="permissions.answers"
         />
-        <!-- TODO: Don't show this if the user has already answered the question -->
-        <form @submit.prevent="submitAnswer">
+        <form v-if="canAnswer" @submit.prevent="submitAnswer">
           <div class="form__group">
             <markdown-editor v-model="form.body" />
             <p
@@ -42,7 +41,7 @@
 
 <script>
 import QuestionSection from '@/Components/Questions/QuestionSection'
-import AnswersSection from '@/Components/Questions/AnswersSection'
+import AnswersSection from '@/Components/Questions/QuestionAnswers'
 import MarkdownEditor from '@/Components/MarkdownEditor'
 
 export default {
@@ -61,12 +60,16 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    bookmark: {
+      type: Object,
+    },
+    userAnswered: {
+      type: Boolean,
+      required: true,
+    },
     userAnswerVotes: {
       type: Object,
       required: true,
-    },
-    bookmark: {
-      type: Object,
     },
     permissions: {
       type: Object,
@@ -83,6 +86,14 @@ export default {
         body: '',
       }),
     }
+  },
+  computed: {
+    user() {
+      return this.$page.props.auth.user ?? null
+    },
+    canAnswer() {
+      return this.user && !this.userAnswered
+    },
   },
   methods: {
     submitAnswer() {

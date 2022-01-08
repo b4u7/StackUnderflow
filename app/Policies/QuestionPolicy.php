@@ -101,7 +101,7 @@ class QuestionPolicy
      */
     public function vote(User $user, Question $question)
     {
-        return true;
+        return $user->id !== $question->user_id;
     }
 
     /**

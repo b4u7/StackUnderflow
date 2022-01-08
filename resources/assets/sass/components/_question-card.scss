@@ -14,11 +14,11 @@
   }
 
   &__title {
-    @apply font-semibold text-gray-800 text-2xl;
+    @apply font-semibold text-zinc-800 text-2xl;
   }
 
   &__stats {
-    @apply flex flex-row text-gray-500 text-sm;
+    @apply flex flex-row text-zinc-500 text-sm;
   }
 
   &__content {
@@ -26,7 +26,7 @@
   }
 
   &__body {
-    @apply text-gray-600 py-2;
+    @apply text-zinc-600 py-2;
   }
 
   &__tags {
@@ -42,7 +42,7 @@
   &__footer {
     @extend .card__footer;
 
-    @apply items-center text-gray-500 text-sm;
+    @apply items-center text-zinc-500 text-sm;
   }
 
   &__menu {
@@ -61,7 +61,7 @@
     }
 
     &__name {
-      @apply text-gray-900 font-medium;
+      @apply text-zinc-900 font-medium;
       @apply hover:text-primary-700 hover:underline;
       @apply focus:text-primary-600 focus:underline;
       @apply active:text-primary-600 active:underline;

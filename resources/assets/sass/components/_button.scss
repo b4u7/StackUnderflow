@@ -1,15 +1,47 @@
 $button-colors: (
+  // Name of the class
   primary: (
-    'primary',
-    'white',
+    // Background Color
+    // Should I set the shade separately and just have a default value for it?
+    backgroundColor: 'primary-600',
+    // Text Color
+    textColor: white,
+    hover: (
+      backgroundColor: 'primary-700',
+      textColor: 'white'
+    )
+  ),
+  primary-lighter: (
+    backgroundColor: 'primary-500',
+    textColor: white,
+    hover: (
+      backgroundColor: 'primary-700',
+      textColor: 'white'
+    )
+  ),
+  light: (
+    backgroundColor: 'primary-50',
+    textColor: 'slate-700',
+    hover: (
+      backgroundColor: 'slate-300',
+      textColor: 'slate-900'
+    )
   ),
   success: (
-    'green',
-    'white',
+    backgroundColor: 'emerald-600',
+    textColor: 'white',
+    hover: (
+      backgroundColor: 'emerald-700',
+      textColor: 'white'
+    ),
   ),
   danger: (
-    'red',
-    'white',
+    backgroundColor: 'red-600',
+    textColor: 'white',
+    hover: (
+      backgroundColor: 'red-700',
+      textColor: 'white'
+    ),
   ),
 );
 
@@ -17,35 +49,42 @@ $button-colors: (
   @apply py-2 px-4 inline-block rounded-md font-semibold bg-white;
   @apply transition duration-200;
   @apply border border-transparent;
-  @apply hover:bg-gray-100;
-  @apply active:outline-none active:ring-2 active:ring-gray-400 active:ring-opacity-75 active:ring active:ring-offset-2;
-  @apply focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 focus:ring-offset-2;
+  @apply hover:bg-zinc-100;
+  @apply active:outline-none active:ring-2 active:ring-zinc-400 active:ring-opacity-75 active:ring active:ring-offset-2;
+  @apply focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-opacity-75 focus:ring-offset-2;
 
   $parent: #{&};
-  @each $name, $pair in $button-colors {
-    $color: nth($pair, 1);
-    $color-inverted: nth($pair, 2);
 
-    &--#{$name} {
-      @apply bg-#{$color}-600 text-#{$color-inverted};
-      @apply hover:bg-#{$color}-700 hover:text-#{$color-inverted};
-      @apply active:ring-#{$color}-300;
-      @apply focus:ring-#{$color}-300;
+  @each $color, $properties in $button-colors {
+    $bgColor: map-deep-get($button-colors, $color, 'backgroundColor');
+    $textColor: map-deep-get($button-colors, $color, 'textColor');
+
+    $hoverBgColor: map-deep-get($button-colors, $color, 'hover', 'backgroundColor');
+    $hoverTextColor: map-deep-get($button-colors, $color, 'hover', 'textColor');
+
+    $invertedBgColor: map-deep-get($button-colors, $color, 'textColor');
+    $invertedTextColor: map-deep-get($button-colors, $color, 'backgroundColor');
+
+    &--#{$color} {
+      @apply bg-#{$bgColor} text-#{$textColor};
+      @apply hover:bg-#{$hoverBgColor} hover:text-#{$hoverTextColor};
+      @apply active:ring-#{$hoverBgColor};
+      @apply focus:ring-#{$hoverBgColor};
 
       &#{$parent}--outline {
-        @apply bg-transparent border-#{$color}-600 text-#{$color}-600;
-        @apply hover:bg-#{$color}-600 hover:text-#{$color-inverted};
+        @apply bg-transparent border-#{$bgColor} text-#{$textColor};
+        @apply hover:bg-#{$bgColor} hover:text-#{$textColor};
       }
 
       &#{$parent}--invert {
-        @apply bg-#{$color-inverted} text-#{$color}-600;
-        @apply hover:bg-#{$color-inverted} hover:text-#{$color}-600;
+        @apply bg-#{$invertedBgColor} text-#{$invertedTextColor};
+        @apply hover:bg-#{$invertedBgColor} hover:text-#{$invertedTextColor};
       }
 
-      &#{$parent}--invert-text {
-        @apply bg-transparent text-#{$color}-600;
-        @apply hover:bg-transparent hover:text-#{$color}-700;
-      }
+      //&#{$parent}--invert-text {
+      //  @apply bg-transparent text-#{$color}-600;
+      //  @apply hover:bg-transparent hover:text-#{$color}-700;
+      //}
     }
   }
 

@@ -6,36 +6,15 @@
         This question was deleted, only admins can see it.
       </p>
     </div>
-
-    <!-- TODO: Clean up class bindings -->
     <div class="flex flex-row">
       <div class="question-controls">
-        <form @submit.prevent="addVote">
-          <button
-            :class="userQuestionVote && userQuestionVote.vote === 1 ? 'question-controls__vote-up--active' : ''"
-            :disabled="!permissions.canVote"
-            class="question-controls__vote-up"
-            type="submit"
-          >
-            <i class="fas fa-angle-up"></i>
-          </button>
-        </form>
-        <p class="question-controls__vote-count">
-          <span v-if="question.votes_sum_vote" :class="voteSumColour">
-            {{ question.votes_sum_vote }}
-          </span>
-          <span v-else> 0 </span>
-        </p>
-        <form @submit.prevent="removeVote">
-          <button
-            :class="userQuestionVote && userQuestionVote.vote === -1 ? 'question-controls__vote-down--active' : ''"
-            :disabled="!permissions.canVote"
-            class="question-controls__vote-down"
-            type="submit"
-          >
-            <i class="fas fa-angle-down"></i>
-          </button>
-        </form>
+        <votes
+          :total-votes="question.votes_sum_vote || 0"
+          :can-vote="permissions.canVote"
+          :user-vote="userVote"
+          @upvoted="addVote"
+          @downvoted="removeVote"
+        />
         <form v-if="bookmark" @submit.prevent="removeBookmark">
           <button
             class="question-controls__bookmark question-controls__bookmark--active"
@@ -51,71 +30,74 @@
           </button>
         </form>
       </div>
-
       <question-card :question="question" :isTrashed="isTrashed" :permissions="permissions"></question-card>
     </div>
   </section>
 </template>
 
 <script>
-import QuestionCard from '@/Components/Questions/QuestionCard'
+import QuestionCard from "@/Components/Questions/Question";
+import Votes from "@/Components/Questions/Votes";
 
 export default {
-  name: 'QuestionSection',
-  components: { QuestionCard },
+  name: "QuestionSection",
+  components: { Votes, QuestionCard },
   props: {
     question: {
       type: Object,
-      required: true,
+      required: true
     },
     isTrashed: {
       type: Boolean,
-      required: true,
+      required: true
     },
     userQuestionVote: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
     bookmark: {
-      type: Object,
+      type: Object
     },
     permissions: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       classes: {
-        success: 'text-green-600',
-        danger: 'text-red-600',
-      },
-    }
+        success: "text-emerald-600",
+        danger: "text-red-600"
+      }
+    };
   },
   computed: {
     voteSumColour() {
-      let voteSum = this.question.votes_sum_vote
+      let voteSum = this.question.votes_sum_vote;
 
       if (voteSum > 0) {
-        return this.classes.success
+        return this.classes.success;
       } else if (voteSum < 0) {
-        return this.classes.danger
+        return this.classes.danger;
       }
     },
+    userVote() {
+      return this.userQuestionVote?.vote ?? 0;
+    }
   },
   methods: {
     addBookmark() {
-      this.$inertia.post(route('questions.bookmarks.store', this.question))
+      this.$inertia.post(route("questions.bookmarks.store", this.question));
     },
     removeBookmark() {
-      this.$inertia.delete(route('questions.bookmarks.destroy', [this.question, this.bookmark]))
+      this.$inertia.delete(route("questions.bookmarks.destroy", [this.question, this.bookmark]));
     },
     addVote() {
-      this.$inertia.post(route('questions.upvote', this.question))
+      this.$inertia.post(route("questions.upvote", this.question));
     },
     removeVote() {
-      this.$inertia.post(route('questions.downvote', this.question))
-    },
-  },
-}
+      this.$inertia.post(route("questions.downvote", this.question));
+    }
+  }
+};
 </script>

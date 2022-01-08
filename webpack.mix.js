@@ -18,8 +18,11 @@ mix
   .options({
     postCss: [require('tailwindcss'), require('autoprefixer')],
   })
-  .browserSync('stackunderflow.test')
   .webpackConfig(require('./webpack.config'))
+
+if (!mix.inProduction()) {
+  mix.browserSync(process.env.APP_URL)
+}
 
 if (mix.inProduction()) {
   mix.version()

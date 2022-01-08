@@ -1,31 +1,8 @@
 .question-controls {
   @apply text-center font-semibold pr-8;
 
-  &__vote-up {
-    @apply text-gray-300 text-5xl hover:text-gray-400;
-
-    &--active {
-      //@apply text-primary-500 hover:text-primary-600;
-      @apply text-green-500 hover:text-green-600;
-    }
-  }
-
-  &__vote-count {
-    //@apply text-gray-400;
-    @apply text-3xl text-gray-500;
-  }
-
-  &__vote-down {
-    @apply text-gray-300 text-5xl hover:text-gray-400;
-
-    &--active {
-      //@apply text-gray-400 hover:text-gray-500;
-      @apply text-red-500 hover:text-red-600;
-    }
-  }
-
   &__bookmark {
-    @apply text-gray-300 text-4xl hover:text-gray-400 mt-2;
+    @apply text-zinc-300 text-4xl hover:text-zinc-400 mt-2;
 
     &--active {
       @apply text-primary-500 hover:text-primary-600;

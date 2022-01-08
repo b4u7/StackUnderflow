@@ -39,19 +39,19 @@
     @apply bg-primary-500 text-sm placeholder-primary-300 text-primary-50 font-medium;
     @apply rounded-md border-2 border-transparent;
     @apply hover:border-primary-400;
-    @apply focus:outline-none focus:bg-white focus:border-blueGray-200 focus:placeholder-blueGray-400 focus:text-blueGray-600 focus:font-medium;
-    @apply active:outline-none active:bg-white active:border-blueGray-200 active:placeholder-blueGray-400 active:font-medium;
+    @apply focus:outline-none focus:bg-white focus:border-slate-200 focus:placeholder-slate-400 focus:text-slate-600 focus:font-medium;
+    @apply active:outline-none active:bg-white active:border-slate-200 active:placeholder-slate-400 active:font-medium;
   }
 
   &__dropdown {
     @apply relative pt-12 inline-block text-left z-10;
 
     &__container {
-      @apply origin-top-right overflow-hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none;
+      @apply origin-top-right overflow-hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-zinc-100 focus:outline-none;
     }
 
     &__item {
-      @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100;
+      @apply block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100;
     }
   }
 

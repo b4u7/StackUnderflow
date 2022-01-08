@@ -20,9 +20,21 @@
           </div>
         </div>
         <div class="inbox__content">
-          <div v-for="(notification, index) in notifications" :key="index" class="inbox__item">
-            <h1>{{ notification.data.title }}</h1>
-            <p>{{ notification.data.body }}</p>
+          <div v-for="(notification, index) in notifications" :key="index" class="inbox__notification">
+            <div class="inbox__notification__content">
+              <!-- TODO: Show notification type in here (Answer, Comment, Rep) -->
+              <div class="inbox__notification__subtitle">
+                <i class="inbox__notification__icon fas fa-comment-alt"></i>
+                <p>
+                  Answer by
+                  <a class="inbox__notification__user" :href="notification.data.author.url">
+                    {{ notification.data.author.name }}
+                  </a>
+                </p>
+              </div>
+              <h1 class="inbox__notification__title">{{ notification.data.title }}</h1>
+              <p class="inbox__notification__body">{{ notification.data.body }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -44,7 +56,7 @@ export default {
       return this.$page.props.auth.user
     },
     notifications() {
-      return this.$page.props.auth.user.notifications
+      return this.user?.notifications
     },
   },
   created() {

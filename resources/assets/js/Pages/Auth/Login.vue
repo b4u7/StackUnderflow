@@ -52,8 +52,14 @@
             </div>
             <label for="remember" class="form__checkbox__label">Remember me</label>
           </div>
-          <p class="form__group__description text-right underline">
-            <a v-if="canResetPassword" :href="route('password.request')"> Forgot your password? </a>
+          <p class="form__group__description text-right">
+            <a
+              v-if="canResetPassword"
+              :href="route('password.request')"
+              class="underline"
+            >
+              Forgot your password?
+            </a>
           </p>
         </div>
         <div class="form__footer">
@@ -62,7 +68,7 @@
           </button>
           <p class="text-center">
             Don't have an account?
-            <a class="underline" :href="route('register')"> Create one here </a>
+            <a class="text-primary-600 underline" :href="route('register')"> Create one here </a>
           </p>
         </div>
       </form>
@@ -72,41 +78,41 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: "Login",
   props: {
     errors: {
       type: Object,
-      required: false,
+      required: false
     },
     canResetPassword: {
       type: Boolean,
-      required: false,
+      required: false
     },
     status: {
       type: String,
-      required: false,
-    },
+      required: false
+    }
   },
   data() {
     return {
       form: this.$inertia.form({
-        email: '',
-        password: '',
-        remember: false,
-      }),
-    }
+        email: "",
+        password: "",
+        remember: false
+      })
+    };
   },
   methods: {
     submit() {
       this.form
         .transform(data => ({
           ...data,
-          remember: this.form.remember ? 'on' : '',
+          remember: this.form.remember ? "on" : ""
         }))
-        .post(this.route('login'), {
-          onFinish: () => this.form.reset('password'),
-        })
-    },
-  },
-}
+        .post(this.route("login"), {
+          onFinish: () => this.form.reset("password")
+        });
+    }
+  }
+};
 </script>

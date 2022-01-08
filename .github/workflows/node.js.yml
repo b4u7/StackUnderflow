@@ -22,17 +22,3 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run lint
-
-#   build:
-#     runs-on: ubuntu-20.04
-
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Build the project
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: 16.x
-#           cache: 'npm'
-#       - run: npm ci
-#       - run: npm run prod --if-present
-#       - run: npm test --if-present

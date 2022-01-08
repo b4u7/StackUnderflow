@@ -11,14 +11,14 @@
     }
 
     &__user {
-      @apply flex flex-row text-gray-500;
+      @apply flex flex-row text-zinc-500;
 
       &__avatar {
         @apply rounded-full h-10 w-10 ring-2 ring-white;
       }
 
       &__name {
-        @apply font-medium text-gray-900;
+        @apply font-medium text-zinc-900;
         @apply hover:underline;
         @apply focus:underline;
         @apply active:underline;
@@ -33,11 +33,11 @@
     }
 
     &__title {
-      @apply font-semibold text-gray-800 text-2xl mt-2 mb-3;
+      @apply font-semibold text-zinc-800 text-2xl mt-2 mb-3;
     }
 
     &__body {
-      @apply text-gray-600 py-2;
+      @apply text-zinc-600 py-2;
     }
 
     &__tags {
@@ -51,7 +51,7 @@
     }
 
     &__stats {
-      @apply flex flex-row text-gray-700 -m-2;
+      @apply flex flex-row text-zinc-700 -m-2;
 
       > * {
         @apply m-2;
@@ -59,7 +59,7 @@
     }
 
     &__icon {
-      @apply text-gray-700;
+      @apply text-zinc-700;
     }
 
     $parent: &;

@@ -1,0 +1,24 @@
+.voting {
+  &__vote-up {
+    @apply text-zinc-300 text-5xl hover:text-zinc-400;
+
+    &--active {
+      //@apply text-primary-500 hover:text-primary-600;
+      @apply text-emerald-500 hover:text-emerald-600;
+    }
+  }
+
+  &__count {
+    //@apply text-zinc-400;
+    @apply text-3xl text-zinc-500;
+  }
+
+  &__vote-down {
+    @apply text-zinc-300 text-5xl hover:text-zinc-400;
+
+    &--active {
+      //@apply text-zinc-400 hover:text-zinc-500;
+      @apply text-red-500 hover:text-red-600;
+    }
+  }
+}
