@@ -28,7 +28,7 @@ export default {
       required: true,
     },
     permissions: {
-      type: Object,
+      // type: Object,
       default: () => ({}),
     },
     userAnswerVotes: {

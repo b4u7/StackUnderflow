@@ -1,5 +1,6 @@
 .dropdown {
-  @apply absolute origin-top-right right-4 top-0 top-14 min-w-[200px];
+  //@apply origin-top-right right-4;
+  @apply absolute top-14 min-w-[200px];
   @apply bg-white text-sm shadow-lg rounded-md block z-10;
 
   &__container {

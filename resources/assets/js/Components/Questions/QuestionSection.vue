@@ -1,11 +1,11 @@
 <template>
   <section class="section">
-    <div v-if="isTrashed" class="alert alert--danger my-8">
+    <Alert v-if="isTrashed" kind="danger" class="my-8">
       <p>
         <i class="fas fa-exclamation-triangle"></i>
         This question was deleted, only admins can see it.
       </p>
-    </div>
+    </Alert>
     <div class="flex flex-row">
       <div class="question-controls">
         <votes
@@ -36,68 +36,69 @@
 </template>
 
 <script>
-import QuestionCard from "@/Components/Questions/Question";
-import Votes from "@/Components/Questions/Votes";
+import QuestionCard from '@/Components/Questions/Question'
+import Votes from '@/Components/Questions/Votes'
+import Alert from '@/Components/Alert'
 
 export default {
-  name: "QuestionSection",
-  components: { Votes, QuestionCard },
+  name: 'QuestionSection',
+  components: { Alert, Votes, QuestionCard },
   props: {
     question: {
       type: Object,
-      required: true
+      required: true,
     },
     isTrashed: {
       type: Boolean,
-      required: true
+      required: true,
     },
     userQuestionVote: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     bookmark: {
-      type: Object
+      type: Object,
     },
     permissions: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       classes: {
-        success: "text-emerald-600",
-        danger: "text-red-600"
-      }
-    };
+        success: 'text-emerald-600',
+        danger: 'text-red-600',
+      },
+    }
   },
   computed: {
     voteSumColour() {
-      let voteSum = this.question.votes_sum_vote;
+      let voteSum = this.question.votes_sum_vote
 
       if (voteSum > 0) {
-        return this.classes.success;
+        return this.classes.success
       } else if (voteSum < 0) {
-        return this.classes.danger;
+        return this.classes.danger
       }
     },
     userVote() {
-      return this.userQuestionVote?.vote ?? 0;
-    }
+      return this.userQuestionVote?.vote ?? 0
+    },
   },
   methods: {
     addBookmark() {
-      this.$inertia.post(route("questions.bookmarks.store", this.question));
+      this.$inertia.post(route('questions.bookmarks.store', this.question))
     },
     removeBookmark() {
-      this.$inertia.delete(route("questions.bookmarks.destroy", [this.question, this.bookmark]));
+      this.$inertia.delete(route('questions.bookmarks.destroy', [this.question, this.bookmark]))
     },
     addVote() {
-      this.$inertia.post(route("questions.upvote", this.question));
+      this.$inertia.post(route('questions.upvote', this.question))
     },
     removeVote() {
-      this.$inertia.post(route("questions.downvote", this.question));
-    }
-  }
-};
+      this.$inertia.post(route('questions.downvote', this.question))
+    },
+  },
+}
 </script>

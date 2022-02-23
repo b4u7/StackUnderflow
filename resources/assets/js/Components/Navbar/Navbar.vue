@@ -20,11 +20,11 @@
             <img :src="user.avatar" class="navbar__user" alt="Your user avatar" />
           </button>
           <transition name="dropdown-transition">
-            <div v-if="dropdownMenuVisible" class="dropdown">
-              <div class="dropdown__container">
-                <a :href="route('user.show', user)" class="dropdown__item"> Profile </a>
-                <a :href="route('user.edit', user)" class="dropdown__item"> Edit profile </a>
-                <form class="dropdown__item" @submit.prevent="logout">
+            <div v-if="dropdownMenuVisible" class="navbar__dropdown">
+              <div class="navbar__dropdown__container">
+                <a :href="route('user.show', user)" class="navbar__dropdown__item"> Profile </a>
+                <a :href="route('user.edit', user)" class="navbar__dropdown__item"> Edit profile </a>
+                <form class="navbar__dropdown__item" @submit.prevent="logout">
                   <button type="submit">Logout</button>
                 </form>
               </div>
@@ -45,31 +45,32 @@
 </template>
 
 <script>
-import Inbox from "@/Components/Navbar/Inbox";
+import Inbox from '@/Components/Navbar/Inbox'
 
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   components: { Inbox },
   data() {
     return {
-      dropdownMenuVisible: false
-    };
+      dropdownMenuVisible: false,
+    }
   },
+  mounted() {},
   computed: {
     user() {
-      return this.$page.props.auth.user ?? null;
-    }
+      return this.$page.props.auth.user ?? null
+    },
   },
   methods: {
     toggleDropdown() {
-      this.dropdownMenuVisible = !this.dropdownMenuVisible;
+      this.dropdownMenuVisible = !this.dropdownMenuVisible
     },
     logout() {
-      this.$inertia.post(route("logout"));
+      this.$inertia.post(route('logout'))
     },
     search() {
-      this.$inertia.get(route("search"));
-    }
-  }
-};
+      this.$inertia.get(route('search'))
+    },
+  },
+}
 </script>

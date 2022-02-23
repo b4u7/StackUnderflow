@@ -21,9 +21,7 @@
       </div>
     </div>
     <div v-if="question.tags.length" class="question-card__tags">
-      <div v-for="tag in question.tags" class="question-card__tag">
-        {{ tag.name }}
-      </div>
+      <Tag v-for="(tag, index) in question.tags" :key="index" :tag="tag"></Tag>
     </div>
     <div class="question-card__footer">
       <div class="question-card__menu">
@@ -65,9 +63,11 @@
 
 <script>
 import { DateTime } from 'luxon'
+import Tag from '@/Components/Tag'
 
 export default {
   name: 'QuestionCard',
+  components: { Tag },
   props: {
     question: {
       type: Object,
@@ -78,7 +78,7 @@ export default {
       required: true,
     },
     permissions: {
-      type: Object,
+      // type: Object,
       required: true,
     },
   },

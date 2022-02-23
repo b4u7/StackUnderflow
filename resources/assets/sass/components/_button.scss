@@ -1,38 +1,39 @@
 $button-colors: (
   // Name of the class
-  primary: (
-    // Background Color
-    // Should I set the shade separately and just have a default value for it?
-    backgroundColor: 'primary-600',
-    // Text Color
-    textColor: white,
-    hover: (
-      backgroundColor: 'primary-700',
-      textColor: 'white'
-    )
-  ),
+  primary:
+    (
+      // Background Color
+      // Should I set the shade separately and just have a default value for it?
+      backgroundColor: 'primary-600',
+      // Text Color
+      textColor: white,
+      hover: (
+        backgroundColor: 'primary-700',
+        textColor: 'white',
+      )
+    ),
   primary-lighter: (
     backgroundColor: 'primary-500',
     textColor: white,
     hover: (
       backgroundColor: 'primary-700',
-      textColor: 'white'
-    )
+      textColor: 'white',
+    ),
   ),
   light: (
     backgroundColor: 'primary-50',
     textColor: 'slate-700',
     hover: (
       backgroundColor: 'slate-300',
-      textColor: 'slate-900'
-    )
+      textColor: 'slate-900',
+    ),
   ),
   success: (
     backgroundColor: 'emerald-600',
     textColor: 'white',
     hover: (
       backgroundColor: 'emerald-700',
-      textColor: 'white'
+      textColor: 'white',
     ),
   ),
   danger: (
@@ -40,10 +41,22 @@ $button-colors: (
     textColor: 'white',
     hover: (
       backgroundColor: 'red-700',
-      textColor: 'white'
+      textColor: 'white',
     ),
-  ),
+  )
 );
+
+@function map-deep-get($map, $keys...) {
+  $scope: $map;
+  $i: 1;
+
+  @while (type-of($scope) == map) and ($i <= length($keys)) {
+    $scope: map-get($scope, nth($keys, $i));
+    $i: $i + 1;
+  }
+
+  @return $scope;
+}
 
 .button {
   @apply py-2 px-4 inline-block rounded-md font-semibold bg-white;
@@ -86,6 +99,10 @@ $button-colors: (
       //  @apply hover:bg-transparent hover:text-#{$color}-700;
       //}
     }
+  }
+
+  &--processing {
+    @apply transition duration-200 opacity-25;
   }
 
   &--shadow {

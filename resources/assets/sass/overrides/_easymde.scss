@@ -1,0 +1,17 @@
+.EasyMDEContainer {
+  .editor-toolbar {
+    @apply border-0;
+
+    &.fullscreen {
+      @apply border-r-0;
+    }
+  }
+
+  .CodeMirror {
+    @apply text-sm;
+
+    &:not(.CodeMirror-fullscreen) {
+      @apply rounded-md;
+    }
+  }
+}

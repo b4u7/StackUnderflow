@@ -1,23 +1,11 @@
 <template>
   <section>
     <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
-      <h1 class="text-xl font-medium mb-4">Register an account</h1>
+      <h1 class="text-xl font-medium mb-4">Reset your password</h1>
 
       <form class="form" @submit.prevent="submit">
-        <div class="form__group">
-          <label for="name" class="form__group__label">Name</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            autocomplete="name"
-            class="form__group__control"
-            v-model="form.name"
-            required
-            autofocus
-          />
-          <p v-if="errors.name" class="form__group__description form__group__description--error" v-text="errors.name" />
-        </div>
+        <input type="hidden" name="token" :value="token" />
+
         <div class="form__group">
           <label for="email-address" class="form__group__label">Email address</label>
           <input
@@ -26,7 +14,9 @@
             id="email-address"
             class="form__group__control"
             v-model="form.email"
+            autocomplete="email"
             required
+            autofocus
           />
           <p
             v-if="errors.email"
@@ -75,11 +65,11 @@
             type="submit"
             class="button button--primary button--fullwidth mb-4"
           >
-            Register
+            Reset password
           </button>
           <p class="text-center">
-            Already have an account?
-            <a class="text-primary-600 underline" :href="route('login')"> Login here </a>
+            Don't have an account?
+            <a class="text-primary-600 underline" :href="route('register')"> Create one here </a>
           </p>
         </div>
       </form>
@@ -88,23 +78,26 @@
 </template>
 
 <script>
+import Alert from '@/Components/Alert'
+
 export default {
-  name: 'Register',
+  name: 'Reset',
+  components: { Alert },
   props: {
+    token: {
+      type: String,
+      required: true,
+    },
     errors: {
       type: Object,
-      required: false,
-    },
-    status: {
-      type: String,
       required: false,
     },
   },
   data() {
     return {
       form: this.$inertia.form({
-        name: '',
-        email: '',
+        token: this.token,
+        email: this.email,
         password: '',
         password_confirmation: '',
       }),
@@ -116,7 +109,7 @@ export default {
         .transform(data => ({
           ...data,
         }))
-        .post(this.route('register'), {
+        .post(this.route('password.update'), {
           onFinish: () => this.form.reset('password', 'password_confirmation'),
         })
     },

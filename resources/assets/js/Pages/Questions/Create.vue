@@ -1,7 +1,8 @@
 <template>
-  <section class="section">
-    <div class="container">
+  <section>
+    <div class="container sm:max-w-screen-lg">
       <h1 class="text-2xl font-medium mb-4">Ask a question</h1>
+
       <form class="form" @submit.prevent="submit">
         <div class="form__group">
           <label for="title" class="form__group__label"> Title </label>
@@ -13,12 +14,13 @@
           />
         </div>
         <div class="form__group">
+          <label class="form__group__label"> Body </label>
           <markdown-editor v-model="form.body" />
           <p v-if="errors.body" class="form__group__description form__group__description--error" v-text="errors.body" />
         </div>
-        <!-- TODO: Need to create a tag selector component -->
         <div class="form__group">
-          <!-- Tags -->
+          <label class="form__group__label"> Tags </label>
+          <TagInput :tags-list="tagsList" />
           <p v-if="errors.tags" class="form__group__description form__group__description--error" v-text="errors.tags" />
         </div>
         <div class="form__footer text-right">
@@ -31,11 +33,16 @@
 
 <script>
 import MarkdownEditor from '@/Components/MarkdownEditor'
+import TagInput from '@/Components/TagInput'
 
 export default {
   name: 'Create.vue',
-  components: { MarkdownEditor },
+  components: { TagInput, MarkdownEditor },
   props: {
+    tagsList: {
+      type: Array,
+      default: [],
+    },
     errors: {
       type: Object,
       required: false,

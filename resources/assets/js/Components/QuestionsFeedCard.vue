@@ -33,9 +33,9 @@
       </p>
     </div>
     <div v-if="question.tags.length" class="questions-feed__card__tags">
-      <div v-for="tag in question.tags" :key="tag.id" class="tag">
-        {{ tag.name }}
-      </div>
+      <a v-for="(tag, index) in question.tags" :key="index" href="#">
+        <Tag :tag="tag"></Tag>
+      </a>
     </div>
     <div class="questions-feed__card__footer">
       <div class="questions-feed__card__stats">
@@ -49,9 +49,11 @@
 
 <script>
 import { DateTime } from 'luxon'
+import Tag from '@/Components/Tag'
 
 export default {
   name: 'QuestionsFeedCard.vue',
+  components: { Tag },
   props: {
     question: {
       type: Object,

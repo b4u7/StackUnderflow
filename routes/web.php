@@ -11,55 +11,56 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->name('home');
-
-
-/**
- * Questions
- */
-Route::resource('questions', 'QuestionController');
-
-Route::resource('questions.bookmarks', 'BookmarkController')->only('store', 'destroy');
-
-Route::group(['prefix' => 'questions', 'as' => 'questions.'], static function () {
-    Route::post('questions/{question}/upvote', 'QuestionController@upvote')
-        ->name('upvote');
-
-    Route::post('questions/{question}/downvote', 'QuestionController@downvote')
-        ->name('downvote');
-});
+Route::get('/', 'HomeController@index')
+    ->name('home');
 
 /**
- * Answers
+ * Questions and answers
  */
-Route::resource('questions/{question}/answers', 'AnswerController')->only(
-    ['store', 'edit', 'update', 'destroy']
-);
+Route::resource('questions', 'QuestionController')
+    ->except('index', 'show')
+    ->middleware('verified');
 
-Route::group(['prefix' => 'answers', 'as' => 'answers.'], static function () {
-    Route::post('questions/{question}/answers/{answer}/restore', 'AnswerController@restore')
-        ->name('restore');
+Route::resource('questions', 'QuestionController')
+    ->only('index', 'show');
 
-    Route::post('questions/{question}/answers/{answer}/upvote', 'AnswerController@upvote')
+Route::group(['prefix' => 'questions/{question}', 'as' => 'questions.', 'middleware' => 'verified'], static function () {
+    Route::post('upvote', 'QuestionController@upvote')
         ->name('upvote');
 
-    Route::post('questions/{question}/answers/{answer}/downvote', 'AnswerController@downvote')
+    Route::post('downvote', 'QuestionController@downvote')
         ->name('downvote');
 
-    Route::post('questions/{question}/answers/{answer}/solution', 'AnswerController@solution')
-        ->name('solution');
+    Route::resource('bookmarks', 'BookmarkController')
+        ->only('store', 'destroy');
+
+    Route::group(['prefix' => 'answers/{answer}', 'as' => 'answers.'], static function () {
+        Route::post('restore', 'AnswerController@restore')
+            ->name('restore');
+
+        Route::post('upvote', 'AnswerController@upvote')
+            ->name('upvote');
+
+        Route::post('downvote', 'AnswerController@downvote')
+            ->name('downvote');
+
+        Route::post('solution', 'AnswerController@solution')
+            ->name('solution');
+    });
 });
 
+Route::resource('questions.answers', 'AnswerController')
+    ->only('store', 'edit', 'update', 'destroy')
+    ->middleware('verified');
 
 /**
  * Search
  */
-Route::get('search', 'SearchController@index')->name('search');
-
+Route::get('search', 'SearchController@index')
+    ->name('search');
 
 /**
  * User
  */
-Route::resource('user', 'UserController')->only(
-    ['index', 'show', 'edit', 'update']
-);
+Route::resource('user', 'UserController')
+    ->only('index', 'show', 'edit', 'update');

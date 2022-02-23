@@ -1,6 +1,6 @@
 <template>
-  <section class="section">
-    <div class="container mx-auto sm:max-w-md min-h-screen flex flex-col sm:justify-center items-center">
+  <section>
+    <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
       <h1 class="text-xl font-medium mb-4">Login</h1>
 
       <form class="form" @submit.prevent="submit">
@@ -53,17 +53,16 @@
             <label for="remember" class="form__checkbox__label">Remember me</label>
           </div>
           <p class="form__group__description text-right">
-            <a
-              v-if="canResetPassword"
-              :href="route('password.request')"
-              class="underline"
-            >
-              Forgot your password?
-            </a>
+            <a v-if="canResetPassword" :href="route('password.request')" class="underline"> Forgot your password? </a>
           </p>
         </div>
         <div class="form__footer">
-          <button type="submit" class="button button--primary button--fullwidth mb-4" :disabled="form.processing">
+          <button
+            :class="{ 'button--processing': form.processing }"
+            :disabled="form.processing"
+            type="submit"
+            class="button button--primary button--fullwidth mb-4"
+          >
             Let me in
           </button>
           <p class="text-center">
@@ -78,41 +77,41 @@
 
 <script>
 export default {
-  name: "Login",
+  name: 'Login',
   props: {
     errors: {
       type: Object,
-      required: false
+      required: false,
     },
     canResetPassword: {
       type: Boolean,
-      required: false
+      required: false,
     },
     status: {
       type: String,
-      required: false
-    }
+      required: false,
+    },
   },
   data() {
     return {
       form: this.$inertia.form({
-        email: "",
-        password: "",
-        remember: false
-      })
-    };
+        email: '',
+        password: '',
+        remember: false,
+      }),
+    }
   },
   methods: {
     submit() {
       this.form
         .transform(data => ({
           ...data,
-          remember: this.form.remember ? "on" : ""
+          remember: this.form.remember ? 'on' : '',
         }))
-        .post(this.route("login"), {
-          onFinish: () => this.form.reset("password")
-        });
-    }
-  }
-};
+        .post(this.route('login'), {
+          onFinish: () => this.form.reset('password'),
+        })
+    },
+  },
+}
 </script>

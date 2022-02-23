@@ -41,7 +41,7 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => function () use ($request, $user) {
                 return [
-                    'user' => $user ? [
+                    'user' => optional($user, static fn() => [
                         'id' => $user->id,
                         'avatar' => $user->avatar,
                         'name' => $user->user,
@@ -56,7 +56,8 @@ class HandleInertiaRequests extends Middleware
                         'gitlab' => $user->gitlab,
                         'instagram' => $user->instagram,
                         'notifications' => $user->unreadNotifications,
-                    ] : null
+                        'verified' => !!$user->email_verified_at
+                    ])
                 ];
             },
             'flash' => $request->session()->get('flash', [])

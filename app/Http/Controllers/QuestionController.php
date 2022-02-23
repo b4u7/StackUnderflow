@@ -53,7 +53,9 @@ class QuestionController extends Controller
     {
         $this->authorize('create', Question::class);
 
-        return Inertia::render('Questions/Create');
+        $tagsList = Tag::all();
+
+        return Inertia::render('Questions/Create', compact('tagsList'));
     }
 
     /**

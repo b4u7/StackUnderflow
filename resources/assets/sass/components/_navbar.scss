@@ -44,14 +44,22 @@
   }
 
   &__dropdown {
-    @apply relative pt-12 inline-block text-left z-10;
+    @extend .dropdown;
+
+    @apply origin-top-right right-4;
+
+    //@apply relative pt-12 inline-block text-left z-10;
 
     &__container {
-      @apply origin-top-right overflow-hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-zinc-100 focus:outline-none;
+      @extend .dropdown__container;
+
+      //@apply origin-top-right overflow-hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-zinc-100 focus:outline-none;
     }
 
     &__item {
-      @apply block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100;
+      @extend .dropdown__item;
+
+      //@apply block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100;
     }
   }
 

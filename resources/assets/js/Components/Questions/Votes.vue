@@ -2,7 +2,7 @@
   <div class="voting">
     <form @submit.prevent="addVote">
       <button
-        :class="{['voting__vote-up--active']: userVote === 1}"
+        :class="{ ['voting__vote-up--active']: userVote === 1 }"
         :disabled="!canVote"
         class="voting__vote-up"
         type="submit"
@@ -17,7 +17,7 @@
     </p>
     <form @submit.prevent="removeVote">
       <button
-        :class="{['voting__vote-down--active']: userVote === -1}"
+        :class="{ ['voting__vote-down--active']: userVote === -1 }"
         :disabled="!canVote"
         class="voting__vote-down"
         type="submit"
@@ -30,47 +30,47 @@
 
 <script>
 export default {
-  name: "Votes",
+  name: 'Votes',
   props: {
     totalVotes: {
       type: Number,
-      required: true
+      required: true,
     },
     canVote: {
       type: Boolean,
-      required: true
+      required: true,
     },
     userVote: {
       type: Number,
-      required: false
-    }
+      required: false,
+    },
   },
   data() {
     return {
       classes: {
-        success: "text-emerald-600",
-        danger: "text-red-600"
-      }
-    };
+        success: 'text-emerald-600',
+        danger: 'text-red-600',
+      },
+    }
   },
   computed: {
     voteSumColour() {
       if (this.totalVotes > 0) {
-        return this.classes.success;
+        return this.classes.success
       }
 
       if (this.totalVotes < 0) {
-        return this.classes.danger;
+        return this.classes.danger
       }
-    }
+    },
   },
   methods: {
     addVote() {
-      this.$emit("upvoted");
+      this.$emit('upvoted')
     },
     removeVote() {
-      this.$emit("downvoted");
-    }
-  }
-};
+      this.$emit('downvoted')
+    },
+  },
+}
 </script>
