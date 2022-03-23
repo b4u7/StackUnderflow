@@ -27,7 +27,7 @@ class AnswerController extends Controller
             ->when(
                 $user,
                 static fn(Builder $query) => $query->withSum(
-                    ['votes as user_vote' => static fn(Builder $q) => $q->where('user_id', '=', $user->id)],
+                    ['votes as user_vote' => static fn(Builder $q) => $q->where('user_id', '=', $user?->id)],
                     'vote'
                 )
             )

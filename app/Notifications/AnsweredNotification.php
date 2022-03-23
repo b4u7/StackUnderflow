@@ -46,15 +46,15 @@ class AnsweredNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @return array<string, array<string>|string>
+     * @return array<string, array<string, string|null>|string|null>
      */
-    #[ArrayShape(['title' => "mixed|string", 'author' => "array", 'body' => "mixed|string", 'url' => "string"])]
+    #[ArrayShape(['title' => "mixed|null|string", 'author' => "array", 'body' => "mixed|string", 'url' => "string"])]
     public function toArray(): array
     {
         return [
-            'title' => $this->answer->question->title,
+            'title' => $this->answer->question?->title,
             'author' => [
-                'name' => $this->answer->user->name,
+                'name' => $this->answer->user?->name,
                 'url' => route('user.show', $this->answer->user)
             ],
             'body' => $this->answer->body,

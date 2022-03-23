@@ -10,7 +10,7 @@ class NotificationController extends Controller
 {
     public function show(Request $request, string $notificationId): Response
     {
-        $notification = $request->user()->notifications()->findOrFail($notificationId);
+        $notification = $request->user()?->notifications()->findOrFail($notificationId);
 
         $notification->markAsRead();
 

@@ -51,21 +51,33 @@ class User extends Authenticatable implements MustVerifyEmail
         return 'users.' . $this->id;
     }
 
+    /**
+     * @return HasMany<Question>
+     */
     public function questions(): HasMany
     {
         return $this->hasMany(Question::class);
     }
 
+    /**
+     * @return HasMany<Answer>
+     */
     public function answers(): HasMany
     {
         return $this->hasMany(Answer::class);
     }
 
+    /**
+     * @return BelongsToMany<Badge>
+     */
     public function badges(): BelongsToMany
     {
         return $this->belongsToMany(Badge::class);
     }
 
+    /**
+     * @return HasMany<Bookmark>
+     */
     public function bookmarks(): HasMany
     {
         return $this->hasMany(Bookmark::class);

@@ -17,6 +17,9 @@ class Vote extends Model
         'user_id', 'vote'
     ];
 
+    /**
+     * @return MorphTo<Question|Answer|Model, Vote>
+     */
     public function votable(): MorphTo
     {
         return $this->morphTo();

@@ -49,11 +49,17 @@ class Tag extends Model
         'rose'
     ];
 
+    /**
+     * @return BelongsToMany<Question>
+     */
     public function questions(): BelongsToMany
     {
         return $this->belongsToMany(Question::class);
     }
 
+    /**
+     * @return Attribute<>
+     */
     public function colour(): Attribute
     {
         return Attribute::get(fn($colour) => $colour ?? self::COLOURS[crc32($this->name) % count(self::COLOURS)]);

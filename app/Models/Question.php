@@ -39,36 +39,57 @@ class Question extends Model implements Viewable
         static::addGlobalScope(new AdminScope);
     }
 
+    /**
+     * @return BelongsTo<User, Question>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsToMany<Tag>
+     */
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
 
+    /**
+     * @return HasMany<Answer>
+     */
     public function answers(): HasMany
     {
         return $this->hasMany(Answer::class);
     }
 
+    /**
+     * @return MorphMany<Comment>
+     */
     public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    /**
+     * @return HasMany<Bookmark>
+     */
     public function bookmarks(): HasMany
     {
         return $this->hasMany(Bookmark::class);
     }
 
+    /**
+     * @return MorphMany<Vote>
+     */
     public function votes(): MorphMany
     {
         return $this->morphMany(Vote::class, 'votable');
     }
 
+    /**
+     * @return BelongsTo<Answer, Question>
+     */
     public function solution(): BelongsTo
     {
         return $this->belongsTo(Answer::class);

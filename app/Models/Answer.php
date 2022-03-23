@@ -33,21 +33,33 @@ class Answer extends Model
         parent::boot();
     }
 
+    /**
+     * @return BelongsTo<User, Answer>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo<Question, Answer>
+     */
     public function question(): BelongsTo
     {
         return $this->belongsTo(Question::class);
     }
 
+    /**
+     * @return MorphMany<Comment>
+     */
     public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    /**
+     * @return MorphMany<Vote>
+     */
     public function votes(): MorphMany
     {
         return $this->morphMany(Vote::class, 'votable');

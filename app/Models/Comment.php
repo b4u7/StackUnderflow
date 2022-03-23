@@ -11,10 +11,14 @@ class Comment extends Model
 {
     use HasFactory;
 
-    public static function booted() {
+    public static function booted()
+    {
         static::addGlobalScope(new AdminScope());
     }
 
+    /**
+     * @return MorphTo<Answer|Model, Comment>
+     */
     public function commentable(): MorphTo
     {
         return $this->morphTo();

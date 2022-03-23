@@ -15,11 +15,17 @@ class Bookmark extends Model
         'question_id'
     ];
 
+    /**
+     * @return HasOne<User>
+     */
     public function user(): hasOne
     {
         return $this->hasOne(User::class);
     }
 
+    /**
+     * @return HasOne<Question>
+     */
     public function question(): hasOne
     {
         return $this->hasOne(Question::class);

@@ -33,7 +33,7 @@ class AnswerPolicy
     public function create(User $user, Question $question): bool
     {
         return Answer::where('user_id', '=', $user->id)
-                ->where('question_id', '=', $question->id)
+                ->where('question_id', '=', $question?->id)
                 ->where('deleted_at', '=', null)
                 ->count() === 0;
     }

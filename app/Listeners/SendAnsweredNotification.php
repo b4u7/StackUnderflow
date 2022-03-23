@@ -20,7 +20,7 @@ class SendAnsweredNotification
      */
     public function handle(AnswerCreated $event): void
     {
-        $user = $event->answer->question->user;
+        $user = $event->answer->question?->user;
 
         Notification::send($user, new AnsweredNotification($event->answer));
     }
