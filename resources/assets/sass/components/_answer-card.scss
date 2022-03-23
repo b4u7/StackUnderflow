@@ -7,13 +7,17 @@
     @apply border border-red-500;
   }
 
-  &__content {
-    @extend .card__content;
-
-    @apply py-3;
+  &--solution {
+    @apply border border-green-500;
   }
 
   &__body {
+    @extend .card__body;
+
+    @apply py-3 flex-grow;
+  }
+
+  &__content {
     @apply text-zinc-600;
   }
 

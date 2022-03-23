@@ -2,7 +2,7 @@
   <nav class="navbar navbar--primary">
     <ul class="navbar__start">
       <li class="navbar__item">
-        <a class="navbar__logo" :href="route('home')"> SU </a>
+        <a class="navbar__logo" :href="route('home')"> StackUnderflow </a>
       </li>
     </ul>
     <ul class="navbar__center">
@@ -15,7 +15,7 @@
     <ul class="navbar__end">
       <template v-if="user">
         <inbox />
-        <li class="relative navbar__item" @click="toggleDropdown">
+        <li class="relative navbar__item" ref="dropdown" @click="toggleDropdown">
           <button type="button">
             <img :src="user.avatar" class="navbar__user" alt="Your user avatar" />
           </button>
@@ -34,10 +34,10 @@
       </template>
       <template v-else>
         <li class="navbar__item">
-          <a :href="route('login')" class="button button--primary-lighter button--small"> Login </a>
+          <a :href="route('login')" class="button button--primary-lighter"> Login </a>
         </li>
         <li class="navbar__item">
-          <a :href="route('register')" class="button button--light button--small"> Register </a>
+          <a :href="route('register')" class="button button--light"> Register </a>
         </li>
       </template>
     </ul>
@@ -46,22 +46,33 @@
 
 <script>
 import Inbox from '@/Components/Navbar/Inbox'
+import Tippy from '@/Components/Tippy'
 
 export default {
   name: 'Navbar',
-  components: { Inbox },
+  components: { Tippy, Inbox },
   data() {
     return {
-      dropdownMenuVisible: false,
+      dropdownMenuVisible: false
     }
   },
-  mounted() {},
   computed: {
     user() {
       return this.$page.props.auth.user ?? null
-    },
+    }
+  },
+  mounted() {
+    document.addEventListener('click', this.onDocumentClick)
+  },
+  beforeDestroy() {
+    document.removeEventListener('click', this.onDocumentClick)
   },
   methods: {
+    onDocumentClick(e) {
+      if (!this.$refs.dropdown.contains(e.target)) {
+        this.dropdownMenuVisible = false
+      }
+    },
     toggleDropdown() {
       this.dropdownMenuVisible = !this.dropdownMenuVisible
     },
@@ -70,7 +81,7 @@ export default {
     },
     search() {
       this.$inertia.get(route('search'))
-    },
-  },
+    }
+  }
 }
 </script>

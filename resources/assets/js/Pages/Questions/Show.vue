@@ -1,10 +1,9 @@
-<!-- TODO: Fix card height (make the content stretch) -->
 <template>
   <section class="section">
     <div class="container">
       <div class="content">
         <div class="mr-0 mb-4 text-right">
-          <a class="button button--fullwidth-touch" :href="route('questions.show', question.id)"> Go back </a>
+          <a class="button button--fullwidth-touch button--white" :href="route('home')"> Go back </a>
         </div>
         <question-section
           :question="question"
@@ -13,10 +12,12 @@
           :bookmark="bookmark"
           :permissions="permissions.question"
         />
-        <!-- TODO: Verify if permissions object is setup correctly -->
-        <answers-section
-          :answers="question.answers"
-          :user-answer-votes="userAnswerVotes"
+        <question-answers
+          :answers="answers.data"
+          :next-page-url="answers.next_page_url"
+          :prev-page-url="answers.prev_page_url"
+          :question-id="question.id"
+          :solution-id="question.solution_id"
           :permissions="permissions.answers"
         />
         <form v-if="canAnswer" @submit.prevent="submitAnswer">
@@ -41,50 +42,51 @@
 
 <script>
 import QuestionSection from '@/Components/Questions/QuestionSection'
-import AnswersSection from '@/Components/Questions/QuestionAnswers'
+import QuestionAnswers from '@/Components/Questions/QuestionAnswers'
 import MarkdownEditor from '@/Components/MarkdownEditor'
+import Tippy from '@/Components/Tippy'
 
 export default {
   name: 'Show',
-  components: { MarkdownEditor, AnswersSection, QuestionSection },
+  components: { QuestionAnswers, Tippy, MarkdownEditor, QuestionSection },
   props: {
     question: {
       type: Object,
-      required: true,
+      required: true
+    },
+    answers: {
+      type: Object,
+      required: true
     },
     isTrashed: {
       type: Boolean,
-      required: true,
+      required: true
     },
     userQuestionVote: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
     bookmark: {
-      type: Object,
+      type: Object
     },
     userAnswered: {
       type: Boolean,
-      required: true,
-    },
-    userAnswerVotes: {
-      type: Object,
-      required: true,
+      required: true
     },
     permissions: {
       type: Object,
-      required: true,
+      required: true
     },
     errors: {
       type: Object,
-      required: false,
-    },
+      required: false
+    }
   },
   data() {
     return {
       form: this.$inertia.form({
-        body: '',
-      }),
+        body: ''
+      })
     }
   },
   computed: {
@@ -93,12 +95,12 @@ export default {
     },
     canAnswer() {
       return this.user && !this.userAnswered
-    },
+    }
   },
   methods: {
     submitAnswer() {
-      this.form.post(this.route('answers.store', this.question))
-    },
-  },
+      this.form.post(this.route('questions.answers.store', this.question))
+    }
+  }
 }
 </script>

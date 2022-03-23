@@ -10,17 +10,14 @@
         type="text"
         name="tag-input"
       />
-      <div
-        v-if="searching && filteredTagsList.length > 0"
-        class="tag-input__dropdown"
-      >
+      <div v-if="searching && filteredTagsList.length > 0" class="tag-input__dropdown">
         <div class="tag-input__dropdown__container">
           <div v-for="(tag, index) in filteredTagsList">
             <button
               :key="index"
               class="tag-input__dropdown__button"
               type="button"
-              @click="(event) => addTag(tag.item, event)"
+              @click="event => addTag(tag.item, event)"
             >
               {{ tag.item.name }}
             </button>
@@ -44,15 +41,15 @@ export default {
   props: {
     tagsList: {
       type: Array,
-      default: []
-    }
+      default: [],
+    },
   },
   data() {
     return {
       searching: false,
       selectedTags: [],
       query: '',
-      fuse: new Fuse([], { keys: ['name'], threshold: 0.2 })
+      fuse: new Fuse([], { keys: ['name'], threshold: 0.2 }),
     }
   },
   watch: {
@@ -60,13 +57,13 @@ export default {
       immediate: true,
       handler(value) {
         this.fuse.setCollection(value)
-      }
-    }
+      },
+    },
   },
   computed: {
     filteredTagsList() {
       return this.fuse.search(this.query).filter(result => !includes(this.selectedTags, result.item))
-    }
+    },
   },
   methods: {
     openDropdown() {
@@ -109,10 +106,12 @@ export default {
         return
       }
 
-      const index = tag ? this.selectedTags.findIndex(t => t.id === tag.id) : this.selectedTags[this.selectedTags.length - 1]
+      const index = tag
+        ? this.selectedTags.findIndex(t => t.id === tag.id)
+        : this.selectedTags[this.selectedTags.length - 1]
       this.selectedTags.splice(index, 1)
-    }
-  }
+    },
+  },
 }
 </script>
 

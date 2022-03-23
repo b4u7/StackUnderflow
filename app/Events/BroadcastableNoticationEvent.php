@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
+use JetBrains\PhpStorm\ArrayShape;
 
 class BroadcastableNoticationEvent implements ShouldBroadcast
 {
@@ -16,6 +17,8 @@ class BroadcastableNoticationEvent implements ShouldBroadcast
 
     /**
      * Create a new event instance.
+     *
+     * @param array<string> $author
      */
     public function __construct(public User $user, public string $title, public array $author, public string $body, public string $url)
     {
@@ -39,7 +42,10 @@ class BroadcastableNoticationEvent implements ShouldBroadcast
 
     /**
      * Get the data to broadcast.
+     *
+     * @return array<string, array<string>|int|string>
      */
+    #[ArrayShape(['userId' => "int|mixed", 'title' => "string", 'author' => "mixed", 'body' => "string", 'url' => "string"])]
     public function broadcastWith(): array
     {
         return [

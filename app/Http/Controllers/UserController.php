@@ -15,9 +15,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::take(10)
+        $users = User::query()
+            ->orderByDesc('created_at')
             ->orderBy('id')
-            ->paginate(10);
+            ->cursorPaginate(24);
 
         return Inertia::render('User/Index', compact('users'));
     }
@@ -57,6 +58,6 @@ class UserController extends Controller
     {
         // update
 
-        return redirect()->back();
+        return back();
     }
 }

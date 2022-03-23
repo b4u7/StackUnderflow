@@ -1,8 +1,11 @@
 .questions-feed {
+  @apply space-y-4;
+
   &__card {
     @extend .card;
 
-    @apply cursor-pointer hover:border-primary-500 border-transparent border;
+    @apply cursor-pointer border border-transparent;
+    @apply hover:border-primary-500;
 
     &__header {
       @extend .card__header;
@@ -25,10 +28,6 @@
       }
     }
 
-    &__content {
-      @extend .card__content;
-    }
-
     &__context {
     }
 
@@ -37,6 +36,10 @@
     }
 
     &__body {
+      @extend .card__body;
+    }
+
+    &__content {
       @apply text-zinc-600 py-2;
     }
 

@@ -1,6 +1,8 @@
 <template>
-  <div :class="[{ 'alert--fullwidth': fullwidth }, `alert--${kind}`]" class="alert">
-    <slot></slot>
+  <div :class="{ classes, ...`alert--${this.kind}` }" class="alert alert--">
+    <p>
+      <slot></slot>
+    </p>
   </div>
 </template>
 
@@ -16,6 +18,13 @@ export default {
       type: Boolean,
       default: false,
     },
+  },
+  data() {
+    return {
+      classes: {
+        'alert--fullwidth': this.fullwidth,
+      },
+    }
   },
 }
 </script>

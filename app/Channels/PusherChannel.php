@@ -11,7 +11,7 @@ class PusherChannel
     /**
      * Send the given notification.
      */
-    public function send(mixed $notifiable, Notification $notification)
+    public function send(mixed $notifiable, Notification $notification): void
     {
         if (!$notifiable instanceof User) {
             return;

@@ -13,35 +13,24 @@ class AnswerPolicy
 
     /**
      * Determine whether the user can view any answers.
-     *
-     * @param User $user
-     * @return mixed
      */
-    public function viewAny(?User $user)
+    public function viewAny(?User $user): bool
     {
         return true;
     }
 
     /**
      * Determine whether the user can view the answer.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return mixed
      */
-    public function view(?User $user, Answer $answer)
+    public function view(?User $user, Answer $answer): bool
     {
         return true;
     }
 
     /**
      * Determine whether the user can create answers.
-     *
-     * @param User $user
-     * @param Question $question
-     * @return mixed
      */
-    public function create(User $user, Question $question)
+    public function create(User $user, Question $question): bool
     {
         return Answer::where('user_id', '=', $user->id)
                 ->where('question_id', '=', $question->id)
@@ -51,84 +40,56 @@ class AnswerPolicy
 
     /**
      * Determine whether the user can update the answer.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return mixed
      */
-    public function update(User $user, Answer $answer)
+    public function update(User $user, Answer $answer): bool
     {
         return $answer->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can delete the answer.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return mixed
      */
-    public function delete(User $user, Answer $answer)
+    public function delete(User $user, Answer $answer): bool
     {
         return $answer->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can restore the answer.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return mixed
      */
-    public function restore(User $user, Answer $answer)
+    public function restore(User $user, Answer $answer): bool
     {
         return false;
     }
 
     /**
      * Determine whether the user can permanently delete the answer.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return mixed
      */
-    public function forceDelete(User $user, Answer $answer)
+    public function forceDelete(User $user, Answer $answer): bool
     {
         return false;
     }
 
     /**
      * Determine whether the user can vote on the answer.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return bool
      */
-    public function vote(User $user, Answer $answer)
+    public function vote(User $user, Answer $answer): bool
     {
         return true;
     }
 
     /**
      * Determine whether the user can select the answer as the solution.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return int|mixed
      */
-    public function solution(User $user, Answer $answer)
+    public function solution(User $user, Answer $answer): bool
     {
-        return $user->id === $answer->question->user_id && $answer->question->solution !== $answer->id;
+        return $user->id === $answer->question->user_id;
     }
 
     /**
      * Determine whether the user is an admin.
-     *
-     * @param User $user
-     * @param $ability
-     * @return bool
      */
-    public function before(User $user, $ability)
+    public function before(User $user, string $ability): ?bool
     {
         if ($user->admin && $ability !== 'create') {
             return true;

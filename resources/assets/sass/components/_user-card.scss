@@ -1,0 +1,42 @@
+.user-card {
+  @extend .card;
+
+  @apply w-full cursor-pointer border border-transparent motion-safe:transition;
+  @apply hover:border-primary-600 hover:-translate-y-1;
+
+  &__header {
+    &__background {
+      @apply bg-cover;
+    }
+  }
+
+  &__body {
+    @extend .card__body;
+
+    @apply py-3;
+  }
+
+  &__content {
+    @apply text-zinc-600;
+  }
+
+  &__user {
+    @apply flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-4;
+
+    &__avatar {
+      @apply rounded-full h-auto w-16;
+    }
+
+    &__name {
+      @apply text-zinc-900 font-semibold;
+    }
+  }
+
+  $parent: &;
+
+  &:hover {
+    #{$parent}__user__name {
+      @apply text-primary-700;
+    }
+  }
+}

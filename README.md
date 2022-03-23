@@ -38,7 +38,7 @@ The only thing left is to add `127.0.0.1 stackunderflow.test` to your hosts file
 
 ### Aliasing Sail
 
-Add the following to `~/.bashrc`
+Add the following to `~/.bash_aliases`
 
 ```
 alias sail='bash vendor/bin/sail'
@@ -52,14 +52,14 @@ the current dependencies for a project run `sail composer install`.
 If you wish to update the version of specific dependencies, make your change to `composer.json`, run `composer update`
 and then commit your changes to `composer.json` and `composer.lock`.
 
-## Database Seeding
-
-You can seed a development database by simply running: `sail artisan db:seed`.
-
 ## Database Migrations
 
 Database migrations are stored in `database/migrations`, this is a version control for the schema. You can generate new
-migrations using the following command: `sail artisan make:migration create_users_table`.
+migrations using the following command: `sail artisan migrate`.
+
+## Database Seeding
+
+You can seed a development database by simply running: `sail artisan db:seed`.
 
 ## Asset Management
 
@@ -68,34 +68,8 @@ We use Laravel Mix for asset management, you can rtfm here: https://laravel.com/
 ## Using an IDE
 
 If you wish to use an IDE, [Jetbrains PHPStorm](https://www.jetbrains.com/phpstorm) is the supported IDE for
-StackUnderflow. It is strongly recommended to use
-the [Laravel Plugin](https://plugins.jetbrains.com/plugin/7532-laravel-plugin).
+StackUnderflow. We strongly recommended you to use the
+[Laravel Plugin](https://plugins.jetbrains.com/plugin/7532-laravel-plugin).
 
 The `_ide_helper.php` file is auto generated using the command `artisan ide-helper:generate` - this provides the IDE
-with vastly improved PHPDocs of the Laravel framework. Select `no` when asked to generate model docblocks.
-
-## Import an existing database in Sail
-
-Put the stackunderflow.bak file in your project folder.
-
-Exec into the Sail docker container:
-
-```
-sail shell
-```
-
-Import the backup:
-
-```
-PGPASSWORD=secret psql --host=pgsql --username=root --dbname=stackunderflow -c 'DROP SCHEMA public CASCADE;' && \
-PGPASSWORD=secret psql --host=pgsql --username=root --dbname=stackunderflow -c 'CREATE SCHEMA public;' && \
-PGPASSWORD=secret pg_restore -Fc stackunderflow.bak --dbname=stackunderflow --username=root --role=root --host=pgsql -j 10
-```
-
-Re-assign the roles:
-
-```
-PGPASSWORD=secret psql --host=pgsql --username=root --dbname=stackunderflow -c 'REASSIGN OWNED BY stackunderflow TO root;'
-```
-
-Done.
+with vastly improved PHPDocs of the Laravel framework. Select `no` when asked to generate model doc-blocks.

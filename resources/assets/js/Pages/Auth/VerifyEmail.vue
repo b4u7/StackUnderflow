@@ -1,9 +1,9 @@
 <template>
   <section>
     <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
-      <Alert v-if="status && status === 'verification-link-sent'" kind="success" :fullwidth="true">
-        <p>A fresh verification link has been sent to your email address.</p>
-      </Alert>
+      <alert v-if="status && status === 'verification-link-sent'" kind="success" :fullwidth="true">
+        A fresh verification link has been sent to your email address.
+      </alert>
 
       <h1 class="text-xl font-medium mb-4">Verify your email address</h1>
 

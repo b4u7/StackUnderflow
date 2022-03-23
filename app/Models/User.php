@@ -5,6 +5,8 @@ namespace App\Models;
 use Avatar;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -15,7 +17,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'name', 'email', 'password',
@@ -24,7 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password', 'remember_token',
@@ -33,40 +35,43 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @var array<string>
+     */
     protected $appends = ['avatar'];
 
-    public function receivesBroadcastNotificationOn()
+    public function receivesBroadcastNotificationOn(): string
     {
         return 'users.' . $this->id;
     }
 
-    public function questions()
+    public function questions(): HasMany
     {
         return $this->hasMany(Question::class);
     }
 
-    public function answers()
+    public function answers(): HasMany
     {
         return $this->hasMany(Answer::class);
     }
 
-    public function badges()
+    public function badges(): BelongsToMany
     {
         return $this->belongsToMany(Badge::class);
     }
 
-    public function bookmarks()
+    public function bookmarks(): HasMany
     {
         return $this->hasMany(Bookmark::class);
     }
 
-    public function getAvatarAttribute()
+    public function getAvatarAttribute(): string
     {
         return Avatar::create($this->name)->toBase64();
     }

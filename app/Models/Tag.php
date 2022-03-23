@@ -11,10 +11,16 @@ class Tag extends Model
 {
     use HasFactory;
 
+    /**
+     * @var array<string>
+     */
     protected $fillable = [
         'name'
     ];
 
+    /**
+     * @var array<string>
+     */
     protected $appends = [
         'colour'
     ];
@@ -50,6 +56,6 @@ class Tag extends Model
 
     public function colour(): Attribute
     {
-        return Attribute::get(fn($colour) => $colour ?? static::COLOURS[crc32($this->name) % count(static::COLOURS)]);
+        return Attribute::get(fn($colour) => $colour ?? self::COLOURS[crc32($this->name) % count(self::COLOURS)]);
     }
 }

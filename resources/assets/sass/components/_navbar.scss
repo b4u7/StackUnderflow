@@ -1,5 +1,5 @@
 .navbar {
-  @apply z-0 h-16 flex items-center justify-between;
+  @apply z-0 h-16 flex items-center justify-between px-4;
 
   &--primary {
     @apply bg-primary-600;
@@ -16,13 +16,13 @@
   }
 
   &__end {
-    @apply h-full flex flex-shrink-2 flex-grow justify-end;
+    @apply h-full flex flex-shrink-2 flex-grow justify-end space-x-4;
     //@apply absolute inset-y-0 right-0 pr-2;
     //@apply sm:static sm:inset-auto sm:ml-6 sm:pr-0;
   }
 
   &__item {
-    @apply relative h-full inline-flex items-center px-4 text-white font-medium;
+    @apply relative h-full inline-flex items-center text-white font-medium;
   }
 
   &__icon {
@@ -30,7 +30,10 @@
   }
 
   &__logo {
-    @apply text-2xl font-bold;
+    //@apply text-2xl font-bold;
+    @apply text-xl font-semibold;
+
+    font-family: 'Epilogue', 'sans-serif';
   }
 
   &__search {

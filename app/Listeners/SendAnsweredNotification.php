@@ -18,7 +18,7 @@ class SendAnsweredNotification
     /**
      * Handle the event.
      */
-    public function handle(AnswerCreated $event)
+    public function handle(AnswerCreated $event): void
     {
         $user = $event->answer->question->user;
 

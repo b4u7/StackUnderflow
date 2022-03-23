@@ -7,13 +7,38 @@ use App\Models\Question;
 use Auth;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\CursorPaginator;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class AnswerController extends Controller
 {
-    // TODO: VALIDATION!!!!
+    public function index(Request $request, Question $question): CursorPaginator
+    {
+        $user = $request->user();
+
+        return $question->answers()
+            ->with('user')
+            ->withSum('votes', 'vote')
+            ->when(
+                $user,
+                static fn(Builder $query) => $query->withSum(
+                    ['votes as user_vote' => static fn(Builder $q) => $q->where('user_id', '=', $user->id)],
+                    'vote'
+                )
+            )
+            ->when($user !== null && $user->admin, fn(Builder $q) => $q->withTrashed())
+            ->when(
+                $question->solution_id !== null,
+                static fn(Builder $q) => $q->orderByDesc(DB::raw('id = ' . $question->solution_id))
+            )
+            ->cursorPaginate();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -23,13 +48,14 @@ class AnswerController extends Controller
     {
         $this->authorize('create', [Answer::class, $question]);
 
+        // FIXME: Add validation
         Answer::create([
             'user_id' => Auth::id(),
             'question_id' => $question->id,
             'body' => $request->input('body'),
         ]);
 
-        return redirect()->back();
+        return back();
     }
 
     /**
@@ -37,11 +63,11 @@ class AnswerController extends Controller
      *
      * @throws AuthorizationException
      */
-    public function edit(Request $request, Question $question, Answer $answer): \Inertia\Response
+    public function edit(Request $request, Question $question, Answer $answer): Response
     {
         $this->authorize('update', $answer);
 
-        return Inertia::render('questions.answers.edit', compact('question', 'answer'));
+        return Inertia::render('Questions/Answers/Edit', compact('question', 'answer'));
     }
 
     /**
@@ -70,7 +96,7 @@ class AnswerController extends Controller
 
         $answer->delete();
 
-        return redirect()->back();
+        return back();
     }
 
     /**
@@ -84,7 +110,7 @@ class AnswerController extends Controller
 
         $answer->restore();
 
-        return redirect()->back();
+        return back();
     }
 
     /**
@@ -105,7 +131,7 @@ class AnswerController extends Controller
 
         if ($find) {
             $find->delete();
-            return redirect()->back();
+            return back();
         }
 
         $answer->votes()->updateOrCreate(
@@ -119,7 +145,7 @@ class AnswerController extends Controller
             ]
         );
 
-        return redirect()->back();
+        return back();
     }
 
     /**
@@ -140,7 +166,7 @@ class AnswerController extends Controller
 
         if ($find) {
             $find->delete();
-            return redirect()->back();
+            return back();
         }
 
         $answer->votes()->updateOrCreate(
@@ -154,7 +180,7 @@ class AnswerController extends Controller
             ]
         );
 
-        return redirect()->back();
+        return back();
     }
 
     /**
@@ -166,9 +192,14 @@ class AnswerController extends Controller
     {
         $this->authorize('solution', $answer);
 
-        $question->solution = $answer->id;
-        $question->save();
+        if ($question->solution()->is($answer)) {
+            $question->solution()->dissociate()->save();
 
-        return redirect()->back();
+            return back();
+        }
+
+        $question->solution()->associate($answer)->save();
+
+        return back();
     }
 }

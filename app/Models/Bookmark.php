@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Bookmark extends Model
 {
@@ -14,13 +15,13 @@ class Bookmark extends Model
         'question_id'
     ];
 
-    public function user()
+    public function user(): hasOne
     {
-        $this->hasOne(User::class);
+        return $this->hasOne(User::class);
     }
 
-    public function question()
+    public function question(): hasOne
     {
-        $this->hasOne(Question::class);
+        return $this->hasOne(Question::class);
     }
 }

@@ -23,6 +23,8 @@ class AnsweredNotification extends Notification
 
     /**
      * Get the notification's delivery channels.
+     *
+     * @return array<string|class-string>
      */
     public function via(mixed $notifiable): array
     {
@@ -43,6 +45,8 @@ class AnsweredNotification extends Notification
 
     /**
      * Get the array representation of the notification.
+     *
+     * @return array<string, array<string>|string>
      */
     #[ArrayShape(['title' => "mixed|string", 'author' => "array", 'body' => "mixed|string", 'url' => "string"])]
     public function toArray(): array
@@ -58,6 +62,9 @@ class AnsweredNotification extends Notification
         ];
     }
 
+    /**
+     * @return array<string, array<string>|string>
+     */
     #[ArrayShape(['title' => "mixed|string", 'author' => "array", 'body' => "\mixed|string", 'url' => "string"])]
     public function toPusher(): array
     {

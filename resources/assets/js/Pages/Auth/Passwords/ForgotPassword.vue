@@ -1,11 +1,9 @@
 <template>
   <section>
     <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
-      <Alert v-if="status" kind="success" :fullwidth="true">
-        <p>
-          {{ status }}
-        </p>
-      </Alert>
+      <alert v-if="status" kind="success" :fullwidth="true">
+        {{ status }}
+      </alert>
 
       <h1 class="text-xl font-medium mb-4">Forgot your password?</h1>
 

@@ -17,18 +17,18 @@
             </a>
           </p>
           <p>
-            {{ lastActionAt }}
+            {{ lastActionType + ' ' + lastActionTime.toRelative() }}
           </p>
         </div>
       </div>
     </div>
-    <div class="questions-feed__card__content">
+    <div class="questions-feed__card__body">
       <h1 class="questions-feed__card__title">
         <a :href="route('questions.show', question.id)">
           {{ question.title }}
         </a>
       </h1>
-      <p class="questions-feed__card__body">
+      <p class="questions-feed__card__content">
         {{ questionBody }}
       </p>
     </div>
@@ -48,24 +48,25 @@
 </template>
 
 <script>
-import { DateTime } from 'luxon'
 import Tag from '@/Components/Tag'
+import { DateTime } from 'luxon'
+import { max } from 'lodash'
 
 export default {
-  name: 'QuestionsFeedCard.vue',
+  name: 'QuestionsFeedCard',
   components: { Tag },
   props: {
     question: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       classes: {
         success: 'text-emerald-600',
-        danger: 'text-red-600',
-      },
+        danger: 'text-red-600'
+      }
     }
   },
   computed: {
@@ -78,17 +79,22 @@ export default {
         return this.classes.danger
       }
     },
-    lastActionAt() {
-      let relativeTime = DateTime.fromISO(this.question.created_at).toRelative()
-      let text = 'Asked'
-
-      if (this.question.answers.length > 0 && this.question.answers.slice(-1).created_at > this.question.updated_at) {
-        text = 'Answered'
-      } else if (this.question.updated_at) {
-        text = 'Modified'
+    lastAnswer() {
+      return this.question.answers.slice(-1)
+    },
+    lastActionType() {
+      if (this.lastAnswer?.created_at > this.question.updated_at) {
+        return 'Answered'
       }
 
-      return text + ' ' + relativeTime.toString()
+      if (this.question.created_at !== this.question.updated_at) {
+        return 'Modified'
+      }
+
+      return 'Asked'
+    },
+    lastActionTime() {
+      return max([this.question.created_at, this.question.updated_at].map(DateTime.fromISO))
     },
     questionBody() {
       let body = this.question.body
@@ -97,12 +103,12 @@ export default {
       }
 
       return body
-    },
+    }
   },
   methods: {
     onCardClick() {
       this.$inertia.get(route('questions.show', this.question))
-    },
-  },
+    }
+  }
 }
 </script>

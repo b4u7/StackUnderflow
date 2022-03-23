@@ -21,11 +21,13 @@
     @apply flex flex-row text-zinc-500 text-sm;
   }
 
-  &__content {
-    @extend .card__content;
+  &__body {
+    @extend .card__body;
+
+    //@apply flex-grow;
   }
 
-  &__body {
+  &__content {
     @apply text-zinc-600 py-2;
   }
 

@@ -24,34 +24,42 @@ Route::resource('questions', 'QuestionController')
 Route::resource('questions', 'QuestionController')
     ->only('index', 'show');
 
-Route::group(['prefix' => 'questions/{question}', 'as' => 'questions.', 'middleware' => 'verified'], static function () {
-    Route::post('upvote', 'QuestionController@upvote')
-        ->name('upvote');
+Route::group(['prefix' => 'questions', 'as' => 'questions.'], static function () {
+    Route::post('questions', 'QuestionController@restore')
+        ->name('restore');
 
-    Route::post('downvote', 'QuestionController@downvote')
-        ->name('downvote');
-
-    Route::resource('bookmarks', 'BookmarkController')
-        ->only('store', 'destroy');
-
-    Route::group(['prefix' => 'answers/{answer}', 'as' => 'answers.'], static function () {
-        Route::post('restore', 'AnswerController@restore')
-            ->name('restore');
-
-        Route::post('upvote', 'AnswerController@upvote')
+    Route::group(['prefix' => '{question}', 'middleware' => 'verified'], static function () {
+        Route::post('upvote', 'QuestionController@upvote')
             ->name('upvote');
 
-        Route::post('downvote', 'AnswerController@downvote')
+        Route::post('downvote', 'QuestionController@downvote')
             ->name('downvote');
 
-        Route::post('solution', 'AnswerController@solution')
-            ->name('solution');
+        Route::resource('bookmarks', 'BookmarkController')
+            ->only('store', 'destroy');
+
+        Route::group(['prefix' => 'answers/{answer}', 'as' => 'answers.'], static function () {
+            Route::post('restore', 'AnswerController@restore')
+                ->name('restore');
+
+            Route::post('upvote', 'AnswerController@upvote')
+                ->name('upvote');
+
+            Route::post('downvote', 'AnswerController@downvote')
+                ->name('downvote');
+
+            Route::post('solution', 'AnswerController@solution')
+                ->name('solution');
+        });
     });
 });
 
 Route::resource('questions.answers', 'AnswerController')
     ->only('store', 'edit', 'update', 'destroy')
     ->middleware('verified');
+
+Route::resource('questions.answers', 'AnswerController')
+    ->only('index');
 
 /**
  * Search
@@ -64,3 +72,10 @@ Route::get('search', 'SearchController@index')
  */
 Route::resource('user', 'UserController')
     ->only('index', 'show', 'edit', 'update');
+
+/**
+ * Notifications
+ */
+Route::get('notifications/{id:uuid}', 'NotificationController@show')
+    ->name('notifications.show')
+    ->middleware('auth');

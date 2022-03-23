@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="LaravelIdeaPersonalSettings">
+    <option name="helperCode">
+      <LaravelHelperCodeSettings>
+        <option name="modelsCreateHighOrderCollectionProxies" value="true" />
+        <option name="modelsDatabaseMetaSource" value="connection" />
+      </LaravelHelperCodeSettings>
+    </option>
+  </component>
+</project>

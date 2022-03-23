@@ -1,35 +1,23 @@
 <template>
-  <div :class="{ 'answer-card--trashed': isTrashed }" class="answer-card">
+  <div :class="classes" :id="`answer-${this.answer.id}`" class="answer-card">
     <div class="answer-card__header"></div>
-    <div class="answer-card__content">
-      <div class="answer-card__body">
+    <div class="answer-card__body">
+      <div class="answer-card__content">
         <div v-html="answer.body" />
       </div>
     </div>
     <div class="answer-card__footer">
       <div class="answer-card__menu">
-        <button type="button"><i class="fas fa-link"></i> Share</button>
-        <form v-if="permissions.canEdit" @submit.prevent="editAnswer">
-          <button type="submit">
-            <i class="fas fa-edit"></i>
-            Edit
-          </button>
-        </form>
-        <form v-if="permissions.canDelete && !isTrashed" @submit.prevent="deleteAnswer">
-          <button
-            type="submit"
-            class="text-red-600 hover:text-red-700 font-semibold active:text-red-500 focus:text-red-500"
-          >
-            <i class="fas fa-trash-alt"></i>
-            Delete
-          </button>
-        </form>
-        <form v-if="permissions.canRestore && isTrashed" @submit.prevent="restoreAnswer">
-          <button type="submit">
-            <i class="fas fa-trash-restore"></i>
-            Restore
-          </button>
-        </form>
+        <footer-actions
+          :can-edit="permissions.canEdit"
+          :can-delete="permissions.canDelete"
+          :can-restore="permissions.canRestore"
+          :is-trashed="isTrashed"
+          :edit-route="route('questions.answers.edit', [this.answer.question_id, this.answer])"
+          :delete-route="route('questions.answers.destroy', [this.answer.question_id, this.answer])"
+          :restore-route="route('questions.answers.restore', [this.answer.question_id, this.answer])"
+          :share-url="shareUrl"
+        />
       </div>
       <div class="answer-card__user">
         <div>
@@ -38,7 +26,10 @@
               {{ answer.user.name }}
             </a>
           </p>
-          <p>Asked {{ createdAt }}</p>
+          <p>
+            Answered
+            <format-date-time :value="answer.created_at" />
+          </p>
         </div>
         <a :href="route('user.show', answer.user)">
           <img :src="answer.user.avatar" :alt="answer.user.name" class="answer-card__user__avatar" />
@@ -49,13 +40,20 @@
 </template>
 
 <script>
-import { DateTime } from 'luxon'
+import Tippy from '@/Components/Tippy'
+import FormatDateTime from '@/Components/FormatDateTime'
+import FooterActions from '@/Components/Questions/Actions/FooterActions'
 
 export default {
   name: 'AnswerCard',
+  components: { FooterActions, FormatDateTime, Tippy },
   props: {
     answer: {
       type: Object,
+      required: true,
+    },
+    isSolution: {
+      type: Boolean,
       required: true,
     },
     permissions: {
@@ -66,22 +64,15 @@ export default {
   data() {
     return {
       isTrashed: !!this.answer.deleted_at,
+      classes: {
+        'answer-card--solution': this.isSolution,
+        'answer-card--trashed': this.isTrashed,
+      },
     }
   },
   computed: {
-    createdAt() {
-      return DateTime.fromISO(this.answer.created_at).toLocaleString(DateTime.DATETIME_FULL)
-    },
-  },
-  methods: {
-    editAnswer() {
-      this.$inertia.post(route('answers.edit', [this.answer.question_id, this.answer]))
-    },
-    deleteAnswer() {
-      this.$inertia.delete(route('answers.destroy', [this.answer.question_id, this.answer]))
-    },
-    restoreAnswer() {
-      this.$inertia.post(route('answers.restore', [this.answer.question_id, this.answer]))
+    shareUrl() {
+      return `${window.location.href}#${this.answer.id}`
     },
   },
 }

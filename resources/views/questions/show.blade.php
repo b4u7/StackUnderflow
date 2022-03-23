@@ -137,9 +137,10 @@
                                     </a>
                                 @endcan
                                 @can('delete', $question)
-                                    <form class="form"
-                                          action="{{ route('questions.destroy', $question) }}"
-                                          method="POST"
+                                    <form
+                                        class="form"
+                                        action="{{ route('questions.destroy', $question) }}"
+                                        method="POST"
                                     >
                                         @method('DELETE')
                                         @csrf
@@ -152,8 +153,10 @@
                             <div class="question-card__user">
                                 <div>
                                     <p>
-                                        <a class="question-card__user-name"
-                                           href="{{ route('user.show', $question->user) }}">
+                                        <a
+                                            class="question-card__user-name"
+                                            href="{{ route('user.show', $question->user) }}"
+                                        >
                                             {{ $question->user->name }}
                                         </a>
                                     </p>
@@ -162,9 +165,10 @@
                                     </p>
                                 </div>
                                 <a href="{{ route('user.show', $question->user) }}">
-                                    <img class="question-card__user-avatar"
-                                         src="{{ $question->user->avatar }}"
-                                         alt="{{ $question->user->name }}'s Avatar"
+                                    <img
+                                        class="question-card__user-avatar"
+                                        src="{{ $question->user->avatar }}"
+                                        alt="{{ $question->user->name }}'s Avatar"
                                     >
                                 </a>
                             </div>
@@ -230,8 +234,10 @@
                                         </h1>
                                         <div class="tags">
                                             @foreach($question->tags as $tag)
-                                                <a class="tag"
-                                                   style="border-color: {{ $tag->colour ?? '#29abe2' }}; color: {{ $tag->colour ?? '#29abe2' }};">
+                                                <a
+                                                    class="tag"
+                                                    style="border-color: {{ $tag->colour ?? '#29abe2' }}; color: {{ $tag->colour ?? '#29abe2' }};"
+                                                >
                                                     {{ $tag->name }}
                                                 </a>
                                             @endforeach
@@ -255,9 +261,10 @@
                                                 </a>
                                             @endcan
                                             @can('delete', $question)
-                                                <form class="form"
-                                                      action="{{ route('questions.destroy', $question->id) }}"
-                                                      method="POST"
+                                                <form
+                                                    class="form"
+                                                    action="{{ route('questions.destroy', $question->id) }}"
+                                                    method="POST"
                                                 >
                                                     @method('DELETE')
                                                     @csrf
@@ -268,9 +275,10 @@
                                             @endcan
                                         </div>
                                         <div class="card-foot-user column has-text-right is-narrow">
-                                            <img class="user-avatar"
-                                                 src="{{ $question->user->avatar }}"
-                                                 alt="{{ $question->user->name }}'s user avatar"
+                                            <img
+                                                class="user-avatar"
+                                                src="{{ $question->user->avatar }}"
+                                                alt="{{ $question->user->name }}'s user avatar"
                                             >
                                             <p>
                                                 Asked by
@@ -343,9 +351,10 @@
                                                     </a>
                                                 @endcan
                                                 @can('solution', $answer)
-                                                    <form class="form"
-                                                          action="{{ route('answers.solution', [$question, $answer]) }}"
-                                                          method="POST"
+                                                    <form
+                                                        class="form"
+                                                        action="{{ route('answers.solution', [$question, $answer]) }}"
+                                                        method="POST"
                                                     >
                                                         @csrf
                                                         <a id="solveForm" href="javascript: submitForm()">
@@ -354,9 +363,10 @@
                                                     </form>
                                                 @endcan
                                                 @can('delete', $answer)
-                                                    <form class="form"
-                                                          action="{{ route('answers.destroy', [$question, $answer]) }}"
-                                                          method="POST"
+                                                    <form
+                                                        class="form"
+                                                        action="{{ route('answers.destroy', [$question, $answer]) }}"
+                                                        method="POST"
                                                     >
                                                         @method('DELETE')
                                                         @csrf
@@ -367,9 +377,10 @@
                                                 @endcan
                                             </div>
                                             <div class="card-foot-user column has-text-right is-narrow">
-                                                <img class="user-avatar"
-                                                     src="{{ $answer->user->avatar }}"
-                                                     alt="{{ $answer->user->name }}'s user avatar"
+                                                <img
+                                                    class="user-avatar"
+                                                    src="{{ $answer->user->avatar }}"
+                                                    alt="{{ $answer->user->name }}'s user avatar"
                                                 >
                                                 <p>
                                                     Answered by
@@ -412,6 +423,8 @@
                                 </div>
                             </form>
                         </div>
+                        1337
+
                     </div>
                 </div>
             @endcan
@@ -428,7 +441,5 @@
             hideIcons: ['guide', 'fullscreen', 'side-by-side'],
             tabSize: 4
         })
-
-        console.log('test')
     </script>
 @endpush

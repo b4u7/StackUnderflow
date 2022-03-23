@@ -2,7 +2,6 @@
   <section>
     <div class="container sm:max-w-screen-lg">
       <h1 class="text-2xl font-medium mb-4">Ask a question</h1>
-
       <form class="form" @submit.prevent="submit">
         <div class="form__group">
           <label for="title" class="form__group__label"> Title </label>

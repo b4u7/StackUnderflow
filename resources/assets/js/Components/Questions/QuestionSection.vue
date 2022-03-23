@@ -1,13 +1,11 @@
 <template>
-  <section class="section">
-    <Alert v-if="isTrashed" kind="danger" class="my-8">
-      <p>
-        <i class="fas fa-exclamation-triangle"></i>
-        This question was deleted, only admins can see it.
-      </p>
-    </Alert>
+  <section>
+    <alert v-if="isTrashed" kind="danger" class="my-8">
+      <i class="fas fa-exclamation-triangle"></i>
+      This question was deleted, only admins can see it.
+    </alert>
     <div class="flex flex-row">
-      <div class="question-controls">
+      <div class="actions">
         <votes
           :total-votes="question.votes_sum_vote || 0"
           :can-vote="permissions.canVote"
@@ -15,34 +13,27 @@
           @upvoted="addVote"
           @downvoted="removeVote"
         />
-        <form v-if="bookmark" @submit.prevent="removeBookmark">
-          <button
-            class="question-controls__bookmark question-controls__bookmark--active"
-            type="submit"
-            :disabled="!permissions.canUnbookmark"
-          >
-            <i class="fas fa-bookmark"></i>
-          </button>
-        </form>
-        <form v-else @submit.prevent="addBookmark">
-          <button class="question-controls__bookmark" type="submit" :disabled="!permissions.canBookmark">
-            <i class="far fa-bookmark"></i>
-          </button>
-        </form>
+        <bookmark
+          :active="!!bookmark"
+          :can-bookmark="permissions.canBookmark"
+          :can-unbookmark="permissions.canUnbookmark"
+          @bookmark="bookmarkAction"
+        />
       </div>
-      <question-card :question="question" :isTrashed="isTrashed" :permissions="permissions"></question-card>
+      <question-card :question="question" :isTrashed="isTrashed" :permissions="permissions" />
     </div>
   </section>
 </template>
 
 <script>
 import QuestionCard from '@/Components/Questions/Question'
-import Votes from '@/Components/Questions/Votes'
+import Votes from '@/Components/Questions/Actions/Votes'
 import Alert from '@/Components/Alert'
+import Bookmark from '@/Components/Questions/Actions/Bookmark'
 
 export default {
   name: 'QuestionSection',
-  components: { Alert, Votes, QuestionCard },
+  components: { Bookmark, Alert, Votes, QuestionCard },
   props: {
     question: {
       type: Object,
@@ -87,6 +78,10 @@ export default {
     },
   },
   methods: {
+    bookmarkAction(value) {
+      console.log('bookmarkAction')
+      value ? this.addBookmark() : this.removeBookmark()
+    },
     addBookmark() {
       this.$inertia.post(route('questions.bookmarks.store', this.question))
     },

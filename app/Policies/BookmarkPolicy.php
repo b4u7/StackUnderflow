@@ -13,34 +13,24 @@ class BookmarkPolicy
 
     /**
      * Determine whether the user can create the model.
-     *
-     * @param User $user
-     * @return mixed
      */
-    public function create(User $user, Question $question)
+    public function create(User $user, Question $question): bool
     {
         return true;
     }
 
     /**
      * Determine whether the user can delete the model.
-     *
-     * @param \App\Models\User $user
-     * @param \App\Models\Bookmark $bookmark
-     * @return mixed
      */
-    public function delete(User $user, Bookmark $bookmark)
+    public function delete(User $user, Bookmark $bookmark): bool
     {
         return $user->id === $bookmark->user_id;
     }
 
     /**
      * Determine whether the user is an admin.
-     *
-     * @param User $user
-     * @return bool
      */
-    public function before(User $user)
+    public function before(User $user): ?bool
     {
         if ($user->admin) {
             return true;

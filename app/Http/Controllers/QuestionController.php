@@ -10,11 +10,14 @@ use App\Models\Vote;
 use Auth;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
+use stdClass;
 
 class QuestionController extends Controller
 {
@@ -41,7 +44,11 @@ class QuestionController extends Controller
             ->orderByDesc('id')
             ->cursorPaginate(10);
 
-        return Inertia::render('Questions/Index', compact('questions'));
+        $tags = Tag::whereHas('questions')
+            ->take(10)
+            ->get();
+
+        return Inertia::render('Questions/Index', compact('questions', 'tags'));
     }
 
     /**
@@ -93,38 +100,46 @@ class QuestionController extends Controller
      */
     public function show(int $questionId): Response
     {
+        $user = Auth::user();
+
         $question = Question::with([
-            'answers' => fn($query) => $query->withSum('votes', 'vote')
-                ->when(Auth::user() !== null && Auth::user()->admin, fn($query) => $query->withTrashed()),
-            'answers.user',
             'user',
             'tags',
             'bookmarks'
         ])->withSum('votes', 'vote')
             ->where('id', '=', $questionId)
-            ->when(Auth::user() !== null && Auth::user()->admin, fn($query) => $query->withTrashed())
+            ->when($user !== null && $user->admin, fn($query) => $query->withTrashed())
             ->firstOrFail();
 
         views($question)->record();
         $this->authorize('view', $question);
 
-        $userQuestionVote = Vote::query()
+        $answers = $question->answers()
+            ->with('user')
+            ->withSum('votes', 'vote')
+            ->when(
+                $user,
+                static fn(Builder $query) => $query->withSum(
+                    ['votes as user_vote' => static fn(Builder $q) => $q->where('user_id', '=', $user->id)],
+                    'vote'
+                )
+            )
+            ->when($user !== null && $user->admin, fn(Builder $q) => $q->withTrashed())
+            ->when(
+                $question->solution_id !== null,
+                static fn(Builder $q) => $q->orderByDesc(DB::raw('id = ' . $question->solution_id))
+            )
+            ->cursorPaginate(cursorName: 'answersCursor');
+
+        $userQuestionVote = $user === null ? null : Vote::query()
             ->where('votable_type', '=', Question::class)
             ->where('votable_id', '=', $question->id)
-            ->where('user_id', '=', Auth::id())
+            ->where('user_id', '=', $user->id)
             ->first();
 
-        $userAnswerVotes = (object)Vote::query()
-            ->where('votable_type', '=', Answer::class)
-            ->whereIn('votable_id', $question->answers->pluck('id'))
-            ->where('user_id', '=', Auth::id())
-            ->get()
-            ->keyBy('votable_id')
-            ->toArray();
+        $userAnswered = transform($user, fn($u) => $question->answers()->where('user_id', '=', $u->id)->exists(), false);
 
-        $userAnswered = transform(Auth::user(), fn($u) => $question->answers()->where('user_id', '=', $u->id)->exists(), false);
-
-        $bookmark = optional(Auth::user(), fn($u) => $question->bookmarks()->where('user_id', '=', $u->id)->first());
+        $bookmark = optional($user, fn($u) => $question->bookmarks()->where('user_id', '=', $u->id)->first());
 
         $permissions = [
             'question' => [
@@ -133,27 +148,28 @@ class QuestionController extends Controller
                 'canVote' => Gate::check('vote', $question),
                 'canRestore' => Gate::check('restore', $question),
                 'canBookmark' => Gate::check('create', [Bookmark::class, $question]),
-                'canUnbookmark' => optional($bookmark, fn($b) => Gate::check('delete', $b)) ?? false
+                'canUnbookmark' => optional($bookmark, fn($b) => Gate::check('delete', $b)) ?? false,
             ],
-            'answers' => []
+            'answers' => new stdClass()
         ];
 
-        foreach ($question->answers as $answer) {
-            $permissions['answers'][$answer->id]['canEdit'] = Gate::check('update', $answer);
-            $permissions['answers'][$answer->id]['canDelete'] = Gate::check('delete', $answer);
-            $permissions['answers'][$answer->id]['canVote'] = Gate::check('vote', $answer);
-            $permissions['answers'][$answer->id]['canRestore'] = Gate::check('restore', $question);
+        foreach ($answers as $answer) {
+            $permissions['answers']->{$answer->id}['canEdit'] = Gate::check('update', $answer);
+            $permissions['answers']->{$answer->id}['canDelete'] = Gate::check('delete', $answer);
+            $permissions['answers']->{$answer->id}['canVote'] = Gate::check('vote', $answer);
+            $permissions['answers']->{$answer->id}['canRestore'] = Gate::check('restore', $question);
+            $permissions['answers']->{$answer->id}['canMarkSolution'] = Gate::check('solution', $answer);
         }
 
         $isTrashed = $question->trashed();
 
         return Inertia::render('Questions/Show', compact(
             'question',
+            'answers',
             'isTrashed',
             'bookmark',
             'userAnswered',
             'userQuestionVote',
-            'userAnswerVotes',
             'permissions'
         ));
     }
@@ -228,7 +244,7 @@ class QuestionController extends Controller
 
         $question->restore();
 
-        return redirect()->back();
+        return back();
     }
 
     /**
@@ -251,7 +267,7 @@ class QuestionController extends Controller
 
         if ($find) {
             $find->delete();
-            return redirect()->back();
+            return back();
         }
 
         $question->votes()->updateOrCreate(
@@ -265,7 +281,7 @@ class QuestionController extends Controller
             ]
         );
 
-        return redirect()->back();
+        return back();
     }
 
     /**
@@ -288,7 +304,7 @@ class QuestionController extends Controller
 
         if ($find) {
             $find->delete();
-            return redirect()->back();
+            return back();
         }
 
         $question->votes()->updateOrCreate(
@@ -302,6 +318,6 @@ class QuestionController extends Controller
             ]
         );
 
-        return redirect()->back();
+        return back();
     }
 }

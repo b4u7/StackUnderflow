@@ -7,8 +7,7 @@
       :inline="inline"
       :removable="removable"
       @tag-remove="remove"
-    >
-    </tag>
+    />
   </ul>
 </template>
 

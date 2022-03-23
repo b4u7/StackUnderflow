@@ -1,7 +1,7 @@
 .inbox {
   @extend .dropdown;
 
-  @apply min-w-[400px] text-slate-800 overflow-hidden;
+  @apply origin-top-right right-4 min-w-[400px] text-slate-800 overflow-x-hidden;
 
   &__header {
     @apply flex flex-row items-center min-h-[3rem] py-1 px-2;
@@ -16,21 +16,24 @@
     }
 
     &__right {
-      @apply w-16;
+      //@apply w-16;
     }
   }
 
   $max-height: 'calc(100vh-12rem)';
 
   &__content {
-    @apply flex flex-grow flex-col h-[200px] p-4 max-h-[#{$max-height}];
+    @apply flex flex-grow flex-col max-h-[400px] max-h-[#{$max-height}] overflow-y-scroll;
   }
 
   &__footer {
   }
 
   &__notification {
-    @apply flex flex-row;
+    @apply flex flex-row p-4;
+    @apply hover:bg-zinc-50;
+    @apply focus:bg-zinc-100;
+    @apply active:bg-zinc-100;
 
     &__subtitle {
       @apply flex flex-row text-sm items-center space-x-2 text-zinc-500;
@@ -58,5 +61,9 @@
       @apply focus:text-primary-500 focus:underline;
       @apply active:text-primary-500 active:underline;
     }
+  }
+
+  &__empty-state {
+    @apply p-4 text-center;
   }
 }

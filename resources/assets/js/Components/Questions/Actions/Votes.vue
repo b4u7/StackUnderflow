@@ -1,26 +1,32 @@
 <template>
-  <div class="voting">
+  <div class="actions__voting">
     <form @submit.prevent="addVote">
       <button
-        :class="{ ['voting__vote-up--active']: userVote === 1 }"
+        :class="{
+          ['actions__item--active']: userVote === 1,
+          'actions__item--disabled': !this.canVote,
+        }"
         :disabled="!canVote"
-        class="voting__vote-up"
         type="submit"
+        class="actions__item actions__vote-up"
       >
         <i class="fas fa-angle-up"></i>
       </button>
     </form>
-    <p class="voting__count">
+    <p class="actions__item actions__vote-count">
       <span :class="voteSumColour">
         {{ totalVotes }}
       </span>
     </p>
     <form @submit.prevent="removeVote">
       <button
-        :class="{ ['voting__vote-down--active']: userVote === -1 }"
+        :class="{
+          ['actions__item--active']: userVote === -1,
+          'actions__item--disabled': !this.canVote,
+        }"
         :disabled="!canVote"
-        class="voting__vote-down"
         type="submit"
+        class="actions__item actions__vote-down"
       >
         <i class="fas fa-angle-down"></i>
       </button>
@@ -32,12 +38,12 @@
 export default {
   name: 'Votes',
   props: {
-    totalVotes: {
-      type: Number,
-      required: true,
-    },
     canVote: {
       type: Boolean,
+      required: true,
+    },
+    totalVotes: {
+      type: Number,
       required: true,
     },
     userVote: {

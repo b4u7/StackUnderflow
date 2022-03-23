@@ -8,7 +8,7 @@
             </a>
         </div>
         <div class="box">
-            <form action="{{ route('answers.update', [$question, $answer]) }}" method="POST">
+            <form action="{{ route('questions.answers.update', [$question, $answer]) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="field">

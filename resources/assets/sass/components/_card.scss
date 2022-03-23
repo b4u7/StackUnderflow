@@ -1,12 +1,8 @@
 .card {
-  @apply bg-white shadow rounded-md sm:overflow-hidden;
+  @apply flex flex-col bg-white shadow rounded-md sm:overflow-hidden;
 
   &--transparent {
     @apply bg-transparent shadow-none rounded-none;
-  }
-
-  &:not(:last-child) {
-    @apply mb-4;
   }
 
   &__header {
@@ -21,8 +17,11 @@
     }
   }
 
-  &__content {
+  &__body {
     @apply px-4;
+  }
+
+  &__content {
   }
 
   &__footer {

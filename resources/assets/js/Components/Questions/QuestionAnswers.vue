@@ -1,16 +1,15 @@
 <template>
-  <section class="section">
+  <section>
     <p class="mt-12 mb-4 text-zinc-800 text-xl font-medium">
       <i class="fas fa-comment-alt"></i> {{ answers.length }}
       {{ $tc('answer | answers', answers.length) }}
     </p>
-
     <answer-section
       v-for="answer in answers"
-      :key="answer.id"
+      :key="`${solutionId}:${answer.id}`"
       :answer="answer"
+      :is-solution="answer.id === solutionId"
       :permissions="permissions[answer.id]"
-      :user-answer-vote="userAnswerVotes[answer.id]"
     />
   </section>
 </template>
@@ -20,20 +19,37 @@ import AnswerCard from './Answer'
 import AnswerSection from './AnswerSection'
 
 export default {
-  name: 'AnswersSection',
+  name: 'QuestionAnswers',
   components: { AnswerSection, AnswerCard },
   props: {
+    questionId: {
+      type: Number,
+      required: true,
+    },
+    solutionId: {
+      type: Number,
+    },
+    permissions: {
+      type: Object,
+      default: () => ({}),
+    },
     answers: {
       type: Array,
       required: true,
     },
-    permissions: {
-      // type: Object,
-      default: () => ({}),
+    nextPageUrl: {
+      type: String,
     },
-    userAnswerVotes: {
-      type: Object,
-      required: true,
+    prevPageUrl: {
+      type: String,
+    },
+  },
+  methods: {
+    async nextPage() {
+      this.$inertia.visit(this.nextPageUrl)
+    },
+    async prevPage() {
+      this.$inertia.visit(this.prevPageUrl)
     },
   },
 }

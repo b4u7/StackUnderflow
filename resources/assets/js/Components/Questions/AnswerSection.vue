@@ -1,37 +1,39 @@
 <template>
   <div class="answer-section">
-    <div class="question-controls">
+    <div class="actions">
       <votes
-        :total-votes="answer.votes_sum_vote || 0"
         :can-vote="permissions.canVote"
-        :user-vote="userVote"
+        :total-votes="answer.votes_sum_vote || 0"
+        :user-vote="answer.user_vote || 0"
         @upvoted="addVote"
         @downvoted="removeVote"
       />
+      <solution :can-mark-solution="permissions.canMarkSolution" :active="isSolution" @mark-solution="markSolution" />
     </div>
-    <answer-card :answer="answer" :permissions="permissions"></answer-card>
+    <answer-card :answer="answer" :is-solution="isSolution" :permissions="permissions" />
   </div>
 </template>
 
 <script>
 import AnswerCard from '@/Components/Questions/Answer'
-import Votes from '@/Components/Questions/Votes'
+import Votes from '@/Components/Questions/Actions/Votes'
+import Solution from '@/Components/Questions/Actions/Solution'
 
 export default {
   name: 'AnswerSection',
-  components: { AnswerCard, Votes },
+  components: { Solution, AnswerCard, Votes },
   props: {
     answer: {
       type: Object,
       required: true,
     },
+    isSolution: {
+      type: Boolean,
+      required: true,
+    },
     permissions: {
       type: Object,
       required: true,
-    },
-    userAnswerVote: {
-      type: Object,
-      required: false,
     },
   },
   data() {
@@ -57,11 +59,42 @@ export default {
     },
   },
   methods: {
-    addVote() {
-      this.$inertia.post(route('answers.upvote', [this.answer.question_id, this.answer]))
+    async addVote() {
+      await this.$inertia.post(route('questions.answers.upvote', [this.answer.question_id, this.answer]), {
+        preserveScroll: true,
+      })
+
+      this.updateVotes(1)
     },
-    removeVote() {
-      this.$inertia.post(route('answers.downvote', [this.answer.question_id, this.answer]))
+    async removeVote() {
+      await this.$inertia.post(route('questions.answers.downvote', [this.answer.question_id, this.answer]), {
+        preserveScroll: true,
+      })
+
+      this.updateVotes(-1)
+    },
+    updateVotes(newUserVote) {
+      if (this.answer.user_vote !== -1 && !this.answer.user_vote) {
+        this.answer.user_vote = newUserVote
+        this.answer.votes_sum_vote += newUserVote
+
+        return
+      }
+
+      const curVote = this.answer.user_vote
+      this.answer.votes_sum_vote -= curVote
+
+      if (curVote !== newUserVote) {
+        this.answer.votes_sum_vote += newUserVote
+        this.answer.user_vote = newUserVote
+
+        return
+      }
+
+      this.answer.user_vote = null
+    },
+    markSolution() {
+      this.$inertia.post(route('questions.answers.solution', [this.answer.question_id, this.answer]))
     },
   },
 }

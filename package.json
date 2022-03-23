@@ -27,6 +27,7 @@
     "babel-jest": "^27.4.5",
     "browser-sync": "^2.27.7",
     "browser-sync-webpack-plugin": "^2.3.0",
+    "copy-to-clipboard": "^3.3.1",
     "cross-env": "^7.0.3",
     "easymde": "^2.15.0",
     "eslint": "^8.5.0",
@@ -36,6 +37,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "^8.2.0",
+    "fuse.js": "^6.5.3",
     "jest": "^27.4.5",
     "laravel-echo": "^1.11.3",
     "laravel-mix": "^6.0.42",
@@ -49,12 +51,15 @@
     "sass": "^1.45.0",
     "sass-loader": "^12.4.0",
     "tailwindcss": "^3.0.7",
+    "tippy.js": "^6.3.7",
     "vue": "^2.6.14",
     "vue-i18n": "^8.26.7",
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14"
   },
   "dependencies": {
-    "fuse.js": "^6.5.3"
+    "@fortawesome/fontawesome-svg-core": "^6.1.0",
+    "@fortawesome/free-solid-svg-icons": "^6.1.0",
+    "@fortawesome/vue-fontawesome": "^2.0.6"
   }
 }
