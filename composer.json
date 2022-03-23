@@ -13,11 +13,10 @@
     "algolia/algoliasearch-client-php": "^3.0.0",
     "cyrildewit/eloquent-viewable": "^6.0",
     "fakerphp/faker": "^1.14",
-    "fideloper/proxy": "^4.0",
-    "inertiajs/inertia-laravel": "^0.4.2",
+    "inertiajs/inertia-laravel": "^v0.5.0",
     "laravel/fortify": "^1.7",
-    "laravel/framework": "^8.0",
-    "laravel/scout": "^8.0",
+    "laravel/framework": "^v9.0.0",
+    "laravel/scout": "^v9.0.0",
     "laravel/tinker": "^2.0",
     "laravolt/avatar": "^4.0.0",
     "parsedown/laravel": "^1.2.1",
@@ -29,12 +28,15 @@
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.2",
     "barryvdh/laravel-ide-helper": "^2.0.0",
-    "facade/ignition": "^2.3.6",
+    "jetbrains/phpstorm-attributes": "^1.0",
     "laravel/sail": "^1.8",
     "mockery/mockery": "^1.0",
-    "nunomaduro/collision": "^5.0",
+    "nunomaduro/collision": "^v6.0.0",
+    "nunomaduro/larastan": "^2.0",
     "pestphp/pest": "^1.9",
-    "phpunit/phpunit": "^9.0"
+    "phpunit/phpunit": "^9.0",
+    "spatie/laravel-ignition": "^1.0",
+    "worksome/envy": "^0.3.1"
   },
   "config": {
     "optimize-autoloader": true,
@@ -73,6 +75,9 @@
     ],
     "post-create-project-cmd": [
       "@php artisan key:generate --ansi"
+    ],
+    "larastan": [
+      "./vendor/bin/phpstan analyse"
     ]
   }
 }
