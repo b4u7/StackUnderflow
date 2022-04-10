@@ -9,12 +9,13 @@ import { InertiaProgress } from '@inertiajs/progress'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import AppLayout from '@/Layouts/AppLayout'
 import HomeLayout from '@/Layouts/HomeLayout'
 
-library.add(fas)
+library.add(fas, far)
 
 Vue.use(VueI18n)
 Vue.mixin({ methods: { route } })
@@ -22,7 +23,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 const i18n = new VueI18n({
   locale: 'en',
-  en
+  en,
 })
 
 let pages = ['Index', 'Auth/']
@@ -45,11 +46,11 @@ createInertiaApp({
     new Vue({
       i18n,
       provide: { axios: window.axios, echo: window.Echo },
-      render: h => h(app, props)
+      render: h => h(app, props),
     }).$mount(el)
-  }
+  },
 })
 
 InertiaProgress.init({
-  color: '#FBBF24'
+  color: '#FBBF24',
 })
