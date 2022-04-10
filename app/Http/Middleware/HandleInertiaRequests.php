@@ -44,19 +44,8 @@ class HandleInertiaRequests extends Middleware
                     'user' => optional($user, static fn() => [
                         'id' => $user->id,
                         'avatar' => $user->avatar,
-                        'name' => $user->user,
-                        'email' => $user->email,
                         'admin' => $user->admin,
-                        'status' => $user->status,
-                        'biography' => $user->biography,
-                        'location' => $user->location,
-                        'facebook' => $user->facebook,
-                        'twitter' => $user->twitter,
-                        'github' => $user->github,
-                        'gitlab' => $user->gitlab,
-                        'instagram' => $user->instagram,
                         'notifications' => $user->unreadNotifications,
-                        'verified' => !!$user->email_verified_at
                     ])
                 ];
             },
