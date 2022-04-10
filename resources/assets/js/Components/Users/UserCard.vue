@@ -1,11 +1,24 @@
 <template>
-  <div class="user-card" @click="onUserCardClick">
+  <div class="user-card">
+    <div class="user-card__header">
+      <figure>
+        <img :src="user.avatar" class="user-card__header__background" :alt="`${user.name}'s header background`" />
+      </figure>
+    </div>
     <div class="user-card__body">
       <div class="user-card__user">
-        <img :src="user.avatar" class="user-card__user__avatar" alt="User avatar">
-        <a class="user-card__user__name" v-text="user.name" />
+        <figure>
+          <img :src="user.avatar" class="user-card__user__avatar" alt="User avatar" />
+        </figure>
+        <p class="user-card__user__name">
+          <a :href="route('user.show', this.user)" v-text="user.name" />
+        </p>
+        <p class="user-card__user__bio">
+          {{ user.biography }}
+        </p>
       </div>
     </div>
+    <div class="user-card__footer"></div>
   </div>
 </template>
 
@@ -15,13 +28,8 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  methods: {
-    onUserCardClick() {
-      this.$inertia.get(route('user.show', this.user))
-    }
-  }
 }
 </script>
