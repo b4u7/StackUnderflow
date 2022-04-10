@@ -1,16 +1,12 @@
+// This can be improved
 $button-colors: (
-  // Name of the class
-  primary:
-  (
-    // Background Color
-    // Should I set the shade separately and just have a default value for it?
+  primary: (
     backgroundColor: 'primary-600',
-    // Text Color
     textColor: 'white',
     hover: (
       backgroundColor: 'primary-700',
       textColor: 'white',
-    )
+    ),
   ),
   primary-lighter: (
     backgroundColor: 'primary-500',
@@ -20,20 +16,32 @@ $button-colors: (
       textColor: 'white',
     ),
   ),
+  secondary:
+    (
+      backgroundColor: 'transparent',
+      textColor: 'slate-600',
+      borderColor: 'slate-200',
+      hover: (
+        borderColor: 'slate-200',
+        backgroundColor: 'white',
+        textColor: 'slate-600',
+      ),
+    ),
   white: (
     backgroundColor: 'white',
-    textColor: 'zinc-600',
+    textColor: 'slate-600',
+    borderColor: 'slate-200',
     hover: (
-      backgroundColor: 'zinc-100',
-      textColor: 'zinc-600',
+      backgroundColor: 'slate-100',
+      textColor: 'slate-900',
     ),
   ),
   light: (
     backgroundColor: 'primary-50',
-    textColor: 'zinc-700',
+    textColor: 'slate-700',
     hover: (
       backgroundColor: 'slate-300',
-      textColor: 'zinc-900',
+      textColor: 'slate-900',
     ),
   ),
   success: (
@@ -51,7 +59,7 @@ $button-colors: (
       backgroundColor: 'red-700',
       textColor: 'white',
     ),
-  )
+  ),
 );
 
 @function map-deep-get($map, $keys...) {
@@ -71,11 +79,10 @@ $button-colors: (
 }
 
 .button {
-  @apply py-2 px-4 inline-block rounded-md font-semibold bg-transparent outline-none motion-safe:transition;
-  @apply transition duration-200;
+  @apply py-2 px-4 inline-block rounded-md font-semibold bg-transparent;
+  @apply transition duration-200 motion-safe:transition;
   @apply border border-transparent;
-  @apply focus:ring focus:ring-primary-400 focus:ring-opacity-75 focus:ring-offset-2;
-  @apply active:ring active:ring-primary-400 active:ring-opacity-75 active:ring-offset-2;
+  @apply focus:outline-none;
 
   $parent: #{&};
 
@@ -83,38 +90,50 @@ $button-colors: (
     $bgColor: map-deep-get($button-colors, $color, 'backgroundColor');
     $textColor: map-deep-get($button-colors, $color, 'textColor');
 
+    $borderColor: if(
+      map-deep-get($button-colors, $color, 'borderColor'),
+      map-deep-get($button-colors, $color, 'borderColor'),
+      'transparent'
+    );
+
     $hoverBgColor: map-deep-get($button-colors, $color, 'hover', 'backgroundColor');
     $hoverTextColor: map-deep-get($button-colors, $color, 'hover', 'textColor');
+
+    $hoverBorderColor: if(
+      map-deep-get($button-colors, $color, 'hover', 'borderColor'),
+      map-deep-get($button-colors, $color, 'hover', 'borderColor'),
+      'transparent'
+    );
 
     $invertedBgColor: map-deep-get($button-colors, $color, 'textColor');
     $invertedTextColor: map-deep-get($button-colors, $color, 'backgroundColor');
 
     &--#{$color} {
-      @apply bg-#{$bgColor} text-#{$textColor};
-      @apply hover:bg-#{$hoverBgColor} hover:text-#{$hoverTextColor};
-      //@apply focus:ring-#{$hoverBgColor};
-      //@apply active:ring-#{$hoverBgColor};
+      @apply bg-#{$bgColor} text-#{$textColor} border-#{$borderColor};
+      @apply hover:bg-#{$hoverBgColor} hover:text-#{$hoverTextColor} hover:border-#{$hoverBorderColor};
 
       &#{$parent}--outline {
-        @apply bg-transparent border-#{$bgColor} text-#{$textColor};
+        @apply bg-transparent border-#{$bgColor} text-#{$bgColor};
         @apply hover:bg-#{$bgColor} hover:text-#{$textColor};
       }
 
       &#{$parent}--invert {
         @apply bg-#{$invertedBgColor} text-#{$invertedTextColor};
         @apply hover:bg-#{$invertedTextColor} hover:text-#{$invertedBgColor};
-        //@apply focus:ring-#{$invertedTextColor};
-        //@apply active:ring-#{$invertedTextColor};
+
+        @apply active:ring-#{$invertedTextColor};
       }
     }
   }
 
   &:not(&--icon) {
     @apply text-sm;
+    @apply focus:ring-primary-600 focus:ring-2 focus:ring-offset-2;
+    @apply focus:ring-primary-600 active:ring-2 active:ring-offset-2;
   }
 
   &--processing {
-    @apply transition duration-200 opacity-25;
+    @apply animate-spin opacity-25;
   }
 
   &--shadow {
@@ -127,7 +146,7 @@ $button-colors: (
 
   // FIXME: hacky fix
   &--icon {
-    @apply text-base p-2;
+    @apply text-base p-2 border-transparent;
 
     svg {
       height: 1rem;
