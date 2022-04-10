@@ -26,7 +26,7 @@ class AnswerFactory extends Factory
         return [
             'user_id' => User::all()->random()->id,
             'question_id' => Question::all()->random()->id,
-            'body' => $this->faker->paragraph,
+            'body' => implode(PHP_EOL, $this->faker->paragraphs(rand(1, 15))),
         ];
     }
 }
