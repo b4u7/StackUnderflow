@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Answer;
 use App\Models\Bookmark;
 use App\Models\Question;
 use App\Models\Tag;
@@ -177,28 +176,25 @@ class QuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Question $question
-     * @return Response
      * @throws AuthorizationException
      */
-    public function edit(Question $question)
+    public function edit(Question $question): Response
     {
         $this->authorize('update', $question);
 
-        $tags = $question->tags()->pluck('name');
+        $tagsList = Tag::all();
 
-        return Inertia::render('Questions/Edit', compact('question', 'tags'));
+        $questionTags = $question->tags()->pluck('name');
+
+        return Inertia::render('Questions/Edit', compact('question', 'tagsList', 'questionTags'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Question $question
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(Request $request, Question $question)
+    public function update(Request $request, Question $question): RedirectResponse
     {
         $this->authorize('update', $question);
 
@@ -218,11 +214,9 @@ class QuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Question $question
-     * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(Question $question)
+    public function destroy(Question $question): RedirectResponse
     {
         $this->authorize('delete', $question);
 
@@ -234,11 +228,9 @@ class QuestionController extends Controller
     /**
      * Restore the specified resource from storage.
      *
-     * @param Question $question
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function restore(Question $question)
+    public function restore(Question $question): RedirectResponse
     {
         $this->authorize('restore', $question);
 
@@ -250,11 +242,9 @@ class QuestionController extends Controller
     /**
      * Upvotes the current question.
      *
-     * @param Question $question
-     * @return RedirectResponse
      * @throws Exception
      */
-    public function upvote(Question $question)
+    public function upvote(Question $question): RedirectResponse
     {
         $this->authorize('vote', $question);
 
@@ -287,11 +277,9 @@ class QuestionController extends Controller
     /**
      * Downvotes the current question.
      *
-     * @param Question $question
-     * @return RedirectResponse
      * @throws Exception
      */
-    public function downvote(Question $question)
+    public function downvote(Question $question): RedirectResponse
     {
         $this->authorize('vote', $question);
 

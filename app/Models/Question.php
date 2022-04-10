@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Scopes\AdminScope;
+use App\Services\MarkdownRenderer;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,8 +15,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
+use League\CommonMark\Extension\Attributes\Node\AttributesInline;
+use League\CommonMark\MarkdownConverter;
 
 class Question extends Model implements Viewable
 {
@@ -27,6 +32,15 @@ class Question extends Model implements Viewable
      */
     protected $fillable = [
         'title', 'body', 'user_id'
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array<string>
+     */
+    protected $appends = [
+        'html_body', 'stripped_body'
     ];
 
     /**
@@ -93,5 +107,15 @@ class Question extends Model implements Viewable
     public function solution(): BelongsTo
     {
         return $this->belongsTo(Answer::class);
+    }
+
+    protected function htmlBody(): Attribute
+    {
+        return Attribute::get(fn() => app(MarkdownRenderer::class)->render($this->body))->shouldCache();
+    }
+
+    protected function strippedBody(): Attribute
+    {
+        return Attribute::get(fn() => strip_tags($this->html_body));
     }
 }
