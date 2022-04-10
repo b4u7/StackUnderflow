@@ -1,13 +1,27 @@
 .user-profile {
+  @apply min-h-screen overflow-hidden;
+
   &__header {
+    @apply h-48 max-h-48 overflow-hidden;
+
     &__background {
-      @apply w-full h-32;
+      @apply object-cover object-center w-full;
     }
+  }
 
-    &__name {
-    }
+  &__avatar {
+    @apply z-10 relative -mt-20 border-4 border-slate-100 rounded-full h-auto w-32;
+  }
 
-    &__username {
-    }
+  &__name {
+    @apply text-2xl text-slate-700 font-semibold mt-2;
+  }
+
+  &__username {
+    @apply font-medium text-slate-600;
+  }
+
+  &__bio {
+    @apply mt-2 text-slate-500;
   }
 }

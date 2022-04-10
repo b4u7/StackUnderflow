@@ -31,12 +31,12 @@
 
   &__notification {
     @apply flex flex-row p-4;
-    @apply hover:bg-zinc-50;
-    @apply focus:bg-zinc-100;
-    @apply active:bg-zinc-100;
+    @apply hover:bg-slate-50;
+    @apply focus:bg-slate-100;
+    @apply active:bg-slate-100;
 
     &__subtitle {
-      @apply flex flex-row text-sm items-center space-x-2 text-zinc-500;
+      @apply flex flex-row text-sm items-center space-x-2 text-slate-500;
     }
 
     &__icon {
@@ -44,11 +44,11 @@
     }
 
     &__title {
-      @apply text-zinc-800;
+      @apply text-slate-800;
     }
 
     &__body {
-      @apply text-zinc-500;
+      @apply text-slate-500;
     }
 
     &__time {
@@ -56,7 +56,7 @@
     }
 
     &__user {
-      @apply text-zinc-900;
+      @apply text-slate-900;
       @apply hover:text-primary-700 hover:underline;
       @apply focus:text-primary-500 focus:underline;
       @apply active:text-primary-500 active:underline;

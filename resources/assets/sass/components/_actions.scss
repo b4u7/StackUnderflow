@@ -4,7 +4,7 @@
   $parent: &;
 
   &__item {
-    @apply text-zinc-300;
+    @apply text-slate-300;
 
     &:is([disabled]),
     &--disabled {
@@ -14,44 +14,56 @@
     &--active {
       &#{$parent}__vote-up {
         @apply text-emerald-500;
-        @apply hover:text-emerald-600;
+
+        &:not([disabled]) {
+          @apply hover:text-emerald-600;
+        }
       }
 
       &#{$parent}__vote-down {
         @apply text-red-500;
-        @apply hover:text-red-600;
+
+        &:not([disabled]) {
+          @apply hover:text-red-600;
+        }
       }
 
       &#{$parent}__bookmark {
         @apply text-primary-500;
-        @apply hover:text-primary-600;
+
+        &:not([disabled]) {
+          @apply hover:text-primary-600;
+        }
       }
 
       &#{$parent}__solution {
         @apply text-emerald-500;
-        @apply hover:text-emerald-600;
+
+        &:not([disabled]) {
+          @apply hover:text-emerald-600;
+        }
       }
     }
   }
 
-  button.actions__item {
-    @apply hover:text-zinc-400;
+  button.actions__item:not([disabled]) {
+    @apply hover:text-slate-400;
   }
 
   &__vote-up {
-    @apply text-5xl;
+    @apply text-4xl;
   }
 
   &__vote-count {
-    @apply text-3xl text-zinc-500;
+    @apply text-3xl text-slate-500;
   }
 
   &__vote-down {
-    @apply text-5xl;
+    @apply text-4xl;
   }
 
   &__bookmark {
-    @apply text-4xl mt-2;
+    @apply text-3xl mt-2;
   }
 
   &__solution {

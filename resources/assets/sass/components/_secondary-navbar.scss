@@ -1,5 +1,5 @@
 .secondary-navbar {
-  @apply bg-zinc-800 text-sm;
+  @apply bg-slate-800 text-sm;
 
   .container {
     @apply relative flex items-center justify-between h-12;
@@ -12,10 +12,10 @@
   &__item {
     @extend .navbar__item;
 
-    @apply text-zinc-400 hover:text-zinc-200;
+    @apply text-slate-400 hover:text-slate-200;
 
     &--active {
-      @apply text-zinc-50;
+      @apply text-slate-50;
     }
   }
 }

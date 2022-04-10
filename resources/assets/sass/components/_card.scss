@@ -1,5 +1,6 @@
 .card {
-  @apply flex flex-col bg-white shadow rounded-md sm:overflow-hidden;
+  //@apply flex flex-col bg-white shadow rounded-md sm:overflow-hidden;
+  @apply flex flex-col bg-white shadow rounded-md ring-1 ring-transparent;
 
   &--transparent {
     @apply bg-transparent shadow-none rounded-none;
@@ -10,10 +11,6 @@
 
     a {
       @apply font-medium;
-    }
-
-    :not(:last-child) {
-      @apply mr-2;
     }
   }
 

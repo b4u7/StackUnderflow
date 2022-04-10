@@ -56,18 +56,18 @@
     &__container {
       @extend .dropdown__container;
 
-      //@apply origin-top-right overflow-hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-zinc-100 focus:outline-none;
+      //@apply origin-top-right overflow-hidden absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-slate-100 focus:outline-none;
     }
 
     &__item {
       @extend .dropdown__item;
 
-      //@apply block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100;
+      //@apply block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100;
     }
   }
 
   &__user {
-    @apply border-2 border-white h-auto w-9 rounded-full;
+    @apply h-auto w-9 rounded-full;
     @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-600 focus:ring-white;
   }
 }
