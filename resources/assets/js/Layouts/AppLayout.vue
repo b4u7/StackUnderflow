@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar />
-    <secondary-navbar class="mb-8" />
+    <secondary-navbar />
     <main>
       <slot></slot>
     </main>
@@ -14,6 +14,6 @@ import SecondaryNavbar from '@/Components/SecondaryNavbar'
 
 export default {
   name: 'AppLayout',
-  components: { Navbar, SecondaryNavbar }
+  components: { Navbar, SecondaryNavbar },
 }
 </script>
