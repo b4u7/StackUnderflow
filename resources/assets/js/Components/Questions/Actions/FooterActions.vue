@@ -8,20 +8,20 @@
         @mouseleave="showShareTippy = false"
         @click.stop.prevent="share"
       >
-        <i class="fas fa-link"></i>
+        <font-awesome-icon icon="fa-solid fa-link" />
         Share
       </Link>
     </tippy>
     <Link v-if="canEdit" :class="classes" :href="editRoute" as="button">
-      <i class="fas fa-edit"></i>
+      <font-awesome-icon icon="fa-solid fa-pen-to-square" />
       Edit
     </Link>
     <Link v-if="canDelete" :class="classes" :href="deleteRoute" method="delete" as="button">
-      <i class="fas fa-trash-alt"></i>
+      <font-awesome-icon icon="fa-solid fa-trash-can" />
       Delete
     </Link>
     <Link v-if="canRestore" :href="restoreRoute" :class="classes" method="post" as="button">
-      <i class="fas fa-trash-restore"></i>
+      <font-awesome-icon icon="fa-solid fa-trash-can-arrow-up" />
       Restore
     </Link>
   </div>
