@@ -1,0 +1,4 @@
+.badge {
+  @apply absolute top-0 right-0 transform translate-x-4 -translate-y-4 inline-flex items-center justify-center;
+  @apply px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full;
+}
