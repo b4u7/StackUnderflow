@@ -5,10 +5,10 @@
       <input
         @click="openDropdown"
         @keyup="event => addTag({ name: query, new: true }, event)"
-        v-model="query"
         class="tag-input__search"
         type="text"
         name="tag-input"
+        v-model="query"
       />
       <div v-if="searching && filteredTagsList.length > 0" class="tag-input__dropdown">
         <div class="tag-input__dropdown__container">
@@ -18,9 +18,8 @@
               class="tag-input__dropdown__button"
               type="button"
               @click="event => addTag(tag.item, event)"
-            >
-              {{ tag.item.name }}
-            </button>
+              v-text="tag.item.name"
+            />
           </div>
         </div>
       </div>
@@ -37,17 +36,24 @@ import { includes, isEmpty, trim } from 'lodash'
 
 export default {
   name: 'TagInput',
+  model: {
+    prop: 'value',
+    event: 'input',
+  },
   components: { Tags, Tag },
   props: {
     tagsList: {
       type: Array,
-      default: [],
+      default: () => [],
+    },
+    value: {
+      type: Array,
+      default: () => [],
     },
   },
   data() {
     return {
       searching: false,
-      selectedTags: [],
       query: '',
       fuse: new Fuse([], { keys: ['name'], threshold: 0.2 }),
     }
@@ -63,6 +69,14 @@ export default {
   computed: {
     filteredTagsList() {
       return this.fuse.search(this.query).filter(result => !includes(this.selectedTags, result.item))
+    },
+    selectedTags: {
+      set(value) {
+        this.$emit('input', value)
+      },
+      get() {
+        return this.value
+      },
     },
   },
   methods: {
@@ -85,7 +99,7 @@ export default {
       tag.name = trim(tag.name, ' ,\t')
 
       // FIXME: Lazy
-      if (event.key.toLowerCase() === 'backspace') {
+      if (event.key.toLowerCase() === 'backspace' && this.query === '') {
         this.removeTag(tag)
         return
       }
@@ -109,6 +123,7 @@ export default {
       const index = tag
         ? this.selectedTags.findIndex(t => t.id === tag.id)
         : this.selectedTags[this.selectedTags.length - 1]
+
       this.selectedTags.splice(index, 1)
     },
   },
