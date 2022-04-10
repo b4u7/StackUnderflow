@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ classes, ...`alert--${this.kind}` }" class="alert alert--">
+  <div :class="classes" class="alert">
     <p>
       <slot></slot>
     </p>
@@ -19,12 +19,13 @@ export default {
       default: false,
     },
   },
-  data() {
-    return {
-      classes: {
+  computed: {
+    classes() {
+      return {
         'alert--fullwidth': this.fullwidth,
-      },
-    }
+        [`alert--${this.kind}`]: true,
+      }
+    },
   },
 }
 </script>
