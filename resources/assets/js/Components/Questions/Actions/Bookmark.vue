@@ -1,8 +1,12 @@
 <template>
   <form @submit.prevent="bookmark">
     <button :class="classes" :disabled="disabled" class="actions__item actions__bookmark" type="submit">
-      <i v-if="active" class="fas fa-bookmark"></i>
-      <i v-else class="far fa-bookmark"></i>
+      <template v-if="active">
+        <font-awesome-icon icon="fa-solid fa-bookmark" />
+      </template>
+      <template v-else>
+        <font-awesome-icon icon="fa-regular fa-bookmark" />
+      </template>
     </button>
   </form>
 </template>

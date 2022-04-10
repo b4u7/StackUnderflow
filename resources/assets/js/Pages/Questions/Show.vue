@@ -1,9 +1,9 @@
 <template>
-  <section class="section">
+  <section class="section mt-8">
     <div class="container">
       <div class="content">
         <div class="mr-0 mb-4 text-right">
-          <a class="button button--fullwidth-touch button--white" :href="route('home')"> Go back </a>
+          <a class="button button--primary button--outline" :href="route('home')"> Go back </a>
         </div>
         <question-section
           :question="question"
@@ -43,7 +43,7 @@
 <script>
 import QuestionSection from '@/Components/Questions/QuestionSection'
 import QuestionAnswers from '@/Components/Questions/QuestionAnswers'
-import MarkdownEditor from '@/Components/MarkdownEditor'
+import MarkdownEditor from '@/Components/Generic/MarkdownEditor'
 import Tippy from '@/Components/Tippy'
 
 export default {
@@ -52,41 +52,41 @@ export default {
   props: {
     question: {
       type: Object,
-      required: true
+      required: true,
     },
     answers: {
       type: Object,
-      required: true
+      required: true,
     },
     isTrashed: {
       type: Boolean,
-      required: true
+      required: true,
     },
     userQuestionVote: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     bookmark: {
-      type: Object
+      type: Object,
     },
     userAnswered: {
       type: Boolean,
-      required: true
+      required: true,
     },
     permissions: {
       type: Object,
-      required: true
+      required: true,
     },
     errors: {
       type: Object,
-      required: false
-    }
+      required: false,
+    },
   },
   data() {
     return {
       form: this.$inertia.form({
-        body: ''
-      })
+        body: '',
+      }),
     }
   },
   computed: {
@@ -95,12 +95,12 @@ export default {
     },
     canAnswer() {
       return this.user && !this.userAnswered
-    }
+    },
   },
   methods: {
     submitAnswer() {
       this.form.post(this.route('questions.answers.store', this.question))
-    }
-  }
+    },
+  },
 }
 </script>

@@ -10,7 +10,7 @@
         type="submit"
         class="actions__item actions__vote-up"
       >
-        <i class="fas fa-angle-up"></i>
+        <font-awesome-icon icon="fa-solid fa-angle-up" />
       </button>
     </form>
     <p class="actions__item actions__vote-count">
@@ -28,7 +28,7 @@
         type="submit"
         class="actions__item actions__vote-down"
       >
-        <i class="fas fa-angle-down"></i>
+        <font-awesome-icon icon="fa-solid fa-angle-down" />
       </button>
     </form>
   </div>

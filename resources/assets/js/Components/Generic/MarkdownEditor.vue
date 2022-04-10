@@ -1,5 +1,5 @@
 <template>
-  <textarea ref="markdownEditor"></textarea>
+  <textarea ref="editor"></textarea>
 </template>
 
 <script>
@@ -14,7 +14,6 @@ export default {
     },
     value: {
       type: String,
-      required: false,
     },
   },
   data() {
@@ -34,6 +33,10 @@ export default {
     })
 
     this.markdownEditor.codemirror.on('change', () => this.$emit('input', this.markdownEditor.value()))
+
+    if (this.value) {
+      this.markdownEditor.value(this.value)
+    }
   },
   watch: {
     value(newValue) {

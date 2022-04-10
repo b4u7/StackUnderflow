@@ -6,7 +6,7 @@
       type="submit"
       class="actions__item actions__solution"
     >
-      <i class="fas fa-check"></i>
+      <font-awesome-icon icon="fa-solid fa-check" />
     </button>
   </form>
 </template>
