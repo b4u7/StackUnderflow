@@ -1,17 +1,12 @@
 <template>
-  <section class="section">
+  <section class="section mt-8">
     <div class="container">
       <div class="mr-0 mb-4 text-right">
-        <a
-          :href="route('questions.create')"
-          class="button button--primary button--fullwidth-touch"
-        >
-          Ask question
-        </a>
+        <a :href="route('questions.create')" class="button button--primary button--fullwidth-touch"> Ask question </a>
       </div>
       <!-- TODO: Left sidebar with some question categories -->
       <!-- <div class="flex items-start mt-4"> -->
-        <!--
+      <!--
         <div v-if="tags.length > 0" class="card">
           <div class="card__header">
             <p>
@@ -23,14 +18,14 @@
           </div>
         </div>
         -->
-        <div id="questions" class="questions-feed">
-          <questions-feed-card
-            v-for="question in loadedQuestions"
-            :key="question.id"
-            :question="question"
-            :id="`question-${question.id}`"
-          />
-        </div>
+      <div id="questions" class="questions-feed">
+        <questions-feed-card
+          v-for="question in loadedQuestions"
+          :key="question.id"
+          :question="question"
+          :id="`question-${question.id}`"
+        />
+      </div>
       <!-- </div> -->
     </div>
   </section>
@@ -46,17 +41,17 @@ export default {
   props: {
     questions: {
       type: Object,
-      required: true
+      required: true,
     },
     tags: {
-      type: Array
-    }
+      type: Array,
+    },
   },
   data() {
     return {
       loadedQuestions: this.questions.data,
       loading: false,
-      observer: null
+      observer: null,
     }
   },
   mounted() {
@@ -76,7 +71,7 @@ export default {
     },
     loadedQuestions() {
       this.$nextTick(() => this.updateObserver())
-    }
+    },
   },
   methods: {
     nextPage() {
@@ -89,7 +84,7 @@ export default {
       this.$inertia.visit(this.questions.next_page_url, {
         preserveScroll: true,
         preserveState: true,
-        onFinish: () => (this.loading = false)
+        onFinish: () => (this.loading = false),
       })
     },
     updateObserver() {
@@ -100,7 +95,7 @@ export default {
 
       const lastQuestionId = `question-${this.loadedQuestions.slice(-1)[0].id}`
       this.observer.observe(document.getElementById(lastQuestionId))
-    }
-  }
+    },
+  },
 }
 </script>

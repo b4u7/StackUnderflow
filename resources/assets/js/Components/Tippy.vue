@@ -7,30 +7,30 @@ export default {
   props: {
     message: {
       type: String,
-      required: true
+      required: true,
     },
     interactive: {
       type: Boolean,
-      default: false
+      default: false,
     },
     placement: {
       type: String,
-      default: 'bottom'
+      default: 'bottom',
     },
     trigger: {
-      type: String
+      type: String,
     },
     open: {
-      type: Boolean
+      type: Boolean,
     },
     hideOnClick: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
-      instance: null
+      instance: null,
     }
   },
   render(h) {
@@ -67,7 +67,7 @@ export default {
       interactive: this.interactive,
       hideOnClick: this.hideOnClick,
       onHide: () => this.$emit('update:open', false),
-      onShow: () => this.$emit('update:open', true)
+      onShow: () => this.$emit('update:open', true),
     })
   },
   watch: {
@@ -79,10 +79,10 @@ export default {
     },
     open(newVal) {
       newVal ? this.instance.show() : this.instance.hide()
-    }
+    },
   },
   beforeDestroy() {
     this.instance?.destroy()
-  }
+  },
 }
 </script>

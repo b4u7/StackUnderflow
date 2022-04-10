@@ -20,21 +20,21 @@ export default {
   props: {
     tags: {
       type: Array,
-      required: true
+      required: true,
     },
     inline: {
       type: Boolean,
-      default: false
+      default: false,
     },
     removable: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   methods: {
     remove(tag) {
       this.$emit('tag-remove', tag)
-    }
-  }
+    },
+  },
 }
 </script>

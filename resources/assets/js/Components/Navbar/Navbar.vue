@@ -53,22 +53,34 @@ export default {
   components: { Tippy, Inbox },
   data() {
     return {
-      dropdownMenuVisible: false
+      dropdownMenuVisible: false,
     }
   },
   computed: {
     user() {
       return this.$page.props.auth.user ?? null
-    }
+    },
   },
   mounted() {
+    if (!this.$refs.dropdown) {
+      return
+    }
+
     document.addEventListener('click', this.onDocumentClick)
   },
   beforeDestroy() {
+    if (!this.$refs.dropdown) {
+      return
+    }
+
     document.removeEventListener('click', this.onDocumentClick)
   },
   methods: {
     onDocumentClick(e) {
+      if (!this.$refs.dropdown) {
+        return
+      }
+
       if (!this.$refs.dropdown.contains(e.target)) {
         this.dropdownMenuVisible = false
       }
@@ -81,7 +93,7 @@ export default {
     },
     search() {
       this.$inertia.get(route('search'))
-    }
-  }
+    },
+  },
 }
 </script>
