@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="section mt-8">
     <div class="container sm:max-w-screen-lg">
       <h1 class="text-2xl font-medium mb-4">Ask a question</h1>
       <form class="form" @submit.prevent="submit">
@@ -19,7 +19,7 @@
         </div>
         <div class="form__group">
           <label class="form__group__label"> Tags </label>
-          <TagInput :tags-list="tagsList" />
+          <tag-input :tags-list="tagsList" v-model="form.tags" />
           <p v-if="errors.tags" class="form__group__description form__group__description--error" v-text="errors.tags" />
         </div>
         <div class="form__footer text-right">
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import MarkdownEditor from '@/Components/MarkdownEditor'
+import MarkdownEditor from '@/Components/Generic/MarkdownEditor'
 import TagInput from '@/Components/TagInput'
 
 export default {
@@ -44,15 +44,14 @@ export default {
     },
     errors: {
       type: Object,
-      required: false,
     },
   },
   data() {
     return {
       form: this.$inertia.form({
-        title: '',
-        body: '',
-        tags: null,
+        title: null,
+        body: null,
+        tags: [],
       }),
     }
   },

@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <section class="section mt-8">
     <div class="container">
       <form class="form mb-4" @submit.prevent="search">
         <div class="form__group">
@@ -13,11 +13,7 @@
         </div>
       </form>
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-        <user-card
-          v-for="user of users.data"
-          :key="user.id"
-          :user="user"
-        />
+        <user-card v-for="user of users.data" :key="user.id" :user="user" />
       </div>
       <div v-if="this.users.prev_page_url || this.users.next_page_url" class="buttons flex justify-between">
         <button v-if="this.users.prev_page_url" class="button button--primary" type="button" @click.prevent="prevPage">
@@ -45,20 +41,19 @@ export default {
   props: {
     users: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       loading: false,
       form: {
-        user: null
-      }
+        user: null,
+      },
     }
   },
   methods: {
-    search() {
-    },
+    search() {},
     prevPage() {
       if (!this.users.prev_page_url || this.loading) {
         return
@@ -69,7 +64,7 @@ export default {
       this.$inertia.visit(this.users.prev_page_url, {
         preserveScroll: true,
         preserveState: true,
-        onFinish: () => (this.loading = false)
+        onFinish: () => (this.loading = false),
       })
     },
     nextPage() {
@@ -82,9 +77,9 @@ export default {
       this.$inertia.visit(this.users.next_page_url, {
         preserveScroll: true,
         preserveState: true,
-        onFinish: () => (this.loading = false)
+        onFinish: () => (this.loading = false),
       })
-    }
-  }
+    },
+  },
 }
 </script>
