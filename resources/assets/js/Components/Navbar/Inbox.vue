@@ -2,15 +2,18 @@
   <li class="relative navbar__item" ref="dropdown">
     <tippy message="Notifications">
       <button class="button button--primary button--icon" type="button" @click.prevent="toggleInbox">
-        <font-awesome-icon icon="fa-solid fa-inbox fa-lg fa-fw" />
+        <span class="relative inline-block">
+          <font-awesome-icon icon="fa-solid fa-inbox fa-lg fa-fw" />
+          <span v-if="notificationCountBadge" class="badge" v-text="notificationCountBadge" />
+        </span>
       </button>
     </tippy>
     <transition name="dropdown-transition">
       <div v-if="visible" class="inbox">
         <div class="inbox__header">
           <div class="inbox__header__left">
-            <template v-if="notificationsCount">
-              <tippy :message="`Mark ${notificationsCount} as read`">
+            <template v-if="notificationCountTotal">
+              <tippy :message="`Mark ${notificationCountTotal} as read`">
                 <button class="button button--white button--icon" type="button" @click.prevent="markAllRead">
                   <font-awesome-icon icon="fa-solid fa-envelope-open" />
                 </button>
@@ -21,18 +24,18 @@
             <p>Notifications</p>
           </div>
           <div class="inbox__header__right">
-            <tippy message="Settings">
-              <button class="button button--white button--icon" type="button" @click.prevent="settingsClick">
-                <font-awesome-icon icon="fa-solid fa-gear fa-lg fa-fw" />
-              </button>
-            </tippy>
+            <!--            <tippy message="Settings">
+                          <button class="button button&#45;&#45;white button&#45;&#45;icon" type="button" @click.prevent="settingsClick">
+                            <font-awesome-icon icon="fa-solid fa-gear fa-lg fa-fw" />
+                          </button>
+                        </tippy>-->
             <button class="button button--white button--icon" type="button" @click.prevent="toggleInbox">
               <font-awesome-icon icon="fa-solid fa-xmark fa-lg fa-fw" />
             </button>
           </div>
         </div>
         <div class="inbox__content">
-          <template v-if="notificationsCount">
+          <template v-if="notificationCountTotal">
             <a
               v-for="notification in notifications"
               :key="notification.id"
@@ -78,18 +81,7 @@ export default {
   inject: ['echo'],
   data() {
     return {
-      visible: false
-    }
-  },
-  computed: {
-    user() {
-      return this.$page.props.auth.user
-    },
-    notifications() {
-      return this.user?.notifications
-    },
-    notificationsCount() {
-      return this.user?.notifications.length
+      visible: false,
     }
   },
   created() {
@@ -100,6 +92,24 @@ export default {
   },
   beforeDestroy() {
     document.removeEventListener('click', this.onDocumentClick)
+  },
+  computed: {
+    user() {
+      return this.$page.props.auth.user
+    },
+    notifications() {
+      return this.user?.notifications
+    },
+    notificationCountTotal() {
+      return this.user?.notifications.length
+    },
+    notificationCountBadge() {
+      if (!this.notificationCountTotal) {
+        return
+      }
+
+      return this.notificationCountTotal > 9 ? '9+' : this.notificationCountTotal.toString()
+    },
   },
   methods: {
     onDocumentClick(e) {
@@ -114,13 +124,11 @@ export default {
       this.visible = !this.visible
     },
     // TODO: Implement Inbox -> Mark all as read
-    markAllRead() {
-
-    },
+    markAllRead() {},
     // TODO: Implement user settings page
     settingsClick() {
       this.$inertia.post(route('user.show'))
-    }
-  }
+    },
+  },
 }
 </script>
