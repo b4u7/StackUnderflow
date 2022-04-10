@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Inertia\Response
      */
-    public function index()
+    public function index(): Response
     {
         $users = User::query()
             ->orderByDesc('created_at')
@@ -25,36 +28,35 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param User $user
-     * @return \Inertia\Response
      */
-    public function show(User $user)
+    public function show(User $user): Response
     {
-        // $votes = User::where('')
+        $questions = $user->questions()
+            ->withSum('votes', 'vote')
+            ->orderByDesc('votes_sum_vote')
+            ->cursorPaginate(8, cursorName: 'questions_cursor');
 
-        return Inertia::render('User/Show', compact('user'));
+        $answers = $user->answers()
+            ->with('question')
+            ->withSum('votes', 'vote')
+            ->orderByDesc('votes_sum_vote')
+            ->cursorPaginate(8, cursorName: 'answers_cursor');
+
+        return Inertia::render('User/Show', compact('user', 'questions', 'answers'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param User $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(User $user)
+    public function edit(User $user): Application|Factory|View
     {
         return view('user.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): RedirectResponse
     {
         // update
 
