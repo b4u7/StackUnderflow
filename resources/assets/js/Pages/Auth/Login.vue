@@ -4,24 +4,40 @@
       <h1 class="text-xl font-medium mb-4">Login</h1>
 
       <form class="form" @submit.prevent="submit">
+        <!--        <div class="form__group">
+                  <label for="email-address" class="form__group__label"> Email address </label>
+                  <input
+                    type="email"
+                    name="email-address"
+                    id="email-address"
+                    autocomplete="email"
+                    class="form__group__control"
+                    v-model="form.email"
+                    required
+                  />
+                  <p
+                    v-if="errors.email"
+                    class="form__group__description form__group__description&#45;&#45;error"
+                    v-text="errors.email"
+                  />
+                </div>-->
         <div class="form__group">
-          <label for="email-address" class="form__group__label"> Email address </label>
+          <label for="username" class="form__group__label"> Username </label>
           <input
-            type="email"
-            name="email-address"
-            id="email-address"
-            autocomplete="email"
+            id="username"
             class="form__group__control"
-            v-model="form.email"
+            type="text"
+            name="username"
+            autocomplete="username"
+            v-model="form.username"
             required
           />
           <p
-            v-if="errors.email"
+            v-if="errors.username"
             class="form__group__description form__group__description--error"
-            v-text="errors.email"
+            v-text="errors.username"
           />
         </div>
-
         <div class="form__group">
           <label for="password" class="form__group__label">Password</label>
           <input
@@ -57,12 +73,7 @@
           </p>
         </div>
         <div class="form__footer">
-          <button
-            :class="{ 'button--processing': form.processing }"
-            :disabled="form.processing"
-            type="submit"
-            class="button button--primary button--fullwidth mb-4"
-          >
+          <button class="button button--primary button--fullwidth mb-4" type="submit" :disabled="form.processing">
             Let me in
           </button>
           <p class="text-center">
@@ -95,7 +106,7 @@ export default {
   data() {
     return {
       form: this.$inertia.form({
-        email: '',
+        username: '',
         password: '',
         remember: false,
       }),

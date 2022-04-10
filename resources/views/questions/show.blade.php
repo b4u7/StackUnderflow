@@ -80,7 +80,7 @@
                             </form>
                         @endcan
                     </div>
-                    <div class="question-card card">
+                    <div class="qa-card card">
                         <div class="question-card__header card__header">
                             <h1 class="question-card__title">
                                 {{ $question->title }}

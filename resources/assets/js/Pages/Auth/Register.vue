@@ -14,9 +14,26 @@
             class="form__group__control"
             v-model="form.name"
             required
-            autofocus
           />
           <p v-if="errors.name" class="form__group__description form__group__description--error" v-text="errors.name" />
+        </div>
+        <div class="form__group">
+          <label for="username" class="form__group__label">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            autocomplete="username"
+            class="form__group__control"
+            v-model="form.username"
+            required
+            autofocus
+          />
+          <p
+            v-if="errors.username"
+            class="form__group__description form__group__description--error"
+            v-text="errors.username"
+          />
         </div>
         <div class="form__group">
           <label for="email-address" class="form__group__label">Email address</label>
@@ -69,12 +86,7 @@
           />
         </div>
         <div class="form__footer">
-          <button
-            :class="{ 'button--processing': form.processing }"
-            :disabled="form.processing"
-            type="submit"
-            class="button button--primary button--fullwidth mb-4"
-          >
+          <button class="button button--primary button--fullwidth mb-4" type="submit" :disabled="form.processing">
             Register
           </button>
           <p class="text-center">
@@ -104,6 +116,7 @@ export default {
     return {
       form: this.$inertia.form({
         name: '',
+        username: '',
         email: '',
         password: '',
         password_confirmation: '',

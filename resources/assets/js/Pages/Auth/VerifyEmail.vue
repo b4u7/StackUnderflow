@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
-      <alert v-if="status && status === 'verification-link-sent'" kind="success" :fullwidth="true">
+      <alert v-if="status && status === 'verification-link-sent'" kind="success" fullwidth>
         A fresh verification link has been sent to your email address.
       </alert>
 
@@ -12,12 +12,7 @@
           <p class="form__group__description">Before proceeding, please check your email for a verification link.</p>
         </div>
         <div class="form__footer">
-          <button
-            :class="{ 'button--processing': form.processing }"
-            :disabled="form.processing"
-            type="submit"
-            class="button button--primary button--fullwidth mb-4"
-          >
+          <button class="button button--primary button--fullwidth mb-4" type="submit" :disabled="form.processing">
             Request another one
           </button>
           <p class="text-center">
