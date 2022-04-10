@@ -28,8 +28,7 @@ class AnsweredNotification extends Notification
      */
     public function via(mixed $notifiable): array
     {
-        // TODO: ['database', 'mail', PusherChannel::class]
-        return ['database', PusherChannel::class];
+        return ['database', 'mail', PusherChannel::class];
     }
 
     /**
