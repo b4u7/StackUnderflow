@@ -1,28 +1,27 @@
 <template>
-  <div :class="classes" :id="`answer-${this.answer.id}`" class="answer-card">
-    <div class="answer-card__header"></div>
-    <div class="answer-card__body">
-      <div class="answer-card__content">
-        <div v-html="answer.body" />
+  <div :class="classes" :id="`answer-${answer.id}`" class="qa-card">
+    <div class="qa-card__body py-3">
+      <div class="qa-card__content">
+        <rendered-markdown :html="answer.html_body" />
       </div>
     </div>
-    <div class="answer-card__footer">
-      <div class="answer-card__menu">
+    <div class="qa-card__footer">
+      <div class="qa-card__menu">
         <footer-actions
           :can-edit="permissions.canEdit"
           :can-delete="permissions.canDelete"
           :can-restore="permissions.canRestore"
           :is-trashed="isTrashed"
-          :edit-route="route('questions.answers.edit', [this.answer.question_id, this.answer])"
-          :delete-route="route('questions.answers.destroy', [this.answer.question_id, this.answer])"
-          :restore-route="route('questions.answers.restore', [this.answer.question_id, this.answer])"
+          :edit-route="route('questions.answers.edit', [answer.question_id, answer])"
+          :delete-route="route('questions.answers.destroy', [answer.question_id, answer])"
+          :restore-route="route('questions.answers.restore', [answer.question_id, answer])"
           :share-url="shareUrl"
         />
       </div>
-      <div class="answer-card__user">
+      <div class="qa-card__user ml-auto text-right">
         <div>
           <p>
-            <a class="answer-card__user__name" :href="route('user.show', answer.user)">
+            <a class="qa-card__user__name" :href="route('user.show', answer.user)">
               {{ answer.user.name }}
             </a>
           </p>
@@ -32,7 +31,7 @@
           </p>
         </div>
         <a :href="route('user.show', answer.user)">
-          <img :src="answer.user.avatar" :alt="answer.user.name" class="answer-card__user__avatar" />
+          <img :src="answer.user.avatar" :alt="answer.user.name" class="qa-card__user__avatar" />
         </a>
       </div>
     </div>
@@ -43,10 +42,11 @@
 import Tippy from '@/Components/Tippy'
 import FormatDateTime from '@/Components/FormatDateTime'
 import FooterActions from '@/Components/Questions/Actions/FooterActions'
+import RenderedMarkdown from '@/Components/Generic/RenderedMarkdown'
 
 export default {
   name: 'AnswerCard',
-  components: { FooterActions, FormatDateTime, Tippy },
+  components: { RenderedMarkdown, FooterActions, FormatDateTime, Tippy },
   props: {
     answer: {
       type: Object,
@@ -65,8 +65,8 @@ export default {
     return {
       isTrashed: !!this.answer.deleted_at,
       classes: {
-        'answer-card--solution': this.isSolution,
-        'answer-card--trashed': this.isTrashed,
+        'qa-card--solution': this.isSolution,
+        'qa-card--trashed': this.isTrashed,
       },
     }
   },

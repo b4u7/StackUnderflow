@@ -1,0 +1,99 @@
+.qa-card {
+  @extend .card;
+
+  @apply w-full;
+
+  &__header {
+    @extend .card__header;
+
+    @apply flex flex-col;
+  }
+
+  &__body {
+    @extend .card__body;
+
+    @apply flex-grow;
+  }
+
+  &__content {
+    @apply text-slate-600 py-2;
+  }
+
+  &__footer {
+    @extend .card__footer;
+
+    @apply items-center text-slate-500;
+  }
+
+  &__menu {
+    @apply flex flex-row text-sm -m-2;
+
+    > * {
+      @apply m-2;
+    }
+  }
+
+  &__user {
+    // questions-card & answers card: ml-auto text-right
+    @apply flex flex-row text-sm text-slate-500 space-x-2;
+
+    &__avatar {
+      // hidden sm:block sm:ml-4
+      @apply rounded-full h-10 w-10 ring-4 ring-white;
+    }
+
+    &__name {
+      @apply text-slate-900 font-medium;
+      @apply hover:text-primary-700 hover:underline;
+      @apply focus:text-primary-600 focus:underline;
+      @apply active:text-primary-600 active:underline;
+    }
+  }
+
+  &__title {
+    @apply font-semibold text-slate-800 text-2xl;
+  }
+
+  &__metadata {
+    @apply flex flex-row space-x-2 text-slate-500 text-sm;
+  }
+
+  &__stats {
+    @apply flex flex-row text-slate-700 -m-2;
+
+    > * {
+      @apply m-2;
+    }
+  }
+
+  &__tags {
+    @extend .tags;
+
+    @apply pt-4 pl-4;
+  }
+
+  &__tag {
+    @extend .tag;
+  }
+
+  &--trashed {
+    @apply border border-red-500;
+  }
+
+  &--solution {
+    @apply border border-green-500;
+  }
+
+  $parent: &;
+
+  &--hoverable {
+    @apply cursor-pointer border border-transparent;
+    @apply hover:ring-primary-500;
+
+    &:hover {
+      #{$parent}__title {
+        @apply text-primary-700;
+      }
+    }
+  }
+}

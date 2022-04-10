@@ -14,11 +14,11 @@
   }
 
   &__title {
-    @apply font-semibold text-zinc-800 text-2xl;
+    @apply font-semibold text-slate-800 text-2xl;
   }
 
   &__stats {
-    @apply flex flex-row text-zinc-500 text-sm;
+    @apply flex flex-row space-x-2 text-slate-500 text-sm;
   }
 
   &__body {
@@ -28,7 +28,7 @@
   }
 
   &__content {
-    @apply text-zinc-600 py-2;
+    @apply text-slate-600 py-2;
   }
 
   &__tags {
@@ -44,7 +44,7 @@
   &__footer {
     @extend .card__footer;
 
-    @apply items-center text-zinc-500 text-sm;
+    @apply items-center text-slate-500 text-sm;
   }
 
   &__menu {
@@ -56,14 +56,14 @@
   }
 
   &__user {
-    @apply flex flex-row ml-auto text-right;
+    @apply flex flex-row text-sm ml-auto text-right;
 
     &__avatar {
       @apply hidden sm:block rounded-full h-10 w-10 ring-2 ring-white sm:ml-4;
     }
 
     &__name {
-      @apply text-zinc-900 font-medium;
+      @apply text-slate-900 font-medium;
       @apply hover:text-primary-700 hover:underline;
       @apply focus:text-primary-600 focus:underline;
       @apply active:text-primary-600 active:underline;

@@ -1,7 +1,10 @@
 <template>
-  <section>
-    <p class="mt-12 mb-4 text-zinc-800 text-xl font-medium">
-      <i class="fas fa-comment-alt"></i> {{ answers.length }}
+  <section class="section">
+    <p class="mt-12 mb-4 text-slate-800 text-xl font-medium">
+      <span>
+        <font-awesome-icon icon="fa-solid fa-message" />
+        {{ answers.length }}
+      </span>
       {{ $tc('answer | answers', answers.length) }}
     </p>
     <answer-section
