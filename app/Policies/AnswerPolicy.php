@@ -32,6 +32,7 @@ class AnswerPolicy
      */
     public function create(User $user, Question $question): bool
     {
+        // TODO: Verify this
         return Answer::where('user_id', '=', $user->id)
                 ->where('question_id', '=', $question?->id)
                 ->where('deleted_at', '=', null)
@@ -91,7 +92,7 @@ class AnswerPolicy
      */
     public function before(User $user, string $ability): ?bool
     {
-        if ($user->admin && $ability !== 'create') {
+        if ($user->admin && ($ability !== 'create' && $ability !== 'vote')) {
             return true;
         }
 
