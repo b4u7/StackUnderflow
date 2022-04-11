@@ -20,5 +20,6 @@ it('registers new users', function () {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(RouteServiceProvider::HOME);
+    $response->assertRedirect('/email/verify');
 });
+
