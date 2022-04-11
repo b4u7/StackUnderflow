@@ -45,9 +45,9 @@ class QuestionPolicy
     /**
      * Determine whether the user can delete the question.
      */
-    public function delete(User $user, Question $question): void
+    public function delete(User $user, Question $question): bool
     {
-        //
+        return $user->id === $question->user_id;
     }
 
     /**
@@ -79,7 +79,7 @@ class QuestionPolicy
      */
     public function before(User $user, string $ability): ?bool
     {
-        if ($user->admin) {
+        if ($user->admin && $ability !== 'vote') {
             return true;
         }
 
