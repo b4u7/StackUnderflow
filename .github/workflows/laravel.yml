@@ -17,7 +17,7 @@ jobs:
           POSTGRES_USER: stackunderflow
           POSTGRES_PASSWORD: secret
         ports:
-          - 5432/TCP
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
