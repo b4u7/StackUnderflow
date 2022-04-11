@@ -18,6 +18,11 @@ jobs:
           POSTGRES_PASSWORD: secret
         ports:
           - 5432/TCP
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
