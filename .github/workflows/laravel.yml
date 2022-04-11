@@ -44,4 +44,5 @@ jobs:
           DB_DATABASE: stackunderflow
           DB_USERNAME: stackunderflow
           DB_PASSWORD: secret
+          MAIL_DRIVER: log
         run: php artisan test
