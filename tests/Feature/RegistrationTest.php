@@ -12,7 +12,8 @@ it('renders the registration screen', function () {
 
 it('registers new users', function () {
     $response = $this->post('/register', [
-        'name' => 'Test User',
+        'name' => 'Test',
+        'username' => 'test_user',
         'email' => 'test@example.com',
         'password' => 'password',
         'password_confirmation' => 'password'
