@@ -1,7 +1,11 @@
 <template>
-  <section class="section mt-8">
-    <div class="container">
+  <section class="section">
+    <div class="container sm:max-w-screen-xl">
       <div class="content">
+        <alert v-if="isTrashed" kind="danger" class="mb-12">
+          <i class="fas fa-exclamation-triangle"></i>
+          This question was deleted, only admins can see it.
+        </alert>
         <div class="mr-0 mb-4 text-right">
           <a class="button button--primary button--outline" :href="route('home')"> Go back </a>
         </div>
@@ -45,10 +49,11 @@ import QuestionSection from '@/Components/Questions/QuestionSection'
 import QuestionAnswers from '@/Components/Questions/QuestionAnswers'
 import MarkdownEditor from '@/Components/Generic/MarkdownEditor'
 import Tippy from '@/Components/Tippy'
+import Alert from '@/Components/Alert'
 
 export default {
   name: 'Show',
-  components: { QuestionAnswers, Tippy, MarkdownEditor, QuestionSection },
+  components: { Alert, QuestionAnswers, Tippy, MarkdownEditor, QuestionSection },
   props: {
     question: {
       type: Object,

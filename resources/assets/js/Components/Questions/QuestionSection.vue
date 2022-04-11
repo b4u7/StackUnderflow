@@ -1,9 +1,5 @@
 <template>
   <section>
-    <alert v-if="isTrashed" kind="danger" class="my-8">
-      <i class="fas fa-exclamation-triangle"></i>
-      This question was deleted, only admins can see it.
-    </alert>
     <div class="flex flex-row">
       <div class="actions">
         <votes

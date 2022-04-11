@@ -16,17 +16,16 @@ $button-colors: (
       textColor: 'white',
     ),
   ),
-  secondary:
-    (
-      backgroundColor: 'transparent',
-      textColor: 'slate-600',
+  secondary: (
+    backgroundColor: 'transparent',
+    textColor: 'slate-600',
+    borderColor: 'slate-200',
+    hover: (
       borderColor: 'slate-200',
-      hover: (
-        borderColor: 'slate-200',
-        backgroundColor: 'white',
-        textColor: 'slate-600',
-      ),
+      backgroundColor: 'white',
+      textColor: 'slate-600',
     ),
+  ),
   white: (
     backgroundColor: 'white',
     textColor: 'slate-600',

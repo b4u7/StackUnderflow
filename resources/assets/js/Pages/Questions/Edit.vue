@@ -23,7 +23,7 @@
           <p v-if="errors.tags" class="form__group__description form__group__description--error" v-text="errors.tags" />
         </div>
         <div class="form__footer text-right">
-          <button type="submit" class="button button--primary mb-4" :disabled="form.processing">Submit question</button>
+          <button type="submit" class="button button--primary mb-4" :disabled="form.processing">Save edits</button>
         </div>
       </form>
     </div>
@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     submit() {
-      this.form.post(this.route('questions.store'))
+      this.form.put(this.route('questions.update', this.question.id))
     },
   },
 }

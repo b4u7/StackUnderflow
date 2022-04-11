@@ -11,7 +11,7 @@ $alert-colours: (
 
   @each $type, $colour in $alert-colours {
     &--#{$type} {
-      @apply bg-#{$colour}-200 text-sm border border-#{$colour}-500 text-#{$colour}-700;
+      @apply bg-#{$colour}-200 text-sm border border-#{$colour}-400 text-#{$colour}-500;
     }
   }
 

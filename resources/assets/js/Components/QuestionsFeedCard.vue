@@ -1,5 +1,5 @@
 <template>
-  <div class="qa-card qa-card--hoverable" @click="onCardClick">
+  <div :class="{ 'qa-card--trashed': question.deleted_at }" class="qa-card qa-card--hoverable" @click="onCardClick">
     <div class="qa-card__header">
       <div class="qa-card__user">
         <a :href="route('user.show', question.user)">
