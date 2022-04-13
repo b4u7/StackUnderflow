@@ -10,7 +10,7 @@ class AnswersTableSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run()
+    public function run(): void
     {
         Answer::factory()->count(100)->create();
     }
