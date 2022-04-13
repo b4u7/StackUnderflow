@@ -22,31 +22,45 @@
             <tabs :tabs="tabs">
               <template #questions>
                 <div class="mt-4 space-y-4">
-                  <div v-for="question in questions.data" class="qa-card qa-card--hoverable">
-                    <div class="qa-card__header">
-                      <h1 class="qa-card__title">
-                        {{ question.title }}
-                      </h1>
+                  <template v-if="questions.data.length">
+                    <div v-for="question in questions.data" class="qa-card qa-card--hoverable">
+                      <div class="qa-card__header">
+                        <h1 class="qa-card__title">
+                          {{ question.title }}
+                        </h1>
+                      </div>
                     </div>
-                  </div>
+                    <button class="button button--primary button--outline button--fullwidth-touch mt-4 ml-auto">
+                      Load more
+                    </button>
+                  </template>
+                  <template v-else>
+                    <p class="text-center">
+                      This user hasn't asked anything.
+                    </p>
+                  </template>
                 </div>
-                <button class="button button--primary button--outline button--fullwidth-touch mt-4 ml-auto">
-                  Load more
-                </button>
               </template>
               <template #answers>
                 <div class="mt-4 space-y-4">
-                  <div v-for="answer in answers.data" class="qa-card qa-card--hoverable">
-                    <div class="qa-card__header">
-                      <h1 class="qa-card__title">
-                        {{ answer.question.title }}
-                      </h1>
+                  <template v-if="answers.data.length">
+                    <div v-for="answer in answers.data" class="qa-card qa-card--hoverable">
+                      <div class="qa-card__header">
+                        <h1 class="qa-card__title">
+                          {{ answer.question.title }}
+                        </h1>
+                      </div>
+                      <div class="qa-card__body">
+                        {{ answer.body }}
+                      </div>
+                      <div class="qa-card__footer"></div>
                     </div>
-                    <div class="qa-card__body">
-                      {{ answer.body }}
-                    </div>
-                    <div class="qa-card__footer"></div>
-                  </div>
+                  </template>
+                  <template v-else>
+                    <p class="text-center">
+                      This user hasn't answered any questions.
+                    </p>
+                  </template>
                 </div>
               </template>
             </tabs>
@@ -66,30 +80,30 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true,
+      required: true
     },
     questions: {
       type: Object,
-      required: true,
+      required: true
     },
     answers: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       loadedData: [],
       tabs: [
         { name: 'Questions', key: 'questions' },
-        { name: 'Answers', key: 'answers' },
-      ],
+        { name: 'Answers', key: 'answers' }
+      ]
     }
   },
   methods: {
     nextPage() {
       // loadedData.push(data)
-    },
-  },
+    }
+  }
 }
 </script>
