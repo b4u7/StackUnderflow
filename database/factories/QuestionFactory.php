@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Question;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use JetBrains\PhpStorm\ArrayShape;
 
 class QuestionFactory extends Factory
 {
@@ -17,10 +18,9 @@ class QuestionFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    #[ArrayShape(['user_id' => "\Illuminate\Support\HigherOrderCollectionProxy|mixed", 'title' => "string", 'body' => "string"])]
+    public function definition(): array
     {
         return [
             'user_id' => User::all()->random()->id,
