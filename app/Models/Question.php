@@ -12,14 +12,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Mail\Markdown;
-use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
-use League\CommonMark\Extension\Attributes\Node\AttributesInline;
-use League\CommonMark\MarkdownConverter;
 
 class Question extends Model implements Viewable
 {
