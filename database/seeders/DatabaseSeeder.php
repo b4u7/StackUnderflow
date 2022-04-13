@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Mail;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Mail::fake();
+
         $this->call([
             UsersTableSeeder::class,
             QuestionsTableSeeder::class,
