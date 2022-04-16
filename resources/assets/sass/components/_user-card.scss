@@ -8,7 +8,7 @@
     @apply z-0 overflow-hidden;
 
     &__background {
-      @apply object-cover object-center filter blur-xl w-full h-16 max-h-16;
+      @apply object-cover object-center w-full h-16 max-h-16;
     }
   }
 
@@ -26,11 +26,15 @@
     }
 
     &__name {
-      @apply mt-1 text-slate-700 font-semibold;
+      @apply mt-1 font-semibold;
+    }
+
+    &__username {
+      @apply text-sm;
     }
 
     &__bio {
-      @apply text-slate-600 text-sm;
+      @apply mt-4 text-slate-600 text-sm;
     }
   }
 
