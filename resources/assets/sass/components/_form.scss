@@ -27,6 +27,18 @@
         @apply text-red-500;
       }
     }
+
+    $parent: &;
+
+    &--error {
+      #{$parent}__control {
+        @apply ring-2 ring-red-500;
+      }
+
+      #{$parent}__description {
+        @apply text-red-500;
+      }
+    }
   }
 
   &__checkbox {
