@@ -54,15 +54,15 @@ export default {
   props: {
     question: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       classes: {
         success: 'text-emerald-600',
-        danger: 'text-red-600'
-      }
+        danger: 'text-red-600',
+      },
     }
   },
   computed: {
@@ -99,12 +99,12 @@ export default {
       }
 
       return body
-    }
+    },
   },
   methods: {
     onCardClick() {
       this.$inertia.get(route('questions.show', this.question))
-    }
-  }
+    },
+  },
 }
 </script>

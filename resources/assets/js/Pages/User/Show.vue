@@ -50,9 +50,7 @@
                     </button>
                   </template>
                   <template v-else>
-                    <p class="text-center">
-                      This user hasn't asked anything.
-                    </p>
+                    <p class="text-center">This user hasn't asked anything.</p>
                   </template>
                 </div>
               </template>
@@ -72,9 +70,7 @@
                     </div>
                   </template>
                   <template v-else>
-                    <p class="text-center">
-                      This user hasn't answered any questions.
-                    </p>
+                    <p class="text-center">This user hasn't answered any questions.</p>
                   </template>
                 </div>
               </template>
@@ -95,30 +91,30 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true
+      required: true,
     },
     questions: {
       type: Object,
-      required: true
+      required: true,
     },
     answers: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       loadedData: [],
       tabs: [
         { name: 'Questions', key: 'questions' },
-        { name: 'Answers', key: 'answers' }
-      ]
+        { name: 'Answers', key: 'answers' },
+      ],
     }
   },
   methods: {
     nextPage() {
       // loadedData.push(data)
-    }
-  }
+    },
+  },
 }
 </script>

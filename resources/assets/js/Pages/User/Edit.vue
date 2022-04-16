@@ -48,9 +48,7 @@
             </form>
           </div>
         </template>
-        <template #profile>
-
-        </template>
+        <template #profile> </template>
       </tabs>
     </div>
   </section>
@@ -64,20 +62,20 @@ export default {
   components: { Tabs },
   props: {
     errors: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   data() {
     return {
       tabs: [
         { name: 'Account', key: 'account' },
-        { name: 'Profile', key: 'profile' }
+        { name: 'Profile', key: 'profile' },
       ],
       form: this.$inertia.form({
         username: '',
         password: '',
-        remember: false
-      })
+        remember: false,
+      }),
     }
   },
   methods: {
@@ -85,12 +83,12 @@ export default {
       this.form
         .transform(data => ({
           ...data,
-          remember: this.form.remember ? 'on' : ''
+          remember: this.form.remember ? 'on' : '',
         }))
         .post(this.route('login'), {
-          onFinish: () => this.form.reset('password')
+          onFinish: () => this.form.reset('password'),
         })
-    }
-  }
+    },
+  },
 }
 </script>

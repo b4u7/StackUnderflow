@@ -2,9 +2,7 @@
   <section>
     <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
       <h1 class="text-xl font-medium mb-4">Register an account</h1>
-      <p>
-        Join the StackUnderflow community to collaborate and share knowledge without any limitations.
-      </p>
+      <p>Join the StackUnderflow community to collaborate and share knowledge without any limitations.</p>
 
       <form class="form" @submit.prevent="submit">
         <div class="form__group">
@@ -108,12 +106,12 @@ export default {
   props: {
     errors: {
       type: Object,
-      required: false
+      required: false,
     },
     status: {
       type: String,
-      required: false
-    }
+      required: false,
+    },
   },
   data() {
     return {
@@ -122,20 +120,20 @@ export default {
         username: '',
         email: '',
         password: '',
-        password_confirmation: ''
-      })
+        password_confirmation: '',
+      }),
     }
   },
   methods: {
     submit() {
       this.form
         .transform(data => ({
-          ...data
+          ...data,
         }))
         .post(this.route('register'), {
-          onFinish: () => this.form.reset('password', 'password_confirmation')
+          onFinish: () => this.form.reset('password', 'password_confirmation'),
         })
-    }
-  }
+    },
+  },
 }
 </script>

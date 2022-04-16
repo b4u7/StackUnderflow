@@ -37,24 +37,24 @@ export default {
   name: 'TagInput',
   model: {
     prop: 'value',
-    event: 'input'
+    event: 'input',
   },
   components: { Tags, Tag },
   props: {
     tagsList: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     value: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
       searching: false,
       query: '',
-      fuse: new Fuse([], { keys: ['name'], threshold: 0.2 })
+      fuse: new Fuse([], { keys: ['name'], threshold: 0.2 }),
     }
   },
   watch: {
@@ -62,8 +62,8 @@ export default {
       immediate: true,
       handler(value) {
         this.fuse.setCollection(value)
-      }
-    }
+      },
+    },
   },
   computed: {
     filteredTagsList() {
@@ -75,8 +75,8 @@ export default {
       },
       get() {
         return this.value
-      }
-    }
+      },
+    },
   },
   // TODO: Probably have a method called handleInput instead of doing everything in addTag
   methods: {
@@ -109,6 +109,7 @@ export default {
 
       tag.name = trim(tag.name, ' ,\t')
 
+      // FIXME: Pressing backspace when there's still a character removes the previous tag
       if (event.key?.toLowerCase() === 'backspace') {
         if (isEmpty(this.query)) {
           this.removeTag(tag)
@@ -138,8 +139,8 @@ export default {
         : this.selectedTags[this.selectedTags.length - 1]
 
       this.selectedTags.splice(index, 1)
-    }
-  }
+    },
+  },
 }
 </script>
 
