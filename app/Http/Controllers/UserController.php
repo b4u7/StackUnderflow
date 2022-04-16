@@ -48,9 +48,9 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user): Application|Factory|View
+    public function edit(User $user): Response
     {
-        return view('user.edit', compact('user'));
+        return Inertia::render('User/Edit', compact('user'));
     }
 
     /**
