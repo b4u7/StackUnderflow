@@ -24,15 +24,15 @@ $colours: (
 );
 
 .tags {
-  //@apply flex flex-row items-center space-x-1;
-  @apply space-x-2;
+  @apply flex space-x-2;
 
+  //@apply flex flex-row items-center space-x-1;
   //@apply flex-wrap;
 }
 
 .tag {
   @apply bg-sky-50 text-sky-600;
-  @apply inline-flex text-sm leading-relaxed rounded-full cursor-pointer;
+  @apply inline-flex whitespace-nowrap text-sm leading-relaxed rounded-full cursor-pointer;
   @apply hover:bg-sky-100;
   @apply focus:bg-sky-200;
   @apply active:bg-sky-200;
