@@ -92,7 +92,6 @@ export default {
   props: {
     errors: {
       type: Object,
-      required: false,
     },
     canResetPassword: {
       type: Boolean,
