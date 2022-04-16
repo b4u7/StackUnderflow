@@ -6,17 +6,17 @@
           <img :src="question.user.avatar" :alt="`${question.user.name} avatar`" class="qa-card__user__avatar" />
         </a>
         <div class="ml-2">
-          <a class="qa-card__user__name" :href="route('user.show', question.user)">
-            <p v-text="question.user.name" />
-          </a>
+          <p class="qa-card__user__name">
+            <a :href="route('user.show', question.user)" v-text="question.user.name" />
+          </p>
           <p v-text="lastActionType + ' ' + lastActionTime.toRelative()" />
         </div>
       </div>
     </div>
     <div class="qa-card__body">
-      <a :href="route('questions.show', question.id)">
-        <h1 class="qa-card__title mt-2 mb-3" v-text="question.title" />
-      </a>
+      <h1 class="qa-card__title mt-2 mb-3">
+        <a :href="route('questions.show', question.id)" v-text="question.title" />
+      </h1>
       <p class="qa-card__content" v-html="questionBody" />
     </div>
     <div v-if="question.tags.length" class="qa-card__tags">
@@ -54,15 +54,15 @@ export default {
   props: {
     question: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       classes: {
         success: 'text-emerald-600',
-        danger: 'text-red-600',
-      },
+        danger: 'text-red-600'
+      }
     }
   },
   computed: {
@@ -99,12 +99,12 @@ export default {
       }
 
       return body
-    },
+    }
   },
   methods: {
     onCardClick() {
       this.$inertia.get(route('questions.show', this.question))
-    },
-  },
+    }
+  }
 }
 </script>
