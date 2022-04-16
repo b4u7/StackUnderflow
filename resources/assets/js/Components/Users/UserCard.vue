@@ -13,9 +13,8 @@
         <p class="user-card__user__name">
           <a :href="route('user.show', this.user)" v-text="user.name" />
         </p>
-        <p class="user-card__user__bio">
-          {{ user.biography }}
-        </p>
+        <p class="user-card__user__username" v-text="`@${user.username}`" />
+        <p class="user-card__user__bio" v-text="user.biography" />
       </div>
     </div>
     <div class="user-card__footer"></div>
@@ -28,8 +27,8 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 }
 </script>
