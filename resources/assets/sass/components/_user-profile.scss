@@ -22,6 +22,14 @@
   }
 
   &__bio {
-    @apply mt-2 text-slate-500;
+    @apply my-4 text-slate-700;
+  }
+
+  &__social {
+    @apply flex flex-row;
+  }
+
+  &__company {
+    @apply mt-4 text-slate-800;
   }
 }

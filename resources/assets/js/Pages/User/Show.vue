@@ -13,12 +13,27 @@
               <img :src="user.avatar" :alt="`${user.name}'s avatar`" class="user-profile__avatar" />
             </figure>
             <h1 class="user-profile__name" v-text="user.name" />
-            <p class="user-profile__username">@{{ user.username }}</p>
-            <p class="user-profile__bio">
-              {{ user.biography }}
+            <p class="user-profile__username" v-text="`@${user.username}`" />
+            <p v-if="user.biography" class="user-profile__bio" v-text="user.biography" />
+            <a class="button button--primary button--fullwidth" :href="route('user.edit', user.id)">
+              Edit your profile
+            </a>
+            <!-- TODO: Following & followers feature
+            <div class="user-profile__social">
+              <p>
+
+              </p>
+            </div>
+            -->
+            <p v-if="user.company" class="user-profile__company">
+              <span class="mr-2">
+                <font-awesome-icon icon="fa-solid fa-building" />
+              </span>
+              {{ user.company }}
             </p>
           </div>
-          <div class="md:col-span-9">
+          <div class="md:col-span-1"></div>
+          <div class="md:col-span-8">
             <tabs :tabs="tabs">
               <template #questions>
                 <div class="mt-4 space-y-4">
