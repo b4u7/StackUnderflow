@@ -1,23 +1,15 @@
 .tag-input {
-  $parent: &;
-
   &__box {
     @apply relative;
-    @apply flex flex-row;
+    @apply flex flex-row items-center;
     @apply bg-white rounded-md;
-    @apply mt-1 w-full shadow-sm sm:text-sm border border-slate-300 px-2;
+    @apply mt-1 w-full shadow-sm sm:text-sm border-0 border-transparent ring-1 ring-slate-300 px-2;
   }
 
   &__search {
     @apply appearance-none border-none w-full text-sm rounded-md;
     @apply focus:border-none focus:outline-none focus:ring-0;
     @apply active:border-none active:outline-none active:ring-0;
-
-    &:focus {
-      #{$parent}__box {
-        @apply ring-primary-600 border-primary-600 bg-red-500;
-      }
-    }
   }
 
   &__dropdown {
@@ -30,7 +22,10 @@
     }
 
     &__button {
-      @apply flex leading-relaxed p-0;
+      @extend .dropdown__item;
+
+      @apply w-full;
+      @apply hover:bg-slate-200;
     }
   }
 }
