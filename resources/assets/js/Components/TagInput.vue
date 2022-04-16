@@ -12,15 +12,14 @@
       />
       <div v-if="searching && filteredTagsList.length > 0" class="tag-input__dropdown">
         <div class="tag-input__dropdown__container">
-          <div v-for="(tag, index) in filteredTagsList">
-            <button
-              :key="index"
-              class="tag-input__dropdown__button"
-              type="button"
-              @click="event => addTag(tag.item, event)"
-              v-text="tag.item.name"
-            />
-          </div>
+          <button
+            v-for="(tag, index) in filteredTagsList"
+            :key="index"
+            type="button"
+            class="tag-input__dropdown__button"
+            @click="event => addTag(tag.item, event)"
+            v-text="tag.item.name"
+          />
         </div>
       </div>
     </div>
@@ -38,24 +37,24 @@ export default {
   name: 'TagInput',
   model: {
     prop: 'value',
-    event: 'input',
+    event: 'input'
   },
   components: { Tags, Tag },
   props: {
     tagsList: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     value: {
       type: Array,
-      default: () => [],
-    },
+      default: () => []
+    }
   },
   data() {
     return {
       searching: false,
       query: '',
-      fuse: new Fuse([], { keys: ['name'], threshold: 0.2 }),
+      fuse: new Fuse([], { keys: ['name'], threshold: 0.2 })
     }
   },
   watch: {
@@ -63,8 +62,8 @@ export default {
       immediate: true,
       handler(value) {
         this.fuse.setCollection(value)
-      },
-    },
+      }
+    }
   },
   computed: {
     filteredTagsList() {
@@ -76,9 +75,10 @@ export default {
       },
       get() {
         return this.value
-      },
-    },
+      }
+    }
   },
+  // TODO: Probably have a method called handleInput instead of doing everything in addTag
   methods: {
     openDropdown() {
       this.searching = true
@@ -86,21 +86,34 @@ export default {
     closeDropdown() {
       this.searching = false
     },
+    // handleInput(tag, event) {
+    //   const allowedKeys = [',', ' ', 'enter', 'delete', 'backspace']
+    //
+    //   if (event.key && !allowedKeys.includes(event.key?.toLowerCase())) {
+    //     return
+    //   }
+    //
+    //   tag.name = trim(tag.name, ' ,\t')
+    // },
     addTag(tag, event) {
       if (this.selectedTags.length >= 5) {
         return
       }
 
       const allowedKeys = [',', ' ', 'enter', 'delete', 'backspace']
-      if (!event.key || (event.key && !allowedKeys.includes(event.key.toLowerCase()))) {
+
+      // !event.key || (event.key && !allowedKeys.includes(event.key.toLowerCase()))
+      if (event.key && !allowedKeys.includes(event.key?.toLowerCase())) {
         return
       }
 
       tag.name = trim(tag.name, ' ,\t')
 
-      // FIXME: Lazy
-      if (event.key.toLowerCase() === 'backspace' && this.query === '') {
-        this.removeTag(tag)
+      if (event.key?.toLowerCase() === 'backspace') {
+        if (isEmpty(this.query)) {
+          this.removeTag(tag)
+        }
+
         return
       }
 
@@ -125,8 +138,8 @@ export default {
         : this.selectedTags[this.selectedTags.length - 1]
 
       this.selectedTags.splice(index, 1)
-    },
-  },
+    }
+  }
 }
 </script>
 
