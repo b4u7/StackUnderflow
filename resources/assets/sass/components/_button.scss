@@ -78,7 +78,7 @@ $button-colors: (
 }
 
 .button {
-  @apply py-2 px-4 inline-block rounded-md font-semibold bg-transparent;
+  @apply py-2 px-4 inline-block rounded-md font-semibold text-center bg-transparent;
   @apply transition duration-200 motion-safe:transition;
   @apply border border-transparent;
   @apply focus:outline-none;
@@ -90,18 +90,18 @@ $button-colors: (
     $textColor: map-deep-get($button-colors, $color, 'textColor');
 
     $borderColor: if(
-      map-deep-get($button-colors, $color, 'borderColor'),
-      map-deep-get($button-colors, $color, 'borderColor'),
-      'transparent'
+        map-deep-get($button-colors, $color, 'borderColor'),
+        map-deep-get($button-colors, $color, 'borderColor'),
+        'transparent'
     );
 
     $hoverBgColor: map-deep-get($button-colors, $color, 'hover', 'backgroundColor');
     $hoverTextColor: map-deep-get($button-colors, $color, 'hover', 'textColor');
 
     $hoverBorderColor: if(
-      map-deep-get($button-colors, $color, 'hover', 'borderColor'),
-      map-deep-get($button-colors, $color, 'hover', 'borderColor'),
-      'transparent'
+        map-deep-get($button-colors, $color, 'hover', 'borderColor'),
+        map-deep-get($button-colors, $color, 'hover', 'borderColor'),
+        'transparent'
     );
 
     $invertedBgColor: map-deep-get($button-colors, $color, 'textColor');
