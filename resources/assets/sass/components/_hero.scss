@@ -11,6 +11,10 @@
     @apply flex items-center flex-grow;
   }
 
+  &__cta {
+    @apply mt-8 space-y-2;
+  }
+
   &__footer {
   }
 
@@ -23,10 +27,10 @@
   }
 
   &--large {
-    @apply h-96;
+    @apply h-[80vh];
   }
 
-  &--fullwidth {
+  &--full {
     @apply h-screen;
   }
 

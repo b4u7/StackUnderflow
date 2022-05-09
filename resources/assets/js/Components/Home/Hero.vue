@@ -1,8 +1,8 @@
 <template>
-  <section class="hero hero--large hero--primary">
+  <section class="hero hero--primary">
     <div class="hero__body">
       <div class="container">
-        <h1 class="hero__leading" v-if="leading" v-html="leading" />
+        <slot name="body"></slot>
       </div>
     </div>
   </section>
