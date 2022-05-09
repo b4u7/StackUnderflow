@@ -4,7 +4,7 @@
   @apply bg-white text-sm shadow-lg rounded-md block z-10;
 
   &__container {
-    @apply p-2;
+    @apply p-2 flex flex-col;
   }
 
   &__divider {
@@ -16,7 +16,7 @@
   }
 
   &__item {
-    @apply flex flex-grow py-1.5 px-2 text-slate-900 rounded-md;
+    @apply flex py-1.5 px-2 text-slate-900 rounded-md;
     @apply hover:bg-slate-200;
   }
 

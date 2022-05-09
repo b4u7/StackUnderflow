@@ -16,17 +16,15 @@
       <template v-if="user">
         <inbox />
         <li class="relative navbar__item" ref="dropdown" @click="toggleDropdown">
-          <button type="button">
-            <img :src="user.avatar" class="navbar__user" alt="Your user avatar" />
+          <button type="button" class="navbar__user">
+            <img :src="user.avatar" alt="Your user avatar" />
           </button>
           <transition name="dropdown-transition">
             <div v-if="dropdownMenuVisible" class="navbar__dropdown">
               <div class="navbar__dropdown__container">
-                <a :href="route('user.show', user)" class="navbar__dropdown__item"> Profile </a>
-                <a :href="route('user.edit', user)" class="navbar__dropdown__item"> Edit profile </a>
-                <form class="navbar__dropdown__item" @submit.prevent="logout">
-                  <button type="submit">Logout</button>
-                </form>
+                <a :href="route('users.show', user)" class="navbar__dropdown__item"> Profile </a>
+                <a :href="route('users.edit', user)" class="navbar__dropdown__item"> Account settings </a>
+                <button type="button" class="navbar__dropdown__item" @click="logout">Logout</button>
               </div>
             </div>
           </transition>
@@ -34,10 +32,10 @@
       </template>
       <template v-else>
         <li class="navbar__item">
-          <a :href="route('login')" class="button button--primary-lighter"> Login </a>
+          <a :href="route('login')" class="button button--primary"> Login </a>
         </li>
         <li class="navbar__item">
-          <a :href="route('register')" class="button button--light"> Register </a>
+          <a :href="route('register')" class="button button--white"> Register </a>
         </li>
       </template>
     </ul>
@@ -89,10 +87,10 @@ export default {
       this.dropdownMenuVisible = !this.dropdownMenuVisible
     },
     logout() {
-      this.$inertia.post(route('logout'))
+      this.$inertia.post(this.route('logout'))
     },
     search() {
-      this.$inertia.get(route('search'))
+      this.$inertia.get(this.route('search'))
     },
   },
 }
