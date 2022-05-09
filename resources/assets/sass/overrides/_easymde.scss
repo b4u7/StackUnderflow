@@ -1,10 +1,14 @@
 .EasyMDEContainer {
   .editor-toolbar {
-    @apply border-0;
+    @apply border-0 text-slate-700;
 
     &.fullscreen {
       @apply border-r-0;
     }
+  }
+
+  .editor-statusbar {
+    @apply text-slate-500;
   }
 
   .CodeMirror {
