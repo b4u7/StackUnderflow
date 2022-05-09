@@ -5,10 +5,10 @@
   @apply hover:border-primary-600 hover:-translate-y-1;
 
   &__header {
-    @apply z-0 overflow-hidden;
+    @apply overflow-hidden bg-slate-100 h-28 max-h-28;
 
     &__background {
-      @apply object-cover object-center w-full h-16 max-h-16;
+      @apply object-cover object-center origin-center w-full h-full;
     }
   }
 
@@ -22,7 +22,11 @@
 
   &__user {
     &__avatar {
-      @apply z-10 relative -mt-8 border-4 border-white rounded-full h-auto w-16;
+      @apply z-10 relative -mt-8 border-4 border-white rounded-full h-20 w-20 overflow-hidden;
+
+      img {
+        @apply h-full w-full object-cover object-center;
+      }
     }
 
     &__name {
@@ -30,7 +34,7 @@
     }
 
     &__username {
-      @apply text-sm;
+      @apply mt-1 text-sm;
     }
 
     &__bio {
