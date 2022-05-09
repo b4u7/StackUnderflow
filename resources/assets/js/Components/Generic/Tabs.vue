@@ -36,5 +36,10 @@ export default {
   created() {
     this.activeTab = this.tabs[0].key
   },
+  watch: {
+    activeTab(newVal) {
+      this.$emit('changed', newVal)
+    },
+  },
 }
 </script>
