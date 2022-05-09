@@ -1,0 +1,51 @@
+.modal {
+  //@apply fixed top-0 right-0 left-0 z-50 w-full md:inset-0 md:h-full;
+  @apply fixed z-20 inset-0 overflow-y-auto;
+
+  &__container {
+    @apply flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0;
+  }
+
+  &__background {
+    @apply fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity;
+  }
+
+  &__centered {
+    @apply hidden sm:inline-block sm:align-middle sm:h-screen;
+  }
+
+  &__card {
+    @extend .card;
+
+    @apply text-left relative inline-block align-bottom shadow-xl overflow-hidden;
+    @apply transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full;
+
+    &__header {
+      @extend .card__header;
+
+      @apply items-center min-h-[3rem] py-1 px-2;
+
+      &__left {
+      }
+
+      &__center {
+        @apply inline-flex flex-grow justify-center;
+      }
+
+      &__right {
+      }
+    }
+
+    &__body {
+      @extend .card__body;
+
+      @apply flex flex-grow flex-col overflow-y-auto max-h-[80vh] p-0;
+    }
+
+    &__footer {
+      @extend .card__footer;
+
+      @apply block;
+    }
+  }
+}
