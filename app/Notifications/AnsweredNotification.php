@@ -54,7 +54,7 @@ class AnsweredNotification extends Notification
             'title' => $this->answer->question?->title,
             'author' => [
                 'name' => $this->answer->user?->name,
-                'url' => route('user.show', $this->answer->user)
+                'url' => route('users.show', $this->answer->user)
             ],
             'body' => $this->answer->body,
             'url' => route('questions.show', $this->answer->question)
