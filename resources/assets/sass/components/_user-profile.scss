@@ -1,16 +1,62 @@
 .user-profile {
-  @apply min-h-screen overflow-hidden;
+  @apply overflow-hidden;
 
   &__header {
-    @apply h-48 max-h-48 overflow-hidden;
+    @apply relative flex items-center justify-center bg-slate-100;
+    @apply h-64 max-h-64 overflow-hidden;
+
+    &--empty {
+      @apply h-32 max-h-32 bg-slate-200;
+    }
 
     &__background {
-      @apply object-cover object-center w-full;
+      @apply object-cover object-center w-full h-full;
+    }
+  }
+
+  &__header--editing img {
+    @apply brightness-90;
+  }
+
+  &__edit {
+    @apply absolute;
+
+    &__button {
+      @apply z-10 relative rounded-full text-white p-2 bg-slate-900 bg-opacity-50;
+      @apply hover:bg-opacity-70;
+
+      svg {
+        height: 1rem;
+        width: 1rem;
+      }
+
+      line-height: 0;
+    }
+
+    &__input {
+      @apply absolute opacity-0 w-[1px] h-[1px] top-0 bottom-0 left-0 right-0 mx-auto;
     }
   }
 
   &__avatar {
-    @apply z-10 relative -mt-20 border-4 border-slate-100 rounded-full h-auto w-32;
+    @apply flex items-center justify-center;
+    @apply z-10 relative -mt-20 border-4 border-slate-100 rounded-full h-32 w-32 overflow-hidden;
+
+    img {
+      @apply h-full w-full object-cover object-center;
+    }
+
+    svg {
+      @apply font-bold;
+    }
+  }
+
+  &__avatar--editing {
+    @apply border-white;
+
+    img {
+      @apply brightness-90;
+    }
   }
 
   &__name {
@@ -22,7 +68,7 @@
   }
 
   &__bio {
-    @apply my-4 text-slate-700;
+    @apply mt-4 text-slate-700;
   }
 
   &__social {

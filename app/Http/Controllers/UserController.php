@@ -8,11 +8,18 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -23,7 +30,7 @@ class UserController extends Controller
             ->orderBy('id')
             ->cursorPaginate(24);
 
-        return Inertia::render('User/Index', compact('users'));
+        return Inertia::render('Users/Index', compact('users'));
     }
 
     /**
@@ -42,7 +49,9 @@ class UserController extends Controller
             ->orderByDesc('votes_sum_vote')
             ->cursorPaginate(8, cursorName: 'answers_cursor');
 
-        return Inertia::render('User/Show', compact('user', 'questions', 'answers'));
+        $canEdit = (bool)Auth::user()?->can('update', $user);
+
+        return Inertia::render('Users/Show', compact('user', 'questions', 'answers', 'canEdit'));
     }
 
     /**
@@ -50,7 +59,7 @@ class UserController extends Controller
      */
     public function edit(User $user): Response
     {
-        return Inertia::render('User/Edit', compact('user'));
+        return Inertia::render('Users/Edit', compact('user'));
     }
 
     /**
@@ -58,8 +67,6 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user): RedirectResponse
     {
-        // update
-
         return back();
     }
 }
