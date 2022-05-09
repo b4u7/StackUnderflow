@@ -23,7 +23,7 @@
   $max-height: 'calc(100vh-12rem)';
 
   &__content {
-    @apply flex flex-grow flex-col max-h-[400px] max-h-[#{$max-height}] overflow-y-scroll;
+    @apply flex flex-grow flex-col max-h-[400px] max-h-[#{$max-height}] overflow-y-auto;
   }
 
   &__footer {
