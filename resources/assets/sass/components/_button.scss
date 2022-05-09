@@ -8,31 +8,34 @@ $button-colors: (
       textColor: 'white',
     ),
   ),
-  primary-lighter: (
-    backgroundColor: 'primary-500',
-    textColor: 'white',
-    hover: (
-      backgroundColor: 'primary-700',
-      textColor: 'white',
-    ),
-  ),
   secondary: (
     backgroundColor: 'transparent',
-    textColor: 'slate-600',
-    borderColor: 'slate-200',
+    textColor: 'primary-600',
+    borderColor: 'primary-600',
     hover: (
-      borderColor: 'slate-200',
-      backgroundColor: 'white',
-      textColor: 'slate-600',
+      backgroundColor: 'primary-600',
+      textColor: 'white',
+      borderColor: 'primary-600',
+    ),
+  ),
+  tertiary: (
+    backgroundColor: 'transparent',
+    textColor: 'primary-600',
+    borderColor: 'transparent',
+    hover: (
+      backgroundColor: 'transparent',
+      textColor: 'primary-700',
+      borderColor: 'transparent',
     ),
   ),
   white: (
     backgroundColor: 'white',
-    textColor: 'slate-600',
-    borderColor: 'slate-200',
+    textColor: 'slate-700',
+    borderColor: 'white',
     hover: (
       backgroundColor: 'slate-100',
       textColor: 'slate-900',
+      borderColor: 'white',
     ),
   ),
   light: (
@@ -48,6 +51,14 @@ $button-colors: (
     textColor: 'white',
     hover: (
       backgroundColor: 'emerald-700',
+      textColor: 'white',
+    ),
+  ),
+  warning: (
+    backgroundColor: 'amber-500',
+    textColor: 'white',
+    hover: (
+      backgroundColor: 'amber-600',
       textColor: 'white',
     ),
   ),
@@ -71,10 +82,6 @@ $button-colors: (
   }
 
   @return $scope;
-}
-
-.buttons {
-  @apply md:space-x-4;
 }
 
 .button {
@@ -155,6 +162,16 @@ $button-colors: (
     line-height: 0;
   }
 
+  &--xl {
+    @apply py-4 px-10;
+
+    @apply text-lg #{!important};
+  }
+
+  &--large {
+    @apply py-4 px-5;
+  }
+
   &--small {
     @apply py-1 px-2;
   }
@@ -163,7 +180,15 @@ $button-colors: (
     @apply w-full;
   }
 
-  &--fullwidth-touch {
-    @apply flex w-full md:inline-block md:w-auto;
+  &--responsive {
+    @apply block w-full md:inline-block md:w-auto;
+  }
+
+  &--responsive + &--responsive {
+    @apply mt-2 md:mt-0;
+  }
+
+  + button {
+    @apply ml-1;
   }
 }
