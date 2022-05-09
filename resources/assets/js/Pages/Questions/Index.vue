@@ -2,7 +2,7 @@
   <section class="section mt-8">
     <div class="container">
       <div class="mr-0 mb-4 text-right">
-        <a :href="route('questions.create')" class="button button--primary button--fullwidth-touch"> Ask question </a>
+        <a :href="route('questions.create')" class="button button--primary button--responsive"> Ask question </a>
       </div>
       <!-- TODO: Left sidebar with some question categories -->
       <!-- <div class="flex items-start mt-4"> -->
