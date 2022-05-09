@@ -68,9 +68,9 @@ Route::get('search', 'SearchController@index')
     ->name('search');
 
 /**
- * User
+ * Users
  */
-Route::resource('user', 'UserController')
+Route::resource('users', 'UserController')
     ->only('index', 'show', 'edit', 'update');
 
 /**
