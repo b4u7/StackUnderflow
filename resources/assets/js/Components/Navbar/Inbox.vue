@@ -24,11 +24,17 @@
             <p>Notifications</p>
           </div>
           <div class="inbox__header__right">
-            <!--            <tippy message="Settings">
-                          <button class="button button&#45;&#45;white button&#45;&#45;icon" type="button" @click.prevent="settingsClick">
-                            <font-awesome-icon icon="fa-solid fa-gear fa-lg fa-fw" />
-                          </button>
-                        </tippy>-->
+            <!--
+            <tippy message="Settings">
+              <button
+                class="button button&#45;&#45;white button&#45;&#45;icon"
+                type="button"
+                @click.prevent="settingsClick"
+              >
+                <font-awesome-icon icon="fa-solid fa-gear fa-lg fa-fw" />
+              </button>
+            </tippy>
+            -->
             <button class="button button--white button--icon" type="button" @click.prevent="toggleInbox">
               <font-awesome-icon icon="fa-solid fa-xmark fa-lg fa-fw" />
             </button>
@@ -127,7 +133,7 @@ export default {
     markAllRead() {},
     // TODO: Implement user settings page
     settingsClick() {
-      this.$inertia.post(route('user.show'))
+      this.$inertia.post(route('users.show'))
     },
   },
 }

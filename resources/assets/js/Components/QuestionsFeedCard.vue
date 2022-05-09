@@ -2,12 +2,12 @@
   <div :class="{ 'qa-card--trashed': question.deleted_at }" class="qa-card qa-card--hoverable" @click="onCardClick">
     <div class="qa-card__header">
       <div class="qa-card__user">
-        <a :href="route('user.show', question.user)">
+        <a :href="route('users.show', question.user)">
           <img :src="question.user.avatar" :alt="`${question.user.name} avatar`" class="qa-card__user__avatar" />
         </a>
         <div class="ml-2">
           <p class="qa-card__user__name">
-            <a :href="route('user.show', question.user)" v-text="question.user.name" />
+            <a :href="route('users.show', question.user)" v-text="question.user.name" />
           </p>
           <p v-text="lastActionType + ' ' + lastActionTime.toRelative()" />
         </div>

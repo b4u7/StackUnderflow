@@ -21,7 +21,7 @@
       <div class="qa-card__user ml-auto text-right">
         <div>
           <p>
-            <a class="qa-card__user__name" :href="route('user.show', answer.user)">
+            <a class="qa-card__user__name" :href="route('users.show', answer.user)">
               {{ answer.user.name }}
             </a>
           </p>
@@ -30,7 +30,7 @@
             <format-date-time :value="answer.created_at" />
           </p>
         </div>
-        <a :href="route('user.show', answer.user)">
+        <a :href="route('users.show', answer.user)">
           <img :src="answer.user.avatar" :alt="answer.user.name" class="qa-card__user__avatar" />
         </a>
       </div>
