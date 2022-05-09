@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Bookmark;
 use App\Models\Question;
 use App\Models\Tag;
@@ -142,6 +143,8 @@ class QuestionController extends Controller
 
         $permissions = [
             'question' => [
+                'canCreate' => Gate::check('create', $question),
+                'canAnswer' => Gate::inspect('create', [Answer::class, $question]),
                 'canEdit' => Gate::check('update', $question),
                 'canDelete' => Gate::check('delete', $question),
                 'canVote' => Gate::check('vote', $question),
@@ -156,7 +159,7 @@ class QuestionController extends Controller
             $permissions['answers']->{$answer->id}['canEdit'] = Gate::check('update', $answer);
             $permissions['answers']->{$answer->id}['canDelete'] = Gate::check('delete', $answer);
             $permissions['answers']->{$answer->id}['canVote'] = Gate::check('vote', $answer);
-            $permissions['answers']->{$answer->id}['canRestore'] = Gate::check('restore', $question);
+            $permissions['answers']->{$answer->id}['canRestore'] = Gate::check('restore', $answer);
             $permissions['answers']->{$answer->id}['canMarkSolution'] = Gate::check('solution', $answer);
         }
 
