@@ -1,5 +1,28 @@
 .footer {
-  &--primary {
-    @apply bg-primary-600;
+  @apply mt-8 pt-24 pb-8 bg-slate-800 text-slate-500;
+
+  &__logo {
+    @apply text-xl;
+
+    font-family: 'Epilogue', 'sans-serif';
+  }
+
+  &__menu {
+    @apply space-y-4;
+  }
+
+  &__title {
+    @apply font-semibold text-slate-300;
+  }
+
+  &__list {
+    @apply text-slate-400;
+    @apply hover:text-slate-300;
+    @apply focus:text-slate-200;
+    @apply active:text-slate-200;
+  }
+
+  &__divider {
+    @apply my-8 border-slate-600;
   }
 }

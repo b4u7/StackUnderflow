@@ -1,20 +1,19 @@
 <template>
   <div>
     <navbar />
-    <hero leading="Learn, Share, Build" subtitle="For developers, by developers" />
     <main>
       <slot></slot>
     </main>
+    <main-footer />
   </div>
 </template>
 
 <script>
-import Hero from '@/Components/Home/Hero'
-import SecondaryNavbar from '@/Components/SecondaryNavbar'
 import Navbar from '@/Components/Navbar/Navbar'
+import MainFooter from '@/Components/Generic/Footer'
 
 export default {
   name: 'HomeLayout',
-  components: { Navbar, SecondaryNavbar, Hero },
+  components: { MainFooter, Navbar },
 }
 </script>
