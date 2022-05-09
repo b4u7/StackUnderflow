@@ -2,17 +2,23 @@
 
 namespace App\Models;
 
-use Avatar;
+use App\Events\UserCreated;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasFactory;
+
+    protected $dispatchesEvents = [
+        'created' => UserCreated::class,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<string>
      */
     protected $fillable = [
-        'name', 'username', 'email', 'biography', 'company', 'password',
+        'name', 'username', 'has_header', 'email', 'biography', 'company', 'password',
     ];
 
     /**
@@ -33,6 +39,13 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * @var array<string>
+     */
+    protected $appends = [
+        'header', 'avatar'
+    ];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array<string, string>
@@ -40,11 +53,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * @var array<string>
-     */
-    protected $appends = ['avatar'];
 
     public function receivesBroadcastNotificationOn(): string
     {
@@ -83,8 +91,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Bookmark::class);
     }
 
-    public function getAvatarAttribute(): string
+    protected function header(): Attribute
     {
-        return Avatar::create($this->name)->toBase64();
+        return Attribute::get(function () {
+            if (!$this->has_header) {
+                return null;
+            }
+
+            return Storage::disk('public')->url("users/headers/$this->id.jpeg");
+        });
+    }
+
+    protected function avatar(): Attribute
+    {
+        return Attribute::get(fn() => Storage::disk('public')->url("users/avatars/$this->id.jpeg"));
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Events\AnswerCreated;
+use App\Events\UserCreated;
+use App\Listeners\GenerateUserAvatar;
 use App\Listeners\SendAnsweredNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -16,23 +18,22 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        AnswerCreated::class => [
+            SendAnsweredNotification::class
+        ],
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        AnswerCreated::class => [
-            SendAnsweredNotification::class
+        UserCreated::class => [
+            GenerateUserAvatar::class
         ]
     ];
 
     /**
      * Register any events for your application.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
-
-        //
     }
 }
