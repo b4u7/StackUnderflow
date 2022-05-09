@@ -1,24 +1,69 @@
 require('./bootstrap')
 
 import Vue from 'vue'
+
 import VueI18n from 'vue-i18n'
 import en from '../../lang/en.json'
+
+import VueCroppie from 'vue-croppie'
 
 import { createInertiaApp } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress'
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { far } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+
+import {
+  faLongArrowAltRight,
+  faPlus,
+  faAngleDown,
+  faAngleUp,
+  faArrowCircleDown,
+  faArrowCircleUp,
+  faBuilding,
+  faCommentAlt,
+  faEnvelope,
+  faEnvelopeOpen,
+  faEye,
+  faInbox,
+  faPencilAlt,
+  faSort,
+  faXmark,
+  faLink,
+  faCheck,
+} from '@fortawesome/free-solid-svg-icons'
+
+import { faBookmark } from '@fortawesome/free-regular-svg-icons'
 
 import AppLayout from '@/Layouts/AppLayout'
 import HomeLayout from '@/Layouts/HomeLayout'
 
-library.add(fas, far)
-
 Vue.use(VueI18n)
+Vue.use(VueCroppie)
+
 Vue.mixin({ methods: { route } })
+
+library.add(
+  faLongArrowAltRight,
+  faPlus,
+  faAngleDown,
+  faAngleUp,
+  faArrowCircleDown,
+  faArrowCircleUp,
+  faBookmark,
+  faBuilding,
+  faCommentAlt,
+  faEnvelope,
+  faEnvelopeOpen,
+  faEye,
+  faInbox,
+  faPencilAlt,
+  faSort,
+  faXmark,
+  faLink,
+  faCheck
+)
+
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 const i18n = new VueI18n({
