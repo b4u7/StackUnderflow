@@ -24,21 +24,21 @@
           :solution-id="question.solution_id"
           :permissions="permissions.answers"
         />
-        <form v-if="canAnswer" @submit.prevent="submitAnswer">
-          <div class="form__group">
-            <markdown-editor v-model="form.body" />
-            <p
-              v-if="errors.body"
-              class="form__group__description form__group__description--error"
-              v-text="errors.body"
-            />
-          </div>
-          <div class="form__footer text-right">
-            <button type="submit" class="button button--primary mb-4" :disabled="form.processing">
-              Submit your answer
-            </button>
-          </div>
-        </form>
+        <div v-if="canAnswer.allowed" class="mt-4">
+          <h1 class="font-semibold">Write your own answer</h1>
+          <form @submit.prevent="submitAnswer">
+            <div :class="{ 'form__group--error': errors.body }" class="form__group">
+              <markdown-editor :value="form.body" v-model="form.body" />
+              <p v-if="errors.body" class="form__group__description" v-text="errors.body" />
+            </div>
+            <div class="form__footer text-right">
+              <button class="button button--primary mb-4" type="submit" :disabled="form.processing">
+                Submit your answer
+              </button>
+            </div>
+          </form>
+        </div>
+        <p v-else-if="canAnswer.message" class="mt-8 text-center font-medium" v-text="canAnswer.message" />
       </div>
     </div>
   </section>
@@ -99,7 +99,7 @@ export default {
       return this.$page.props.auth.user ?? null
     },
     canAnswer() {
-      return this.user && !this.userAnswered
+      return this.permissions.question.canAnswer
     },
   },
   methods: {

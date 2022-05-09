@@ -6,6 +6,7 @@ use App\Models\Answer;
 use App\Models\Question;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class AnswerPolicy
 {
@@ -30,13 +31,16 @@ class AnswerPolicy
     /**
      * Determine whether the user can create answers.
      */
-    public function create(User $user, Question $question): bool
+    public function create(User $user, Question $question): Response|bool
     {
-        // TODO: Verify this
-        return Answer::where('user_id', '=', $user->id)
-                ->where('question_id', '=', $question?->id)
-                ->where('deleted_at', '=', null)
-                ->count() === 0;
+        if (!$user->hasVerifiedEmail()) {
+            return $this->deny('You must verify your email address before you can answer questions.');
+        }
+
+        return $user->hasVerifiedEmail() && Answer::whereBelongsTo($user)
+                ->whereBelongsTo($question)
+                ->whereNull('deleted_at')
+                ->doesntExist();
     }
 
     /**
