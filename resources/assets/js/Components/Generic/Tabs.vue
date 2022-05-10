@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-full">
     <div class="tabs">
       <ul class="tabs__list">
         <!-- FIXME:  | aria-current="page" -->
