@@ -89,6 +89,7 @@ export default {
     },
     updateObserver() {
       this.observer.disconnect()
+
       if (this.loadedQuestions.length < 1 || !this.questions.next_page_url) {
         return
       }
