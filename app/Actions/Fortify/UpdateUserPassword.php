@@ -2,6 +2,9 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\User;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\UpdatesUserPasswords;
@@ -13,23 +16,24 @@ class UpdateUserPassword implements UpdatesUserPasswords
     /**
      * Validate and update the user's password.
      *
-     * @param  mixed  $user
-     * @param  array  $input
-     * @return void
+     * @param User $user
+     * @throws AuthenticationException
      */
-    public function update($user, array $input)
+    public function update($user, array $input): void
     {
         Validator::make($input, [
             'current_password' => ['required', 'string'],
             'password' => $this->passwordRules(),
         ])->after(function ($validator) use ($user, $input) {
-            if (! isset($input['current_password']) || ! Hash::check($input['current_password'], $user->password)) {
+            if (!isset($input['current_password']) || !Hash::check($input['current_password'], $user->password)) {
                 $validator->errors()->add('current_password', __('The provided password does not match your current password.'));
             }
-        })->validateWithBag('updatePassword');
+        })->validate();
 
         $user->forceFill([
             'password' => Hash::make($input['password']),
         ])->save();
+
+        Auth::logoutOtherDevices($input['password']);
     }
 }
