@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -50,12 +51,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         if ($input['email'] !== $user->email && $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
         } else {
-            $user->forceFill([
-                'name' => $input['name'],
-                'email' => $input['email'],
-                'biography' => $input['biography'],
-                'company' => $input['company'],
-            ])->save();
+            $user->forceFill(
+                Arr::only($input, ['name', 'email', 'biography', 'company'])
+            )->save();
         }
 
         if (!empty($input['avatar'])) {
@@ -84,13 +82,12 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     protected function updateVerifiedUser(mixed $user, array $input): void
     {
-        $user->forceFill([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'email_verified_at' => null,
-            'biography' => $input['biography'],
-            'company' => $input['company'],
-        ])->save();
+        $user->forceFill(
+            array_merge(
+                ['email_verified_at' => null],
+                Arr::only($input, ['name', 'email', 'biography', 'company'])
+            )
+        )->save();
 
         $user->sendEmailVerificationNotification();
     }
