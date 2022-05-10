@@ -71,12 +71,10 @@ class FortifyServiceProvider extends ServiceProvider
             'status' => session('status'),
         ]));
 
-        // TODO: Auth/Passwords/ForgotPassword
         Fortify::requestPasswordResetLinkView(static fn() => Inertia::render('Auth/Passwords/ForgotPassword', [
             'status' => session('status')
         ]));
 
-        // TODO: Auth/Passwords/ResetPassword
         Fortify::resetPasswordView(static fn(Request $request) => Inertia::render('Auth/Passwords/ResetPassword', [
             'token' => $request->route('token')
         ]));
