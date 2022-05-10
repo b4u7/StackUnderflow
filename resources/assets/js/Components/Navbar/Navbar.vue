@@ -8,7 +8,14 @@
     <ul class="navbar__center">
       <li class="navbar__item">
         <form @submit.prevent="search">
-          <input class="navbar__search" type="text" name="search" placeholder="Search..." autocomplete="off" />
+          <input
+            class="navbar__search"
+            type="text"
+            placeholder="Search questions"
+            spellcheck="false"
+            autocomplete="off"
+            v-model="searchQuery"
+          />
         </form>
       </li>
     </ul>
@@ -51,6 +58,7 @@ export default {
   components: { Tippy, Inbox },
   data() {
     return {
+      searchQuery: '',
       dropdownMenuVisible: false,
     }
   },
@@ -90,7 +98,7 @@ export default {
       this.$inertia.post(this.route('logout'))
     },
     search() {
-      this.$inertia.get(this.route('search'))
+      this.$inertia.get(this.route('questions.index', { query: this.searchQuery }))
     },
   },
 }

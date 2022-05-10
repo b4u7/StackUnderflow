@@ -57,9 +57,11 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user): Response
+    public function edit(Request $request, User $user): Response
     {
-        return Inertia::render('Users/Edit', compact('user'));
+        $status = $request->session()->get('status');
+
+        return Inertia::render('Users/Edit', compact('user', 'status'));
     }
 
     /**
