@@ -1,23 +1,32 @@
 <template>
   <div class="user-profile">
-    <header class="user-profile__header">
-      <figure>
-        <img :src="user.avatar" :alt="`${user.name}'s header background`" class="user-profile__header__background" />
-      </figure>
+    <header :class="{ 'user-profile__header--empty': !user.header }" class="user-profile__header">
+      <img
+        v-if="user.header"
+        :src="user.header"
+        class="user-profile__header__background"
+        alt="Your header background"
+      />
     </header>
     <section class="section">
       <div class="container">
         <div class="md:grid md:grid-cols-12 md:gap-4">
           <div class="md:col-span-3">
-            <figure>
-              <img :src="user.avatar" :alt="`${user.name}'s avatar`" class="user-profile__avatar" />
-            </figure>
+            <div class="user-profile__avatar">
+              <img :src="user.avatar" alt="Your user avatar" />
+            </div>
             <h1 class="user-profile__name" v-text="user.name" />
             <p class="user-profile__username" v-text="`@${user.username}`" />
             <p v-if="user.biography" class="user-profile__bio" v-text="user.biography" />
-            <a class="button button--primary button--fullwidth" :href="route('user.edit', user.id)">
+            <a
+              v-if="canEdit"
+              class="mt-4 button button--primary button--fullwidth"
+              :href="route('users.edit', user.id)"
+              @click.prevent="editModalVisible = true"
+            >
               Edit your profile
             </a>
+            <edit-profile-modal :user="user" :errors="errors" v-model="editModalVisible" />
             <!-- TODO: Following & followers feature
             <div class="user-profile__social">
               <p>
@@ -45,7 +54,7 @@
                         </h1>
                       </div>
                     </div>
-                    <button class="button button--primary button--outline button--fullwidth-touch mt-4 ml-auto">
+                    <button class="button button--primary button--outline button--responsive mt-4 ml-auto">
                       Load more
                     </button>
                   </template>
@@ -84,22 +93,30 @@
 
 <script>
 import Tabs from '@/Components/Generic/Tabs'
+import EditProfileModal from '@/Components/Users/EditProfileModal'
 
 export default {
   name: 'Index',
-  components: { Tabs },
+  components: { EditProfileModal, Tabs },
   props: {
-    user: {
+    answers: {
       type: Object,
+      required: true,
+    },
+    canEdit: {
+      type: Boolean,
       required: true,
     },
     questions: {
       type: Object,
       required: true,
     },
-    answers: {
+    user: {
       type: Object,
       required: true,
+    },
+    errors: {
+      type: Object,
     },
   },
   data() {
@@ -109,6 +126,7 @@ export default {
         { name: 'Questions', key: 'questions' },
         { name: 'Answers', key: 'answers' },
       ],
+      editModalVisible: false,
     }
   },
   methods: {
