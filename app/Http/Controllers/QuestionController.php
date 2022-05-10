@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 use stdClass;
+use Throwable;
 
 class QuestionController extends Controller
 {
@@ -34,15 +35,26 @@ class QuestionController extends Controller
      *
      * @throws AuthorizationException
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $this->authorize('viewAny', Question::class);
 
+        if ($request->has('query')) {
+            $questions = Question::search($request->query('query'))
+                ->query(
+                    fn(Builder $query) => $query
+                        ->with(['votes', 'answers', 'user', 'tags'])
+                        ->withCount('votes')
+                );
+        } else {
+            $questions = Question::with(['votes', 'answers', 'user', 'tags'])
+                ->withCount('votes');
+        }
+
         // TODO: Change this to be order by votes before demo
-        $questions = Question::with(['votes', 'answers', 'user', 'tags'])
-            ->withCount('votes')
-            ->orderByDesc('id')
-            ->cursorPaginate(10);
+        $questions = $questions
+            ->orderBy('id', 'desc')
+            ->paginate(10);
 
         $tags = Tag::whereHas('questions')
             ->take(10)
@@ -80,13 +92,9 @@ class QuestionController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        $tagNames = explode(',', $request->input('tags'));
-        foreach ($tagNames as $tagName) {
-            if (empty(trim($tagName))) {
-                continue;
-            }
-
-            $tag = Tag::firstOrCreate(['name' => $tagName]);
+        $tags = $request->input('tags');
+        foreach ($tags as $tag) {
+            $tag = Tag::firstOrCreate(['name' => $tag['name']]);
             $question->tags()->attach($tag);
         }
 
@@ -185,31 +193,36 @@ class QuestionController extends Controller
     {
         $this->authorize('update', $question);
 
+        $question->load('tags');
+
         $tagsList = Tag::all();
 
-        $questionTags = $question->tags()->pluck('name');
-
-        return Inertia::render('Questions/Edit', compact('question', 'tagsList', 'questionTags'));
+        return Inertia::render('Questions/Edit', compact('question', 'tagsList'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @throws AuthorizationException
+     * @throws Throwable
      */
     public function update(Request $request, Question $question): RedirectResponse
     {
         $this->authorize('update', $question);
 
-        $question->update($request->all());
+        DB::transaction(function () use ($request, $question) {
+            $question->update($request->all());
 
-        $question->tags()->detach();
+            $tags = $request->input('tags');
+            $tagIds = [];
 
-        $tagNames = explode(',', strtolower($request->input('tags')));
-        foreach ($tagNames as $tagName) {
-            $tag = Tag::firstOrCreate(['name' => $tagName]);
-            $question->tags()->attach($tag);
-        }
+            foreach ($tags as $tag) {
+                $tag = Tag::firstOrCreate(['name' => $tag['name']]);
+                $tagIds[] = $tag->id;
+            }
+
+            $question->tags()->sync($tagIds);
+        });
 
         return redirect()->route('questions.show', [$question->id]);
     }

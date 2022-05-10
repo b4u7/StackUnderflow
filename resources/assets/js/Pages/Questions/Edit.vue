@@ -68,10 +68,6 @@ export default {
       type: Array,
       default: [],
     },
-    questionTags: {
-      type: Array,
-      default: [],
-    },
     errors: {
       type: Object,
     },

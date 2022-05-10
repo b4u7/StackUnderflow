@@ -4,7 +4,7 @@
       <tags :tags="selectedTags" removable @tag-remove="removeTag" />
       <input
         @click="openDropdown"
-        @keyup="event => addTag({ name: query, new: true }, event)"
+        @keydown="event => addTag({ name: query, new: true }, event)"
         class="tag-input__search"
         type="text"
         name="tag-input"
@@ -86,15 +86,6 @@ export default {
     closeDropdown() {
       this.searching = false
     },
-    // handleInput(tag, event) {
-    //   const allowedKeys = [',', ' ', 'enter', 'delete', 'backspace']
-    //
-    //   if (event.key && !allowedKeys.includes(event.key?.toLowerCase())) {
-    //     return
-    //   }
-    //
-    //   tag.name = trim(tag.name, ' ,\t')
-    // },
     addTag(tag, event) {
       if (this.selectedTags.length >= 5) {
         return
@@ -103,15 +94,13 @@ export default {
       const allowedKeys = [',', ' ', 'enter', 'delete', 'backspace']
 
       // !event.key || (event.key && !allowedKeys.includes(event.key.toLowerCase()))
-      if (event.key && !allowedKeys.includes(event.key?.toLowerCase())) {
+      if (!event.key || !allowedKeys.includes(event.key.toLowerCase())) {
         return
       }
 
       tag.name = trim(tag.name, ' ,\t')
-
-      // FIXME: Pressing backspace when there's still a character removes the previous tag
       if (event.key?.toLowerCase() === 'backspace') {
-        if (isEmpty(this.query)) {
+        if (isEmpty(tag.name)) {
           this.removeTag(tag)
         }
 
