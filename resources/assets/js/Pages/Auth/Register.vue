@@ -7,25 +7,16 @@
       <form class="form" @submit.prevent="submit">
         <div class="form__group">
           <label for="name" class="form__group__label">Name</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            autocomplete="name"
-            class="form__group__control"
-            v-model="form.name"
-            required
-          />
+          <input id="name" class="form__group__control" type="text" autocomplete="name" v-model="form.name" required />
           <p v-if="errors.name" class="form__group__description form__group__description--error" v-text="errors.name" />
         </div>
         <div class="form__group">
           <label for="username" class="form__group__label">Username</label>
           <input
-            type="text"
-            name="username"
             id="username"
-            autocomplete="username"
             class="form__group__control"
+            type="text"
+            autocomplete="username"
             v-model="form.username"
             required
             autofocus
@@ -38,14 +29,7 @@
         </div>
         <div class="form__group">
           <label for="email-address" class="form__group__label">Email address</label>
-          <input
-            type="email"
-            name="email-address"
-            id="email-address"
-            class="form__group__control"
-            v-model="form.email"
-            required
-          />
+          <input id="email-address" class="form__group__control" type="email" v-model="form.email" required />
           <p
             v-if="errors.email"
             class="form__group__description form__group__description--error"
@@ -55,10 +39,9 @@
         <div class="form__group">
           <label for="password" class="form__group__label">Password</label>
           <input
-            type="password"
-            name="password"
             id="password"
             class="form__group__control"
+            type="password"
             v-model="form.password"
             autocomplete="new-password"
             required
@@ -73,9 +56,8 @@
           <label for="password-confirm" class="form__group__label">Confirm password</label>
           <input
             id="password-confirm"
-            type="password"
             class="form__group__control"
-            name="password_confirmation"
+            type="password"
             v-model="form.password_confirmation"
             autocomplete="new-password"
             required
