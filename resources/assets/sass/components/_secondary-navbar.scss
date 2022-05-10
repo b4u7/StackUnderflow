@@ -7,6 +7,8 @@
 
   &__start {
     @extend .navbar__start;
+
+    @apply space-x-4;
   }
 
   &__item {
