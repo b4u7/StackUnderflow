@@ -1,83 +1,101 @@
 <template>
   <form class="form" @submit.prevent="submit">
-    <div class="md:max-w-2xl flex flex-col items-center">
-      <h1 class="text-xl font-medium my-4">Change password</h1>
-      <div :class="{ 'form__group--error': errors.current_password }" class="form__group">
-        <label for="password" class="form__group__label"> Current password </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          class="form__group__control"
-          v-model="form.current_password"
-          autocomplete="current-password"
-          required
-        />
-        <p v-if="!errors.current_password" class="form__group__description">Enter your current password</p>
-        <p v-else class="form__group__description">
-          <font-awesome-icon icon="fa-solid fa-circle-exclamation" />
-          {{ errors.current_password }}
-        </p>
-      </div>
-      <div :class="{ 'form__group--error': errors.new_password }" class="form__group">
-        <label for="password" class="form__group__label"> New password </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          class="form__group__control"
-          v-model="form.password"
-          autocomplete="current-password"
-          required
-        />
-        <p v-if="!errors.new_password" class="form__group__description">Enter the new password</p>
-        <p v-else class="form__group__description">
-          <font-awesome-icon icon="fa-solid fa-circle-exclamation" />
-          {{ errors.new_password }}
-        </p>
-      </div>
-      <div :class="{ 'form__group--error': errors.confirm_new_password }" class="form__group">
-        <label for="password" class="form__group__label"> Confirm new password </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          class="form__group__control"
-          v-model="form.password"
-          autocomplete="current-password"
-          required
-        />
-        <p v-if="!errors.confirm_new_password" class="form__group__description">Confirm your new password</p>
-        <p v-else class="form__group__description">
-          <font-awesome-icon icon="fa-solid fa-circle-exclamation" />
-          {{ errors.confirm_new_password }}
-        </p>
-      </div>
-      <div class="form__footer">
-        <button class="button button--primary button--fullwidth mb-4" type="submit" :disabled="form.processing">
-          Change password
-        </button>
-      </div>
+    <h1 class="text-xl font-medium mt-8 mb-4">Change password</h1>
+    <alert class="my-8" v-if="status && status === 'password-updated'" kind="success" fullwidth>
+      Your password was successfully updated.
+    </alert>
+    <div :class="{ 'form__group--error': errors.current_password }" class="form__group">
+      <label for="current-password" class="form__group__label"> Current password </label>
+      <input
+        id="current-password"
+        class="form__group__control"
+        type="password"
+        v-model="form.current_password"
+        autocomplete="password"
+        required
+      />
+      <p v-if="!errors.current_password" class="form__group__description">
+        Forgot your password? Click
+        <a class="text-primary-600 underline" :href="route('password.request')">here</a>
+        to reset it
+      </p>
+      <p v-else class="form__group__description">
+        <font-awesome-icon icon="fa-solid fa-circle-exclamation" />
+        {{ errors.current_password }}
+      </p>
+    </div>
+    <div :class="{ 'form__group--error': errors.password }" class="form__group">
+      <label for="password" class="form__group__label"> New password </label>
+      <input
+        id="password"
+        class="form__group__control"
+        type="password"
+        v-model="form.password"
+        autocomplete="new-password"
+        required
+      />
+      <p v-if="!errors.password" class="form__group__description">Enter the new password</p>
+      <p v-else class="form__group__description">
+        <font-awesome-icon icon="fa-solid fa-circle-exclamation" />
+        {{ errors.password }}
+      </p>
+    </div>
+    <div :class="{ 'form__group--error': errors.password_confirmation }" class="form__group">
+      <label for="password-confirmation" class="form__group__label"> Confirm new password </label>
+      <input
+        id="password-confirmation"
+        class="form__group__control"
+        type="password"
+        v-model="form.password_confirmation"
+        autocomplete="new-password"
+        required
+      />
+      <p v-if="!errors.password_confirmation" class="form__group__description">Confirm your new password</p>
+      <p v-else class="form__group__description">
+        <font-awesome-icon icon="fa-solid fa-circle-exclamation" />
+        {{ errors.password_confirmation }}
+      </p>
+    </div>
+    <div class="form__footer">
+      <button class="button button--primary button--fullwidth mb-4" type="submit" :disabled="form.processing">
+        Change password
+      </button>
+      <p class="text-center">You will be logged out all of your other devices</p>
     </div>
   </form>
 </template>
 
 <script>
+import Alert from '@/Components/Alert'
+
 export default {
-  name: 'EditEmailForm',
+  name: 'EditPasswordForm',
+  components: { Alert },
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+    errors: {
+      type: Object,
+    },
+    status: {
+      type: String,
+    },
+  },
   data() {
     return {
       form: this.$inertia.form({
         current_password: '',
-        new_password: '',
-        confirm_new_password: '',
+        password: '',
+        password_confirmation: '',
       }),
     }
   },
   methods: {
     submit() {
-      this.form.post(this.route('user-profile-information.update'), {
-        onFinish: () => this.form.reset('current_password', 'new_password', 'confirm_new_password'),
+      this.form.put(this.route('user-password.update'), {
+        onFinish: () => this.form.reset('current_password', 'password', 'password_confirmation'),
       })
     },
   },
