@@ -1,12 +1,10 @@
 <template>
   <section>
     <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
-      <alert v-if="status && status === 'verification-link-sent'" kind="success" fullwidth>
+      <alert v-if="status && status === 'verification-link-sent'" class="mb-8" kind="success" fullwidth>
         A fresh verification link has been sent to your email address.
       </alert>
-
       <h1 class="text-xl font-medium mb-4">Verify your email address</h1>
-
       <form class="form" @submit.prevent="submit">
         <div class="form__group">
           <p class="form__group__description">Before proceeding, please check your email for a verification link.</p>
