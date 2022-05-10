@@ -1,5 +1,5 @@
 <template>
-  <div class="buttons">
+  <div class="buttons space-x-2">
     <tippy :message="shareMessage" :hideOnClick="false" :open.sync="showShareTippy" trigger="manual" placement="top">
       <Link
         :class="classes"
