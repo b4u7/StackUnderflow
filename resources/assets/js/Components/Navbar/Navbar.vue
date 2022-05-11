@@ -58,14 +58,10 @@ export default {
   components: { Tippy, Inbox },
   data() {
     return {
-      searchQuery: '',
       dropdownMenuVisible: false,
+      pendingSearch: null,
+      searchQuery: '',
     }
-  },
-  computed: {
-    user() {
-      return this.$page.props.auth.user ?? null
-    },
   },
   mounted() {
     if (!this.$refs.dropdown) {
@@ -80,6 +76,32 @@ export default {
     }
 
     document.removeEventListener('click', this.onDocumentClick)
+  },
+  watch: {
+    searchQuery(newVal) {
+      if (newVal.length < 3) {
+        if (this.pendingSearch !== null) {
+          clearTimeout(this.pendingSearch)
+          this.pendingSearch = null
+        }
+
+        return
+      }
+
+      if (this.pendingSearch !== null) {
+        clearTimeout(this.pendingSearch)
+      }
+
+      this.pendingSearch = setTimeout(() => {
+        this.pendingSearch = null
+        this.search()
+      }, 200)
+    },
+  },
+  computed: {
+    user() {
+      return this.$page.props.auth.user ?? null
+    },
   },
   methods: {
     onDocumentClick(e) {
@@ -98,7 +120,16 @@ export default {
       this.$inertia.post(this.route('logout'))
     },
     search() {
-      this.$inertia.get(this.route('questions.index', { query: this.searchQuery }))
+      this.$inertia.get(
+        this.route(
+          'questions.index',
+          { query: this.searchQuery },
+          {
+            preserveScroll: true,
+            preserveState: true,
+          }
+        )
+      )
     },
   },
 }
