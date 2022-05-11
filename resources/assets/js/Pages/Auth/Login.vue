@@ -39,12 +39,7 @@
         <div class="grid grid-cols-2">
           <div class="form__checkbox">
             <div class="flex items-center h-6">
-              <input
-                id="remember"
-                class="form__checkbox__control"
-                type="checkbox"
-                v-model:checked="form.remember"
-              />
+              <input id="remember" class="form__checkbox__control" type="checkbox" v-model:checked="form.remember" />
             </div>
             <label for="remember" class="form__checkbox__label">Remember me</label>
           </div>
@@ -71,24 +66,24 @@ export default {
   name: 'Login',
   props: {
     errors: {
-      type: Object
+      type: Object,
     },
     canResetPassword: {
       type: Boolean,
-      required: false
+      required: false,
     },
     status: {
       type: String,
-      required: false
-    }
+      required: false,
+    },
   },
   data() {
     return {
       form: this.$inertia.form({
         username: '',
         password: '',
-        remember: false
-      })
+        remember: false,
+      }),
     }
   },
   methods: {
@@ -96,12 +91,12 @@ export default {
       this.form
         .transform(data => ({
           ...data,
-          remember: this.form.remember ? 'on' : ''
+          remember: this.form.remember ? 'on' : '',
         }))
         .post(this.route('login'), {
-          onFinish: () => this.form.reset('password')
+          onFinish: () => this.form.reset('password'),
         })
-    }
-  }
+    },
+  },
 }
 </script>
