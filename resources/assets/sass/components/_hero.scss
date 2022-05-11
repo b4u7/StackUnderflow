@@ -19,11 +19,11 @@
   }
 
   &--small {
-    @apply h-48;
+    @apply h-64;
   }
 
   &--medium {
-    @apply h-64;
+    @apply h-[60vh];
   }
 
   &--large {
