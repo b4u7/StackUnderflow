@@ -2,12 +2,7 @@
   <section class="section mt-8">
     <div class="container">
       <form class="mb-8" @submit.prevent="search">
-        <input
-          class="form__group__control"
-          type="text"
-          placeholder="Search for users"
-          v-model="form.user"
-        />
+        <input class="form__group__control" type="text" placeholder="Search for users" v-model="searchQuery" />
       </form>
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <user-card v-for="user of users.data" :key="user.id" :user="user" />
@@ -31,6 +26,7 @@
 
 <script>
 import UserCard from '@/Components/Users/UserCard'
+// import Fuse from 'fuse.js'
 
 export default {
   name: 'Index',
@@ -43,14 +39,63 @@ export default {
   },
   data() {
     return {
+      // pendingSearch: false,
       loading: false,
-      form: {
-        user: null,
-      },
+      searchQuery: '',
+      // fuse: new Fuse([], { keys: ['name', 'username'], threshold: 0.2 })
     }
   },
+  // watch: {
+  //   users: {
+  //     deep: true,
+  //     immediate: true,
+  //     handler(newVal) {
+  //       if (!newVal) {
+  //         return
+  //       }
+  //
+  //       this.fuse.setCollection(newVal.data)
+  //     }
+  //   },
+  //   searchQuery() {
+  //     this.enqueueSearch()
+  //   }
+  // },
+  // computed: {
+  //   filteredUsersList() {
+  //     if (!this.searchQuery) {
+  //       return this.users.data
+  //     }
+  //
+  //     return this.fuse.search(this.searchQuery).map(({ item }) => item)
+  //   }
+  // },
   methods: {
-    search() {},
+    // search() {
+    //   const query = this.searchQuery?.length >= 3 ? this.searchQuery : undefined
+    //
+    //   this.$inertia.get(this.route('users.index'), { query }, { preserveScroll: true, preserveState: true })
+    // },
+    // enqueueSearch() {
+    //   if (this.pendingSearch !== null) {
+    //     clearTimeout(this.pendingSearch)
+    //   }
+    //
+    //   this.pendingSearch = setTimeout(() => {
+    //     this.pendingSearch = null
+    //     this.search()
+    //   }, 200)
+    // },
+    search() {
+      this.$inertia.get(
+        this.route('users.index'),
+        { query: this.searchQuery },
+        {
+          preserveScroll: true,
+          preserveState: true,
+        }
+      )
+    },
     prevPage() {
       if (!this.users.prev_page_url || this.loading) {
         return

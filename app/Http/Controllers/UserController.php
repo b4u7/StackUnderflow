@@ -23,12 +23,13 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $users = User::query()
-            ->orderByDesc('created_at')
+        $users = $request->has('query') ? User::search($request->query('query')) : User::query();
+
+        $users = $users->orderBy('created_at', 'desc')
             ->orderBy('id')
-            ->cursorPaginate(24);
+            ->paginate(24);
 
         return Inertia::render('Users/Index', compact('users'));
     }
