@@ -2,9 +2,9 @@ name: Laravel
 
 on:
   push:
-    branches: [master, develop]
+    branches: [ master, develop ]
   pull_request:
-    branches: [master, develop]
+    branches: [ master, develop ]
 
 jobs:
   laravel-tests:
@@ -45,4 +45,5 @@ jobs:
           DB_USERNAME: stackunderflow
           DB_PASSWORD: secret
           MAIL_DRIVER: log
+          SCOUT_DRIVER: database
         run: php artisan test
