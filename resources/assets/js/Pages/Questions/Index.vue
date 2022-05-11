@@ -5,19 +5,6 @@
         <a :href="route('questions.create')" class="button button--primary button--responsive"> Ask question </a>
       </div>
       <!-- TODO: Left sidebar with some question categories -->
-      <!-- <div class="flex items-start mt-4"> -->
-      <!--
-        <div v-if="tags.length > 0" class="card">
-          <div class="card__header">
-            <p>
-              Filter by tag
-            </p>
-          </div>
-          <div class="card__body">
-            <tags class="flex flex-col" :tags="tags" :inline="false" />
-          </div>
-        </div>
-        -->
       <div id="questions" class="questions-feed">
         <questions-feed-card
           v-for="question in loadedQuestions"
@@ -26,7 +13,6 @@
           :id="`question-${question.id}`"
         />
       </div>
-      <!-- </div> -->
     </div>
   </section>
 </template>
