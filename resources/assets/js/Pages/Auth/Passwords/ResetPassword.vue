@@ -59,12 +59,7 @@
           />
         </div>
         <div class="form__footer">
-          <button
-            :class="{ 'button--processing': form.processing }"
-            :disabled="form.processing"
-            type="submit"
-            class="button button--primary button--fullwidth mb-4"
-          >
+          <button type="submit" class="button button--primary button--fullwidth mb-4" :disabled="form.processing">
             Reset password
           </button>
           <p class="text-center">
