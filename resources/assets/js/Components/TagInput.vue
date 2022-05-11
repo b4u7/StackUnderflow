@@ -60,8 +60,8 @@ export default {
   watch: {
     tagsList: {
       immediate: true,
-      handler(value) {
-        this.fuse.setCollection(value)
+      handler(newVal) {
+        this.fuse.setCollection(newVal)
       },
     },
   },
@@ -78,7 +78,6 @@ export default {
       },
     },
   },
-  // TODO: Probably have a method called handleInput instead of doing everything in addTag
   methods: {
     openDropdown() {
       this.searching = true
@@ -93,7 +92,6 @@ export default {
 
       const allowedKeys = [',', ' ', 'enter', 'delete', 'backspace']
 
-      // !event.key || (event.key && !allowedKeys.includes(event.key.toLowerCase()))
       if (!event.key || !allowedKeys.includes(event.key.toLowerCase())) {
         return
       }
