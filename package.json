@@ -18,10 +18,14 @@
     "tdd": "npm run test -- --watch --notify"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.0",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.0",
+    "@fortawesome/vue-fontawesome": "^2.0.6",
     "@inertiajs/inertia": "^0.10.1",
     "@inertiajs/inertia-vue": "^0.7.2",
     "@inertiajs/progress": "^0.2.6",
-    "@tailwindcss/forms": "^0.4.0",
+    "@tailwindcss/forms": "^0.5.1",
     "@tailwindcss/typography": "^0.5.2",
     "autoprefixer": "^10.2.6",
     "axios": "^0.24.0",
@@ -44,9 +48,10 @@
     "laravel-mix": "^6.0.42",
     "lodash": "^4.17.21",
     "luxon": "^2.2.0",
+    "marked": "^4.0.12",
     "popper.js": "^1.16.1",
     "postcss": "^8.4.5",
-    "prettier": "^2.5.1",
+    "prettier": "^2.6.2",
     "pusher-js": "^7.0.3",
     "resolve-url-loader": "^4.0.0",
     "sass": "^1.45.0",
@@ -54,14 +59,9 @@
     "tailwindcss": "^3.0.7",
     "tippy.js": "^6.3.7",
     "vue": "^2.6.14",
+    "vue-croppie": "^2.0.2",
     "vue-i18n": "^8.26.7",
     "vue-loader": "^15.9.8",
-    "vue-template-compiler": "^2.6.14",
-    "@fortawesome/fontawesome-svg-core": "^6.1.0",
-    "@fortawesome/free-regular-svg-icons": "^6.1.1",
-    "@fortawesome/free-solid-svg-icons": "^6.1.0",
-    "@fortawesome/vue-fontawesome": "^2.0.6",
-    "marked": "^4.0.12",
-    "vue-croppie": "^2.0.2"
+    "vue-template-compiler": "^2.6.14"
   }
 }
