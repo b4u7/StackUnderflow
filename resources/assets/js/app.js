@@ -31,6 +31,8 @@ import {
   faXmark,
   faLink,
   faCheck,
+  faTrashCan,
+  faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { faBookmark } from '@fortawesome/free-regular-svg-icons'
@@ -44,24 +46,26 @@ Vue.use(VueCroppie)
 Vue.mixin({ methods: { route } })
 
 library.add(
-  faLongArrowAltRight,
-  faPlus,
   faAngleDown,
   faAngleUp,
   faArrowCircleDown,
   faArrowCircleUp,
   faBookmark,
   faBuilding,
+  faCheck,
   faCommentAlt,
   faEnvelope,
   faEnvelopeOpen,
   faEye,
   faInbox,
-  faPencilAlt,
-  faSort,
-  faXmark,
   faLink,
-  faCheck
+  faLongArrowAltRight,
+  faPenToSquare,
+  faPencilAlt,
+  faPlus,
+  faSort,
+  faTrashCan,
+  faXmark
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
