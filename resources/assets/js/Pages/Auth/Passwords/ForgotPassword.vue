@@ -1,12 +1,10 @@
 <template>
   <section>
     <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
-      <alert v-if="status" kind="success" :fullwidth="true">
+      <alert v-if="status" class="mb-8" kind="success" :fullwidth="true">
         {{ status }}
       </alert>
-
       <h1 class="text-xl font-medium mb-4">Forgot your password?</h1>
-
       <form class="form" @submit.prevent="submit">
         <div class="form__group">
           <label for="email-address" class="form__group__label">Email address</label>
@@ -27,12 +25,7 @@
           />
         </div>
         <div class="form__footer">
-          <button
-            :class="{ 'button--processing': form.processing }"
-            :disabled="form.processing"
-            type="submit"
-            class="button button--primary button--fullwidth mb-4"
-          >
+          <button class="button button--primary button--fullwidth mb-4" type="submit" :disabled="form.processing">
             Email password reset link
           </button>
           <p class="text-center">
