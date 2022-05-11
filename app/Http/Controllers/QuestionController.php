@@ -27,7 +27,6 @@ class QuestionController extends Controller
      */
     public function __construct()
     {
-        // $this->authorizeResource(Question::class, 'question');
     }
 
     /**
