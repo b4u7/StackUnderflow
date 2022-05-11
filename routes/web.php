@@ -62,12 +62,6 @@ Route::resource('questions.answers', 'AnswerController')
     ->only('index');
 
 /**
- * Search
- */
-Route::get('search', 'SearchController@index')
-    ->name('search');
-
-/**
  * Users
  */
 Route::resource('users', 'UserController')
