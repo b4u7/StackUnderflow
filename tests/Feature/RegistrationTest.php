@@ -19,7 +19,7 @@ it('registers new users', function () {
         'password_confirmation' => 'password'
     ]);
 
-    $this->assertAuthenticated();
     $response->assertRedirect('/email/verify');
+    $this->assertAuthenticated();
 });
 
