@@ -7,19 +7,11 @@
     }
 
     &__control {
-      // v1
-      //@apply block w-full sm:text-sm border-slate-300 rounded-md shadow-sm;
-
-      //v2
-      //@apply block w-full sm:text-sm border-slate-300 rounded-md;
-
-      // v3
       @apply appearance-none block w-full rounded-md text-sm shadow-sm;
       @apply border-0 border-transparent ring-1 ring-slate-300;
       @apply text-slate-900 placeholder-slate-400;
-
       @apply focus:ring-2 focus:ring-primary-600 focus:outline-none;
-
+      @apply focus:invalid:ring-red-500 focus:invalid:text-red-500;
       @apply disabled:cursor-not-allowed disabled:opacity-50;
     }
 
@@ -56,7 +48,7 @@
     }
 
     &__control {
-      @apply h-4 w-4 text-primary-600 border-slate-300 rounded;
+      @apply h-4 w-4 text-primary-600 border-slate-300 rounded cursor-pointer;
       @apply focus:ring-primary-600;
       @apply active:ring-primary-600;
     }
@@ -68,6 +60,5 @@
 
   &__footer {
     @apply mt-4 text-sm text-slate-500;
-    // @apply flex items-center justify-end;
   }
 }
