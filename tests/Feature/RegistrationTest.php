@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Providers\RouteServiceProvider;
-
 it('renders the registration screen', function () {
     $response = $this->get('/register');
 

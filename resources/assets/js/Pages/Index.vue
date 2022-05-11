@@ -6,7 +6,7 @@
         <p>
           <Link class="button button--warning button--xl" as="button" :href="route('register')">
             Join the community
-            <font-awesome-icon icon="fa-solid fa-right" />
+            <font-awesome-icon icon="fa-solid fa-arrow-right" />
           </Link>
         </p>
         <p>
@@ -24,6 +24,6 @@ import { Link } from '@inertiajs/inertia-vue'
 
 export default {
   name: 'Index',
-  components: { Hero, Link },
+  components: { Hero, Link }
 }
 </script>

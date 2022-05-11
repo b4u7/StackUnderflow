@@ -18,8 +18,6 @@ U
 Y
 )resources/assets/sass/overrides/_all.scss,f\b\fbeec9c76dc4b64cc69c4d9dbf35f6a0ccd29cd8
 =
-composer.json,3\9\3957b91a0d8450cea0115cfd5af69eac90d75897
-=
 composer.lock,c\3\c3262e2a0879195bd6a727e90f768bc85ad79ffd
 <
 .env.example,d\4\d4dae00d11854b35292c2b8a30515a9a0aa2d871
