@@ -1,6 +1,6 @@
 // This can be improved
 $button-colors: (
-  primary: (
+  'primary': (
     backgroundColor: 'primary-600',
     textColor: 'white',
     hover: (
@@ -8,7 +8,7 @@ $button-colors: (
       textColor: 'white',
     ),
   ),
-  secondary: (
+  'secondary': (
     backgroundColor: 'transparent',
     textColor: 'primary-600',
     borderColor: 'primary-600',
@@ -18,7 +18,7 @@ $button-colors: (
       borderColor: 'primary-600',
     ),
   ),
-  tertiary: (
+  'tertiary': (
     backgroundColor: 'transparent',
     textColor: 'primary-600',
     borderColor: 'transparent',
@@ -28,7 +28,7 @@ $button-colors: (
       borderColor: 'transparent',
     ),
   ),
-  white: (
+  'white': (
     backgroundColor: 'white',
     textColor: 'slate-700',
     borderColor: 'white',
@@ -38,7 +38,7 @@ $button-colors: (
       borderColor: 'white',
     ),
   ),
-  light: (
+  'light': (
     backgroundColor: 'primary-50',
     textColor: 'slate-700',
     hover: (
@@ -46,7 +46,7 @@ $button-colors: (
       textColor: 'slate-900',
     ),
   ),
-  success: (
+  'success': (
     backgroundColor: 'emerald-600',
     textColor: 'white',
     hover: (
@@ -54,15 +54,15 @@ $button-colors: (
       textColor: 'white',
     ),
   ),
-  warning: (
-    backgroundColor: 'amber-500',
+  'warning': (
+    backgroundColor: 'yellow-500',
     textColor: 'white',
     hover: (
-      backgroundColor: 'amber-600',
+      backgroundColor: 'yellow-600',
       textColor: 'white',
     ),
   ),
-  danger: (
+  'danger': (
     backgroundColor: 'red-600',
     textColor: 'white',
     hover: (
@@ -89,26 +89,26 @@ $button-colors: (
   @apply transition duration-200 motion-safe:transition;
   @apply border border-transparent;
   @apply focus:outline-none;
+  @apply disabled:opacity-75 disabled:cursor-not-allowed;
 
   $parent: #{&};
-
   @each $color, $properties in $button-colors {
     $bgColor: map-deep-get($button-colors, $color, 'backgroundColor');
     $textColor: map-deep-get($button-colors, $color, 'textColor');
 
     $borderColor: if(
-      map-deep-get($button-colors, $color, 'borderColor'),
-      map-deep-get($button-colors, $color, 'borderColor'),
-      'transparent'
+        map-deep-get($button-colors, $color, 'borderColor'),
+        map-deep-get($button-colors, $color, 'borderColor'),
+        'transparent'
     );
 
     $hoverBgColor: map-deep-get($button-colors, $color, 'hover', 'backgroundColor');
     $hoverTextColor: map-deep-get($button-colors, $color, 'hover', 'textColor');
 
     $hoverBorderColor: if(
-      map-deep-get($button-colors, $color, 'hover', 'borderColor'),
-      map-deep-get($button-colors, $color, 'hover', 'borderColor'),
-      'transparent'
+        map-deep-get($button-colors, $color, 'hover', 'borderColor'),
+        map-deep-get($button-colors, $color, 'hover', 'borderColor'),
+        'transparent'
     );
 
     $invertedBgColor: map-deep-get($button-colors, $color, 'textColor');
@@ -136,10 +136,6 @@ $button-colors: (
     @apply text-sm;
     @apply focus:ring-primary-600 focus:ring-2 focus:ring-offset-2;
     @apply focus:ring-primary-600 active:ring-2 active:ring-offset-2;
-  }
-
-  &--processing {
-    @apply animate-spin opacity-25;
   }
 
   &--shadow {
