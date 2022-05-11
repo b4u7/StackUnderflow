@@ -13,9 +13,6 @@
         <div class="user-card__user__avatar">
           <img :src="user.avatar" :alt="`User avatar for ${user.username}`" />
         </div>
-        <!--
-        <img :src="user.avatar" class="user-card__user__avatar" alt="User avatar" />
-        -->
         <p class="user-card__user__name">
           <a :href="route('users.show', user.id)" v-text="user.name" />
         </p>
