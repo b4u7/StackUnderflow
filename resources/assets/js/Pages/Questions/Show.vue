@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <section class="section mt-8">
     <div class="container sm:max-w-screen-xl">
       <div class="content">
         <alert v-if="isTrashed" kind="danger" class="mb-12">
