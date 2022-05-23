@@ -112,11 +112,9 @@ class QuestionController extends Controller
         $question = Question::with([
             'user',
             'tags',
-            'bookmarks'
         ])->withSum('votes', 'vote')
-            ->where('id', '=', $questionId)
             ->when($user !== null && $user->admin, fn($query) => $query->withTrashed())
-            ->firstOrFail();
+            ->findOrFail($questionId);
 
         views($question)->record();
         $this->authorize('view', $question);
@@ -146,28 +144,28 @@ class QuestionController extends Controller
 
         $userAnswered = transform($user, fn($u) => $question->answers()->where('user_id', '=', $u->id)->exists(), false);
 
-        $bookmark = optional($user, fn($u) => $question->bookmarks()->where('user_id', '=', $u->id)->first());
+        $bookmarked = $user?->bookmarkedQuestions()->whereKey($question->id)->exists();
 
         $permissions = [
             'question' => [
                 'canCreate' => Gate::check('create', $question),
                 'canAnswer' => Gate::inspect('create', [Answer::class, $question]),
                 'canEdit' => Gate::check('update', $question),
-                'canDelete' => Gate::check('delete', $question),
                 'canVote' => Gate::check('vote', $question),
+                'canBookmark' => Gate::check('bookmark', $question),
+                'canUnbookmark' => Gate::check('unbookmark', $question),
+                'canDelete' => Gate::check('delete', $question),
                 'canRestore' => Gate::check('restore', $question),
-                'canBookmark' => Gate::check('create', [Bookmark::class, $question]),
-                'canUnbookmark' => optional($bookmark, fn($b) => Gate::check('delete', $b)) ?? false,
             ],
             'answers' => new stdClass()
         ];
 
         foreach ($answers as $answer) {
             $permissions['answers']->{$answer->id}['canEdit'] = Gate::check('update', $answer);
-            $permissions['answers']->{$answer->id}['canDelete'] = Gate::check('delete', $answer);
             $permissions['answers']->{$answer->id}['canVote'] = Gate::check('vote', $answer);
-            $permissions['answers']->{$answer->id}['canRestore'] = Gate::check('restore', $answer);
             $permissions['answers']->{$answer->id}['canMarkSolution'] = Gate::check('solution', $answer);
+            $permissions['answers']->{$answer->id}['canDelete'] = Gate::check('delete', $answer);
+            $permissions['answers']->{$answer->id}['canRestore'] = Gate::check('restore', $answer);
         }
 
         $isTrashed = $question->trashed();
@@ -176,7 +174,7 @@ class QuestionController extends Controller
             'question',
             'answers',
             'isTrashed',
-            'bookmark',
+            'bookmarked',
             'userAnswered',
             'userQuestionVote',
             'permissions'
