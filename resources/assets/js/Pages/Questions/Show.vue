@@ -3,8 +3,12 @@
     <div class="container sm:max-w-screen-xl">
       <div class="content">
         <alert v-if="isTrashed" kind="danger" class="mb-12">
-          <i class="fas fa-exclamation-triangle"></i>
-          This question was deleted, only admins can see it.
+          <template #icon>
+            <i class="fas fa-exclamation-triangle"></i>
+          </template>
+          <template #default>
+            This question was deleted, only admins can see it.
+          </template>
         </alert>
         <div class="mr-0 mb-4 text-right">
           <a class="button button--primary button--outline" :href="route('home')"> Go back </a>
@@ -13,7 +17,7 @@
           :question="question"
           :is-trashed="isTrashed"
           :user-question-vote="userQuestionVote"
-          :bookmark="bookmark"
+          :bookmarked="bookmarked"
           :permissions="permissions.question"
         />
         <question-answers
@@ -57,41 +61,42 @@ export default {
   props: {
     question: {
       type: Object,
-      required: true,
+      required: true
     },
     answers: {
       type: Object,
-      required: true,
+      required: true
     },
     isTrashed: {
       type: Boolean,
-      required: true,
+      required: true
     },
     userQuestionVote: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
-    bookmark: {
-      type: Object,
+    bookmarked: {
+      type: Boolean,
+      required: true
     },
     userAnswered: {
       type: Boolean,
-      required: true,
+      required: true
     },
     permissions: {
       type: Object,
-      required: true,
+      required: true
     },
     errors: {
       type: Object,
-      required: false,
-    },
+      required: false
+    }
   },
   data() {
     return {
       form: this.$inertia.form({
-        body: '',
-      }),
+        body: ''
+      })
     }
   },
   computed: {
@@ -100,12 +105,12 @@ export default {
     },
     canAnswer() {
       return this.permissions.question.canAnswer
-    },
+    }
   },
   methods: {
     submitAnswer() {
       this.form.post(this.route('questions.answers.store', this.question))
-    },
-  },
+    }
+  }
 }
 </script>

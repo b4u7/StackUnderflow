@@ -1,8 +1,13 @@
 <template>
   <div :class="classes" class="alert">
-    <p>
-      <slot></slot>
-    </p>
+    <div class="alert__icon">
+      <slot name="icon"></slot>
+    </div>
+    <div>
+      <p>
+        <slot></slot>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -12,20 +17,20 @@ export default {
   props: {
     kind: {
       type: String,
-      required: true,
+      required: true
     },
     fullwidth: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   computed: {
     classes() {
       return {
         'alert--fullwidth': this.fullwidth,
-        [`alert--${this.kind}`]: true,
+        [`alert--${this.kind}`]: true
       }
-    },
-  },
+    }
+  }
 }
 </script>

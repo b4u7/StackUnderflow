@@ -7,7 +7,7 @@ $alert-colours: (
 );
 
 .alert {
-  @apply py-3 px-4 rounded-md bg-white text-center text-slate-900;
+  @apply py-3 px-4 flex rounded-md bg-white text-slate-900 max-w-prose mx-auto gap-4;
 
   @each $type, $colour in $alert-colours {
     &--#{$type} {
