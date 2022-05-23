@@ -3,11 +3,18 @@
     <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
       <h1 class="text-xl font-medium mb-4">Register an account</h1>
       <p>Join the StackUnderflow community to collaborate and share knowledge without any limitations.</p>
-
       <form class="form" @submit.prevent="submit">
         <div class="form__group">
           <label for="name" class="form__group__label">Name</label>
-          <input id="name" class="form__group__control" type="text" autocomplete="name" v-model="form.name" required />
+          <input
+            id="name"
+            class="form__group__control"
+            type="text"
+            autocomplete="name"
+            v-model="form.name"
+            required
+            autofocus
+          />
           <p v-if="errors.name" class="form__group__description form__group__description--error" v-text="errors.name" />
         </div>
         <div class="form__group">
@@ -19,7 +26,6 @@
             autocomplete="username"
             v-model="form.username"
             required
-            autofocus
           />
           <p
             v-if="errors.username"
@@ -112,9 +118,7 @@ export default {
         .transform(data => ({
           ...data,
         }))
-        .post(this.route('register'), {
-          onFinish: () => this.form.reset('password', 'password_confirmation'),
-        })
+        .post(this.route('register'))
     },
   },
 }
