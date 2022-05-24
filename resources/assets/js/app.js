@@ -19,6 +19,7 @@ import {
   faArrowCircleDown,
   faArrowCircleUp,
   faArrowRight,
+  faBookmark as faBookmarkSolid,
   faBuilding,
   faCheck,
   faCommentAlt,
@@ -32,11 +33,12 @@ import {
   faPencilAlt,
   faPlus,
   faSort,
+  faTrashCanArrowUp,
   faTrashCan,
-  faXmark,
+  faXmark
 } from '@fortawesome/free-solid-svg-icons'
 
-import { faBookmark } from '@fortawesome/free-regular-svg-icons'
+import { faBookmark as faBookmarkRegular } from '@fortawesome/free-regular-svg-icons'
 
 import AppLayout from '@/Layouts/AppLayout'
 import HomeLayout from '@/Layouts/HomeLayout'
@@ -52,7 +54,8 @@ library.add(
   faArrowCircleDown,
   faArrowCircleUp,
   faArrowRight,
-  faBookmark,
+  faBookmarkSolid,
+  faBookmarkRegular,
   faBuilding,
   faCheck,
   faCommentAlt,
@@ -67,6 +70,7 @@ library.add(
   faPlus,
   faSort,
   faTrashCan,
+  faTrashCanArrowUp,
   faXmark
 )
 
@@ -74,7 +78,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 const i18n = new VueI18n({
   locale: 'en',
-  en,
+  en
 })
 
 let pages = ['Index', 'Auth/']
@@ -97,11 +101,11 @@ createInertiaApp({
     new Vue({
       i18n,
       provide: { axios: window.axios, echo: window.Echo },
-      render: h => h(app, props),
+      render: h => h(app, props)
     }).$mount(el)
-  },
+  }
 })
 
 InertiaProgress.init({
-  color: '#FBBF24',
+  color: '#FBBF24'
 })
