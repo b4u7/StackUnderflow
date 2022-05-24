@@ -39,7 +39,7 @@ class QuestionPolicy
      */
     public function update(User $user, Question $question): bool
     {
-        return $user->id === $question->user_id;
+        return $user->admin || $user->id === $question->user_id;
     }
 
     /**
@@ -47,7 +47,11 @@ class QuestionPolicy
      */
     public function delete(User $user, Question $question): bool
     {
-        return $user->id === $question->user_id;
+        if ($question->trashed()) {
+            return false;
+        }
+
+        return $user->admin || $user->id === $question->user_id;
     }
 
     /**
@@ -55,7 +59,7 @@ class QuestionPolicy
      */
     public function restore(User $user, Question $question): bool
     {
-        return false;
+        return $user->admin && $question->trashed();
     }
 
     /**
@@ -66,23 +70,35 @@ class QuestionPolicy
         return false;
     }
 
+    /*
+     * Determine whether the user can bookmark the question.
+     */
+    public function bookmark(User $user, Question $question): bool
+    {
+        return !$question->trashed();
+    }
+
+    /*
+     * Determine whether the user can unbookmark the question.
+     */
+    public function unbookmark(User $user, Question $question): bool
+    {
+        if ($question->trashed()) {
+            return false;
+        }
+
+        return $question->bookmarkedBy()->whereKey($user->id)->exists();
+    }
+
     /**
      * Determine whether the user can vote on the question.
      */
     public function vote(User $user, Question $question): bool
     {
-        return $user->id !== $question->user_id;
-    }
-
-    /**
-     * Determine whether the user is an admin.
-     */
-    public function before(User $user, string $ability): ?bool
-    {
-        if ($user->admin && $ability !== 'vote') {
-            return true;
+        if ($question->trashed()) {
+            return false;
         }
 
-        return null;
+        return $user->id !== $question->user_id;
     }
 }

@@ -37,9 +37,13 @@ class AnswerPolicy
             return $this->deny('You must verify your email address before you can answer questions.');
         }
 
-        return $user->hasVerifiedEmail() && Answer::whereBelongsTo($user)
-                ->whereBelongsTo($question)
-                ->whereNull('deleted_at')
+        if ($question->trashed()) {
+            return false;
+        }
+
+        return $user->hasVerifiedEmail()
+            && $question->answers()
+                ->whereBelongsTo($user)
                 ->doesntExist();
     }
 
@@ -48,7 +52,7 @@ class AnswerPolicy
      */
     public function update(User $user, Answer $answer): bool
     {
-        return $answer->user_id === $user->id;
+        return $user->admin || $answer->user_id === $user->id;
     }
 
     /**
@@ -56,7 +60,11 @@ class AnswerPolicy
      */
     public function delete(User $user, Answer $answer): bool
     {
-        return $answer->user_id === $user->id;
+        if ($answer->trashed()) {
+            return false;
+        }
+
+        return $user->admin || $answer->user_id === $user->id;
     }
 
     /**
@@ -64,7 +72,7 @@ class AnswerPolicy
      */
     public function restore(User $user, Answer $answer): bool
     {
-        return false;
+        return $user->admin && $answer->trashed();
     }
 
     /**
@@ -80,7 +88,7 @@ class AnswerPolicy
      */
     public function vote(User $user, Answer $answer): bool
     {
-        return true;
+        return !($answer->trashed() || $answer->question->trashed());
     }
 
     /**
@@ -88,18 +96,10 @@ class AnswerPolicy
      */
     public function solution(User $user, Answer $answer): bool
     {
-        return $user->id === $answer->question->user_id;
-    }
-
-    /**
-     * Determine whether the user is an admin.
-     */
-    public function before(User $user, string $ability): ?bool
-    {
-        if ($user->admin && ($ability !== 'create' && $ability !== 'vote')) {
-            return true;
+        if ($answer->trashed() || $answer->question->trashed()) {
+            return false;
         }
 
-        return null;
+        return $user->id === $answer->question->user_id;
     }
 }
