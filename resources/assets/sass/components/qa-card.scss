@@ -38,8 +38,11 @@
     @apply flex flex-row text-sm text-slate-500 space-x-2;
 
     &__avatar {
-      // hidden sm:block sm:ml-4
-      @apply rounded-full h-10 w-10 ring-4 ring-white;
+      @apply rounded-full h-10 w-10 ring-4 ring-white overflow-hidden;
+
+      img {
+        @apply h-full w-full object-cover object-center;
+      }
     }
 
     &__name {
