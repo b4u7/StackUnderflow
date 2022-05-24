@@ -34,7 +34,7 @@
         </p>
         <p :class="votesColour">
           <font-awesome-icon icon="fa-solid fa-sort" />
-          {{ question.votes_count }}
+          {{ question.votes_sum_vote ? question.votes_sum_vote : 0 }}
         </p>
         <p>
           <font-awesome-icon icon="fa-solid fa-eye" />
@@ -56,24 +56,24 @@ export default {
   props: {
     question: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       classes: {
         success: 'text-emerald-600',
-        danger: 'text-red-600',
-      },
+        danger: 'text-red-600'
+      }
     }
   },
   computed: {
     votesColour() {
-      let voteCount = this.question.votes_count
+      let votesSumVote = this.question.votes_sum_vote
 
-      if (voteCount > 0) {
+      if (votesSumVote > 0) {
         return this.classes.success
-      } else if (voteCount < 0) {
+      } else if (votesSumVote < 0) {
         return this.classes.danger
       }
     },
@@ -101,12 +101,12 @@ export default {
       }
 
       return body
-    },
+    }
   },
   methods: {
     onCardClick() {
       this.$inertia.get(route('questions.show', this.question))
-    },
-  },
+    }
+  }
 }
 </script>

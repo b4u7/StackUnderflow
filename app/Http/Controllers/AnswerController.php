@@ -31,7 +31,7 @@ class AnswerController extends Controller
                     'vote'
                 )
             )
-            ->when($user !== null && $user->admin, fn(Builder $q) => $q->withTrashed())
+            ->when($user !== null && $user->admin, static fn(Builder $q) => $q->withTrashed())
             ->when(
                 $question->solution_id !== null,
                 static fn(Builder $q) => $q->orderByDesc(DB::raw('id = ' . $question->solution_id))

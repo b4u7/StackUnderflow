@@ -42,15 +42,17 @@ class QuestionController extends Controller
                 ->query(
                     fn(Builder $query) => $query
                         ->with(['votes', 'answers', 'user', 'tags'])
-                        ->withCount('votes')
+                        ->withSum('votes', 'vote')
                 );
         } else {
             $questions = Question::with(['votes', 'answers', 'user', 'tags'])
-                ->withCount('votes');
+                ->withSum('votes', 'vote');
         }
 
+        // FIXME: Order by vote sum
         $questions = $questions
-            ->orderBy('votes_count', 'desc')
+            ->when(Auth::user()?->admin, static fn(Builder $query) => $query->withTrashed())
+            ->orderByDesc('votes_sum_vote')
             ->paginate(10);
 
         $tags = Tag::whereHas('questions')
@@ -132,6 +134,7 @@ class QuestionController extends Controller
                 $question->solution_id !== null,
                 static fn(Builder $q) => $q->orderByDesc(DB::raw('id = ' . $question->solution_id))
             )
+            ->orderByDesc('votes_sum_vote')
             ->cursorPaginate(cursorName: 'answersCursor');
 
         $userQuestionVote = $user === null ? null : Vote::query()
