@@ -52,34 +52,34 @@ export default {
   props: {
     answer: {
       type: Object,
-      required: true
+      required: true,
     },
     isSolution: {
       type: Boolean,
-      required: true
+      required: true,
     },
     permissions: {
       type: Object,
-      required: true
+      required: true,
     },
     isTrashed: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       classes: {
         'qa-card--solution': !!this.isSolution,
-        'qa-card--trashed': this.isTrashed
-      }
+        'qa-card--trashed': this.isTrashed,
+      },
     }
   },
   computed: {
     shareUrl() {
       return `${this.route('questions.show', [this.answer.question_id])}#answer-${this.answer.id}`
-    }
-  }
+    },
+  },
 }
 </script>
 

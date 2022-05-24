@@ -61,48 +61,45 @@ export default {
   props: {
     canEdit: {
       type: Boolean,
-      required: true
+      required: true,
     },
     canDelete: {
       type: Boolean,
-      required: true
+      required: true,
     },
     canRestore: {
       type: Boolean,
-      required: true
+      required: true,
     },
     data: {
-      type: Object
+      type: Object,
     },
     isTrashed: {
       type: Boolean,
-      required: true
+      required: true,
     },
     shareUrl: {
       type: String,
-      required: true
+      required: true,
     },
     editRoute: {
       type: String,
-      required: true
+      required: true,
     },
     deleteRoute: {
       type: String,
-      required: true
+      required: true,
     },
     restoreRoute: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      classes: [
-        'transition-all',
-        'font-semibold'
-      ],
+      classes: ['transition-all', 'font-semibold'],
       shareMessage: SHARE_MESSAGE,
-      showShareTippy: false
+      showShareTippy: false,
     }
   },
   methods: {
@@ -116,7 +113,7 @@ export default {
 
         setTimeout(() => (this.shareMessage = SHARE_MESSAGE), 1000)
       }, 1000)
-    }
-  }
+    },
+  },
 }
 </script>
