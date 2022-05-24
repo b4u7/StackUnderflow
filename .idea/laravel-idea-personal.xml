@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="LaravelIdeaPersonalSettings">
+    <option name="generationStringOptionValues">
+      <map>
+        <entry key="createController.singleAction" value="1" />
+      </map>
+    </option>
     <option name="helperCode">
       <LaravelHelperCodeSettings>
         <option name="modelsCreateHighOrderCollectionProxies" value="true" />
