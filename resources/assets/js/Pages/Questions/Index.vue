@@ -13,17 +13,27 @@
           :id="`question-${question.id}`"
         />
       </div>
+      <div class="py-8 text-center">
+        <p>
+          You've reached the end. Please consider
+          <Link class="font-medium hover:text-primary-700" :href="route('questions.create')">
+            <span class="underline">asking a question</span>
+          </Link>
+          to make the list longer.
+        </p>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue'
 import QuestionsFeedCard from '@/Components/QuestionsFeedCard'
 import Tags from '@/Components/Tags'
 
 export default {
   name: 'Index',
-  components: { Tags, QuestionsFeedCard },
+  components: { Link, Tags, QuestionsFeedCard },
   props: {
     questions: {
       type: Object,
@@ -38,6 +48,7 @@ export default {
       loadedQuestions: this.questions.data,
       loading: false,
       observer: null,
+      sortBy: null,
     }
   },
   mounted() {
