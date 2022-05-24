@@ -47,7 +47,9 @@
           </p>
         </div>
         <a :href="route('users.show', question.user)">
-          <img :src="question.user.avatar" :alt="question.user.name" class="qa-card__user__avatar" />
+          <div class="qa-card__user__avatar">
+            <img :src="question.user.avatar" :alt="question.user.name" />
+          </div>
         </a>
       </div>
     </div>
@@ -68,16 +70,16 @@ export default {
   props: {
     question: {
       type: Object,
-      required: true,
+      required: true
     },
     isTrashed: {
       type: Boolean,
-      required: true,
+      required: true
     },
     permissions: {
       // type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     lastActionType() {
@@ -91,9 +93,9 @@ export default {
       return max([this.question.created_at, this.question.updated_at].map(DateTime.fromISO))
     },
     shareUrl() {
-      return window.location.href
-    },
-  },
+      return this.route('questions.show', this.question.id)
+    }
+  }
 }
 </script>
 

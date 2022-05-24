@@ -31,7 +31,9 @@
           </p>
         </div>
         <a :href="route('users.show', answer.user)">
-          <img :src="answer.user.avatar" :alt="answer.user.name" class="qa-card__user__avatar" />
+          <div class="qa-card__user__avatar">
+            <img :src="answer.user.avatar" :alt="answer.user.name" />
+          </div>
         </a>
       </div>
     </div>
@@ -50,31 +52,34 @@ export default {
   props: {
     answer: {
       type: Object,
-      required: true,
+      required: true
     },
     isSolution: {
       type: Boolean,
-      required: true,
+      required: true
     },
     permissions: {
       type: Object,
-      required: true,
+      required: true
     },
+    isTrashed: {
+      type: Boolean,
+      required: true
+    }
   },
   data() {
     return {
-      isTrashed: !!this.answer.deleted_at,
       classes: {
-        'qa-card--solution': this.isSolution,
-        'qa-card--trashed': this.isTrashed,
-      },
+        'qa-card--solution': !!this.isSolution,
+        'qa-card--trashed': this.isTrashed
+      }
     }
   },
   computed: {
     shareUrl() {
-      return `${window.location.href}#${this.answer.id}`
-    },
-  },
+      return `${this.route('questions.show', [this.answer.question_id])}#answer-${this.answer.id}`
+    }
+  }
 }
 </script>
 
