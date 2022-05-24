@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\VoteCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Vote extends Model
 {
     use HasFactory;
+
+    protected $dispatchesEvents = ['created' => VoteCreated::class];
 
     /**
      * @var array<string>
