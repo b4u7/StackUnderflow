@@ -1,5 +1,4 @@
 .card {
-  //@apply flex flex-col bg-white shadow rounded-md sm:overflow-hidden;
   @apply flex flex-col bg-white shadow rounded-md ring-1 ring-transparent;
 
   &--transparent {
