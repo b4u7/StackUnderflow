@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Question;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -8,35 +10,26 @@ class CreateBookmarksTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('bookmarks', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('user_id');
-            $table->bigInteger('question_id');
-            $table->timestamps();
+        Schema::create('user_question_bookmark', function (Blueprint $table) {
+            $table->foreignIdFor(User::class)
+                ->constrained()
+                ->cascadeOnDelete();
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+            $table->foreignIdFor(Question::class)
+                ->constrained()
+                ->cascadeOnDelete();
 
-            $table->foreign('question_id')
-                ->references('id')
-                ->on('questions')
-                ->onDelete('cascade');
+            $table->primary(['user_id', 'question_id']);
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('bookmarks');
     }
