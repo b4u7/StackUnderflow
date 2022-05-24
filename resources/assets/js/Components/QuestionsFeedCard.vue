@@ -3,7 +3,9 @@
     <div class="qa-card__header">
       <div class="qa-card__user">
         <a :href="route('users.show', question.user)">
-          <img :src="question.user.avatar" :alt="`${question.user.name} avatar`" class="qa-card__user__avatar" />
+          <div class="qa-card__user__avatar">
+            <img :src="question.user.avatar" :alt="`${question.user.name} avatar`" />
+          </div>
         </a>
         <div class="ml-2">
           <p class="qa-card__user__name">
