@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar--primary">
+  <nav :class="`navbar--${dark ? 'dark' : 'primary'}`" class="navbar">
     <ul class="navbar__start">
       <li class="navbar__item">
         <a class="navbar__logo" :href="route('home')"> StackUnderflow </a>
@@ -9,6 +9,7 @@
       <li class="navbar__item">
         <form @submit.prevent="search">
           <input
+            :class="{ 'navbar__search--dark': dark }"
             class="navbar__search"
             type="text"
             placeholder="Search questions"
@@ -29,9 +30,10 @@
           <transition name="dropdown-transition">
             <div v-if="dropdownMenuVisible" class="navbar__dropdown">
               <div class="navbar__dropdown__container">
-                <a :href="route('users.show', user)" class="navbar__dropdown__item"> Profile </a>
-                <a :href="route('users.edit', user)" class="navbar__dropdown__item"> Account settings </a>
-                <button type="button" class="navbar__dropdown__item" @click="logout">Logout</button>
+                <Link :href="route('users.show', user)" class="navbar__dropdown__item">Profile</Link>
+                <Link :href="route('users.bookmarks.index', user)" class="navbar__dropdown__item">My bookmarks</Link>
+                <Link :href="route('users.edit', user)" class="navbar__dropdown__item">Account settings</Link>
+                <Link as="button" class="navbar__dropdown__item" @click.prevent="logout">Logout</Link>
               </div>
             </div>
           </transition>
@@ -50,17 +52,23 @@
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue'
 import Inbox from '@/Components/Navbar/Inbox'
 import Tippy from '@/Components/Tippy'
 
 export default {
   name: 'Navbar',
-  components: { Tippy, Inbox },
+  components: { Link, Tippy, Inbox },
+  props: {
+    dark: {
+      type: Boolean
+    }
+  },
   data() {
     return {
       dropdownMenuVisible: false,
       pendingSearch: null,
-      searchQuery: '',
+      searchQuery: ''
     }
   },
   mounted() {
@@ -77,31 +85,31 @@ export default {
 
     document.removeEventListener('click', this.onDocumentClick)
   },
-  watch: {
-    searchQuery(newVal) {
-      if (newVal.length < 3) {
-        if (this.pendingSearch !== null) {
-          clearTimeout(this.pendingSearch)
-          this.pendingSearch = null
-        }
-
-        return
-      }
-
-      if (this.pendingSearch !== null) {
-        clearTimeout(this.pendingSearch)
-      }
-
-      this.pendingSearch = setTimeout(() => {
-        this.pendingSearch = null
-        this.search()
-      }, 200)
-    },
-  },
+  // watch: {
+  //   searchQuery(newVal) {
+  //     if (newVal.length < 3) {
+  //       if (this.pendingSearch !== null) {
+  //         clearTimeout(this.pendingSearch)
+  //         this.pendingSearch = null
+  //       }
+  //
+  //       return
+  //     }
+  //
+  //     if (this.pendingSearch !== null) {
+  //       clearTimeout(this.pendingSearch)
+  //     }
+  //
+  //     this.pendingSearch = setTimeout(() => {
+  //       this.pendingSearch = null
+  //       this.search()
+  //     }, 200)
+  //   }
+  // },
   computed: {
     user() {
       return this.$page.props.auth.user ?? null
-    },
+    }
   },
   methods: {
     onDocumentClick(e) {
@@ -126,11 +134,11 @@ export default {
           { query: this.searchQuery },
           {
             preserveScroll: true,
-            preserveState: true,
+            preserveState: true
           }
         )
       )
-    },
-  },
+    }
+  }
 }
 </script>
