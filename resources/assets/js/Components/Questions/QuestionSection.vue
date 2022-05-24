@@ -10,7 +10,7 @@
           @downvoted="removeVote"
         />
         <bookmark
-          :active="!!bookmark"
+          :bookmarked="bookmarked"
           :can-bookmark="permissions.canBookmark"
           :can-unbookmark="permissions.canUnbookmark"
           @bookmark="bookmarkAction"
@@ -33,30 +33,31 @@ export default {
   props: {
     question: {
       type: Object,
-      required: true,
+      required: true
     },
     isTrashed: {
       type: Boolean,
-      required: true,
+      required: true
     },
     userQuestionVote: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
-    bookmark: {
-      type: Object,
+    bookmarked: {
+      type: Boolean,
+      required: true
     },
     permissions: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       classes: {
         success: 'text-emerald-600',
-        danger: 'text-red-600',
-      },
+        danger: 'text-red-600'
+      }
     }
   },
   computed: {
@@ -71,25 +72,24 @@ export default {
     },
     userVote() {
       return this.userQuestionVote?.vote ?? 0
-    },
+    }
   },
   methods: {
     bookmarkAction(value) {
-      console.log('bookmarkAction')
       value ? this.addBookmark() : this.removeBookmark()
     },
     addBookmark() {
-      this.$inertia.post(route('questions.bookmarks.store', this.question))
+      this.$inertia.post(route('questions.bookmark', this.question))
     },
     removeBookmark() {
-      this.$inertia.delete(route('questions.bookmarks.destroy', [this.question, this.bookmark]))
+      this.$inertia.post(route('questions.bookmark', this.question))
     },
     addVote() {
       this.$inertia.post(route('questions.upvote', this.question))
     },
     removeVote() {
       this.$inertia.post(route('questions.downvote', this.question))
-    },
-  },
+    }
+  }
 }
 </script>
