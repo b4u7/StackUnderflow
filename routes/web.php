@@ -25,9 +25,6 @@ Route::resource('questions', 'QuestionController')
     ->only('index', 'show');
 
 Route::group(['prefix' => 'questions', 'as' => 'questions.'], static function () {
-    Route::post('questions', 'QuestionController@restore')
-        ->name('restore');
-
     Route::group(['prefix' => '{question}', 'middleware' => 'verified'], static function () {
         Route::post('upvote', 'QuestionController@upvote')
             ->name('upvote');
@@ -35,12 +32,24 @@ Route::group(['prefix' => 'questions', 'as' => 'questions.'], static function ()
         Route::post('downvote', 'QuestionController@downvote')
             ->name('downvote');
 
-        Route::resource('bookmarks', 'BookmarkController')
-            ->only('store', 'destroy');
+        Route::post('bookmark', 'Questions\\BookmarkController')
+            ->name('bookmark');
+
+        Route::post('unbookmark', 'Questions\\UnbookmarkController')
+            ->name('unbookmark');
+
+        Route::post('restore', 'QuestionController@restore')
+            ->name('restore')
+            ->withTrashed();
 
         Route::group(['prefix' => 'answers/{answer}', 'as' => 'answers.'], static function () {
+            Route::delete('destroy', 'AnswerController@destroy')
+                ->name('destroy')
+                ->withTrashed();
+
             Route::post('restore', 'AnswerController@restore')
-                ->name('restore');
+                ->name('restore')
+                ->withTrashed();
 
             Route::post('upvote', 'AnswerController@upvote')
                 ->name('upvote');
@@ -55,17 +64,25 @@ Route::group(['prefix' => 'questions', 'as' => 'questions.'], static function ()
 });
 
 Route::resource('questions.answers', 'AnswerController')
-    ->only('store', 'edit', 'update', 'destroy')
+    ->only('store', 'edit', 'update')
     ->middleware('verified');
 
 Route::resource('questions.answers', 'AnswerController')
     ->only('index');
+
 
 /**
  * Users
  */
 Route::resource('users', 'UserController')
     ->only('index', 'show', 'edit', 'update');
+
+Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => 'auth'], static function () {
+    Route::group(['prefix' => '{user}'], static function () {
+        Route::get('bookmarks', 'Users\\BookmarkController')
+            ->name('bookmarks.index');
+    });
+});
 
 /**
  * Notifications
