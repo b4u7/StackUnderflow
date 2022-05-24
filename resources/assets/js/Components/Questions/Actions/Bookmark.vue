@@ -1,12 +1,8 @@
 <template>
   <form @submit.prevent="bookmark">
     <button :class="classes" :disabled="disabled" class="actions__item actions__bookmark" type="submit">
-      <template v-if="active">
-        <font-awesome-icon icon="fa-solid fa-bookmark" />
-      </template>
-      <template v-else>
-        <font-awesome-icon icon="fa-regular fa-bookmark" />
-      </template>
+      <font-awesome-icon v-if="mutableBookmarked" icon="fa-solid fa-bookmark" />
+      <font-awesome-icon v-else icon="fa-regular fa-bookmark" />
     </button>
   </form>
 </template>
@@ -15,22 +11,22 @@
 export default {
   name: 'Bookmark',
   props: {
-    active: {
+    bookmarked: {
       type: Boolean,
-      required: true,
+      required: true
     },
     canBookmark: {
       type: Boolean,
-      required: true,
+      required: true
     },
     canUnbookmark: {
       type: Boolean,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
-      bookmarked: this.active,
+      mutableBookmarked: this.active
     }
   },
   methods: {
@@ -39,19 +35,19 @@ export default {
         return
       }
 
-      this.bookmarked = !this.bookmarked
-      this.$emit('bookmark', this.bookmarked)
-    },
+      this.mutableBookmarked = !this.mutableBookmarked
+      this.$emit('bookmark', this.mutableBookmarked)
+    }
   },
   computed: {
     disabled() {
-      return (this.bookmarked && !this.canUnbookmark) || (!this.bookmarked && !this.canBookmark)
+      return (this.mutableBookmarked && !this.canUnbookmark) || (!this.mutableBookmarked && !this.canBookmark)
     },
     classes() {
       return {
-        'actions__item--active': this.bookmarked,
+        'actions__item--active': this.mutableBookmarked
       }
-    },
-  },
+    }
+  }
 }
 </script>
