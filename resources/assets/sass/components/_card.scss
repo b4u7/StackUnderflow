@@ -21,6 +21,6 @@
   }
 
   &__footer {
-    @apply flex flex-row py-3 px-4;
+    @apply flex flex-col space-y-8 sm:space-y-0 sm:flex-row py-3 px-4;
   }
 }

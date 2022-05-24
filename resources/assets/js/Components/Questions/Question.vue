@@ -22,19 +22,18 @@
       <tag v-for="(tag, index) in question.tags" :key="index" :tag="tag" />
     </div>
     <div class="qa-card__footer">
-      <div class="qa-card__menu">
-        <footer-actions
-          :can-edit="permissions.canEdit"
-          :can-delete="permissions.canDelete"
-          :can-restore="permissions.canRestore"
-          :is-trashed="isTrashed"
-          :edit-route="route('questions.edit', [this.question.id])"
-          :delete-route="route('questions.destroy', [this.question.id])"
-          :restore-route="route('questions.restore', [this.question.id])"
-          :share-url="shareUrl"
-        />
-      </div>
-      <div class="qa-card__user text-right ml-auto">
+      <footer-actions
+        :can-edit="permissions.canEdit"
+        :can-delete="permissions.canDelete"
+        :can-restore="permissions.canRestore"
+        :is-trashed="isTrashed"
+        :edit-route="route('questions.edit', [this.question.id])"
+        :delete-route="route('questions.destroy', [this.question.id])"
+        :restore-route="route('questions.restore', [this.question.id])"
+        :share-url="shareUrl"
+        class="qa-card__menu"
+      />
+      <div class="qa-card__user w-full sm:w-auto sm:ml-auto sm:text-right">
         <div>
           <p>
             <a class="qa-card__user__name" :href="route('users.show', question.user)">
@@ -46,7 +45,7 @@
             <format-date-time :value="question.created_at" />
           </p>
         </div>
-        <a :href="route('users.show', question.user)">
+        <a :href="route('users.show', question.user)" class="hidden sm:inline-block">
           <div class="qa-card__user__avatar">
             <img :src="question.user.avatar" :alt="question.user.name" />
           </div>
@@ -70,16 +69,16 @@ export default {
   props: {
     question: {
       type: Object,
-      required: true,
+      required: true
     },
     isTrashed: {
       type: Boolean,
-      required: true,
+      required: true
     },
     permissions: {
       // type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     lastActionType() {
@@ -94,8 +93,8 @@ export default {
     },
     shareUrl() {
       return this.route('questions.show', this.question.id)
-    },
-  },
+    }
+  }
 }
 </script>
 

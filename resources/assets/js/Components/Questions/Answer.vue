@@ -18,7 +18,7 @@
           :share-url="shareUrl"
         />
       </div>
-      <div class="qa-card__user ml-auto text-right">
+      <div class="qa-card__user w-full sm:w-auto sm:ml-auto sm:text-right">
         <div>
           <p>
             <a class="qa-card__user__name" :href="route('users.show', answer.user)">
@@ -30,7 +30,7 @@
             <format-date-time :value="answer.created_at" />
           </p>
         </div>
-        <a :href="route('users.show', answer.user)">
+        <a :href="route('users.show', answer.user)" class="hidden sm:inline-block">
           <div class="qa-card__user__avatar">
             <img :src="answer.user.avatar" :alt="answer.user.name" />
           </div>
@@ -52,34 +52,34 @@ export default {
   props: {
     answer: {
       type: Object,
-      required: true,
+      required: true
     },
     isSolution: {
       type: Boolean,
-      required: true,
+      required: true
     },
     permissions: {
       type: Object,
-      required: true,
+      required: true
     },
     isTrashed: {
       type: Boolean,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       classes: {
         'qa-card--solution': !!this.isSolution,
-        'qa-card--trashed': this.isTrashed,
-      },
+        'qa-card--trashed': this.isTrashed
+      }
     }
   },
   computed: {
     shareUrl() {
       return `${this.route('questions.show', [this.answer.question_id])}#answer-${this.answer.id}`
-    },
-  },
+    }
+  }
 }
 </script>
 
