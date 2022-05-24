@@ -47,9 +47,13 @@
               <template #questions>
                 <div class="mt-4 space-y-4">
                   <template v-if="questions.data.length">
-                    <div v-for="question in questions.data" class="qa-card qa-card--hoverable">
+                    <div
+                      v-for="question in questions.data"
+                      class="qa-card qa-card--hoverable"
+                      @click.prevent="visitQuestion(question.id)"
+                    >
                       <div class="qa-card__header">
-                        <h1 class="qa-card__title">
+                        <h1 class="qa-card__title !text-base">
                           {{ question.title }}
                         </h1>
                       </div>
@@ -66,7 +70,11 @@
               <template #answers>
                 <div class="mt-4 space-y-4">
                   <template v-if="answers.data.length">
-                    <div v-for="answer in answers.data" class="qa-card qa-card--hoverable">
+                    <div
+                      v-for="answer in answers.data"
+                      class="qa-card qa-card--hoverable"
+                      @click.prevent="visitAnswer(answer.question_id, answer.id)"
+                    >
                       <div class="qa-card__header">
                         <h1 class="qa-card__title">
                           {{ answer.question.title }}
@@ -132,6 +140,12 @@ export default {
   methods: {
     nextPage() {
       // loadedData.push(data)
+    },
+    visitQuestion(questionId) {
+      this.$inertia.visit(`${this.route('questions.show', [questionId])}`)
+    },
+    visitAnswer(questionId, answerId) {
+      this.$inertia.visit(`${this.route('questions.show', [questionId])}#answer-${answerId}`)
     },
   },
 }
