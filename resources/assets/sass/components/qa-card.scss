@@ -22,7 +22,7 @@
   &__footer {
     @extend .card__footer;
 
-    @apply items-center text-slate-500;
+    @apply text-slate-500 items-start sm:items-center;
   }
 
   &__menu {
@@ -34,7 +34,6 @@
   }
 
   &__user {
-    // questions-card & answers card: ml-auto text-right
     @apply flex flex-row text-sm text-slate-500 space-x-2;
 
     &__avatar {
@@ -80,17 +79,17 @@
   }
 
   &--trashed {
-    @apply border border-red-500;
+    @apply ring-red-500;
   }
 
   &--solution {
-    @apply border border-green-500;
+    @apply ring-green-500;
   }
 
   $parent: &;
 
   &--hoverable {
-    @apply cursor-pointer border border-transparent;
+    @apply cursor-pointer;
     @apply hover:ring-primary-500;
 
     &:hover {
