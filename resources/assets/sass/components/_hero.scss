@@ -1,5 +1,5 @@
 .hero {
-  @apply flex h-64;
+  @apply bg-slate-900 text-white flex flex-col h-64 overflow-hidden;
 
   &__leading {
     @apply text-6xl font-bold;
@@ -8,11 +8,7 @@
   }
 
   &__body {
-    @apply flex items-center flex-grow;
-  }
-
-  &__cta {
-    @apply mt-8 space-y-2;
+    @apply flex items-center flex-grow flex-shrink-0;
   }
 
   &__footer {
@@ -32,9 +28,5 @@
 
   &--full {
     @apply h-screen;
-  }
-
-  &--primary {
-    @apply bg-primary-600 text-white;
   }
 }
