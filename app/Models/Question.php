@@ -81,11 +81,11 @@ class Question extends Model implements Viewable
     }
 
     /**
-     * @return HasMany<Bookmark>
+     * @return BelongsToMany<User>
      */
-    public function bookmarks(): HasMany
+    public function bookmarkedBy(): BelongsToMany
     {
-        return $this->hasMany(Bookmark::class);
+        return $this->belongsToMany(User::class, 'user_question_bookmark')->using(Bookmark::class);
     }
 
     /**
