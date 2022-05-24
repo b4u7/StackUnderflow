@@ -85,11 +85,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<Bookmark>
+     * @return BelongsToMany<Question>
      */
-    public function bookmarks(): HasMany
+    public function bookmarkedQuestions(): BelongsToMany
     {
-        return $this->hasMany(Bookmark::class);
+        return $this->belongsToMany(Question::class, 'user_question_bookmark')->using(Bookmark::class);
     }
 
     protected function header(): Attribute
