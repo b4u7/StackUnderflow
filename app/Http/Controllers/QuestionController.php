@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answer;
-use App\Models\Bookmark;
 use App\Models\Question;
 use App\Models\Tag;
 use App\Models\Vote;
@@ -50,9 +49,8 @@ class QuestionController extends Controller
                 ->withCount('votes');
         }
 
-        // TODO: Change this to be order by votes before demo
         $questions = $questions
-            ->orderBy('id', 'desc')
+            ->orderBy('votes_count', 'desc')
             ->paginate(10);
 
         $tags = Tag::whereHas('questions')
