@@ -17,20 +17,20 @@ export default {
   props: {
     kind: {
       type: String,
-      required: true
+      required: true,
     },
     fullwidth: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     classes() {
       return {
         'alert--fullwidth': this.fullwidth,
-        [`alert--${this.kind}`]: true
+        [`alert--${this.kind}`]: true,
       }
-    }
-  }
+    },
+  },
 }
 </script>

@@ -33,31 +33,31 @@ export default {
   props: {
     question: {
       type: Object,
-      required: true
+      required: true,
     },
     isTrashed: {
       type: Boolean,
-      required: true
+      required: true,
     },
     userQuestionVote: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     bookmarked: {
       type: Boolean,
-      required: true
+      required: true,
     },
     permissions: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       classes: {
         success: 'text-emerald-600',
-        danger: 'text-red-600'
-      }
+        danger: 'text-red-600',
+      },
     }
   },
   computed: {
@@ -72,7 +72,7 @@ export default {
     },
     userVote() {
       return this.userQuestionVote?.vote ?? 0
-    }
+    },
   },
   methods: {
     bookmarkAction(value) {
@@ -89,7 +89,7 @@ export default {
     },
     removeVote() {
       this.$inertia.post(route('questions.downvote', this.question))
-    }
-  }
+    },
+  },
 }
 </script>

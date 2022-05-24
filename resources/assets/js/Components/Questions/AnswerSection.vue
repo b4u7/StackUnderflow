@@ -35,23 +35,23 @@ export default {
   props: {
     answer: {
       type: Object,
-      required: true
+      required: true,
     },
     isSolution: {
       type: Boolean,
-      required: true
+      required: true,
     },
     permissions: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       classes: {
         success: 'text-emerald-600',
-        danger: 'text-red-600'
-      }
+        danger: 'text-red-600',
+      },
     }
   },
   computed: {
@@ -66,19 +66,19 @@ export default {
     },
     userVote() {
       return this.userQuestionVote?.vote ?? 0
-    }
+    },
   },
   methods: {
     async addVote() {
       await this.$inertia.post(route('questions.answers.upvote', [this.answer.question_id, this.answer]), {
-        preserveScroll: true
+        preserveScroll: true,
       })
 
       this.updateVotes(1)
     },
     async removeVote() {
       await this.$inertia.post(route('questions.answers.downvote', [this.answer.question_id, this.answer]), {
-        preserveScroll: true
+        preserveScroll: true,
       })
 
       this.updateVotes(-1)
@@ -105,8 +105,8 @@ export default {
     },
     markSolution() {
       this.$inertia.post(route('questions.answers.solution', [this.answer.question_id, this.answer]))
-    }
-  }
+    },
+  },
 }
 </script>
 

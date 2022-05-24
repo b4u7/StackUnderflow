@@ -10,15 +10,14 @@
             <h1 class="hero__leading">Learn. Share. Build</h1>
             <p class="max-w-prose opacity-80">
               A community-based space to find and contribute answers to technical challenges, and one of the most
-              popular
-              websites in the world.
+              popular websites in the world.
             </p>
             <Link class="button button--primary button--xl" as="button" :href="route('register')">
               Join the community
               <font-awesome-icon class="ml-1.5" icon="fa-solid fa-arrow-right" />
             </Link>
           </div>
-          <img class="hidden lg:inline rounded-lg shadow" src="img/index/small.png" alt="test">
+          <img class="hidden lg:inline rounded-lg shadow" src="img/index/small.png" alt="test" />
         </div>
       </template>
       <template #footer>
@@ -80,6 +79,6 @@ import Navbar from '@/Components/Navbar/Navbar'
 
 export default {
   name: 'Index',
-  components: { Navbar, Hero, Link }
+  components: { Navbar, Hero, Link },
 }
 </script>

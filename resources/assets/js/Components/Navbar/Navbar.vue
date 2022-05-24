@@ -61,14 +61,14 @@ export default {
   components: { Link, Tippy, Inbox },
   props: {
     dark: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   data() {
     return {
       dropdownMenuVisible: false,
       pendingSearch: null,
-      searchQuery: ''
+      searchQuery: '',
     }
   },
   mounted() {
@@ -109,7 +109,7 @@ export default {
   computed: {
     user() {
       return this.$page.props.auth.user ?? null
-    }
+    },
   },
   methods: {
     onDocumentClick(e) {
@@ -134,11 +134,11 @@ export default {
           { query: this.searchQuery },
           {
             preserveScroll: true,
-            preserveState: true
+            preserveState: true,
           }
         )
       )
-    }
-  }
+    },
+  },
 }
 </script>

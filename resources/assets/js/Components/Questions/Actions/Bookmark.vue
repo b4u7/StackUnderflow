@@ -13,20 +13,20 @@ export default {
   props: {
     bookmarked: {
       type: Boolean,
-      required: true
+      required: true,
     },
     canBookmark: {
       type: Boolean,
-      required: true
+      required: true,
     },
     canUnbookmark: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      mutableBookmarked: this.active
+      mutableBookmarked: this.active,
     }
   },
   methods: {
@@ -37,7 +37,7 @@ export default {
 
       this.mutableBookmarked = !this.mutableBookmarked
       this.$emit('bookmark', this.mutableBookmarked)
-    }
+    },
   },
   computed: {
     disabled() {
@@ -45,9 +45,9 @@ export default {
     },
     classes() {
       return {
-        'actions__item--active': this.mutableBookmarked
+        'actions__item--active': this.mutableBookmarked,
       }
-    }
-  }
+    },
+  },
 }
 </script>

@@ -70,16 +70,16 @@ export default {
   props: {
     question: {
       type: Object,
-      required: true
+      required: true,
     },
     isTrashed: {
       type: Boolean,
-      required: true
+      required: true,
     },
     permissions: {
       // type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     lastActionType() {
@@ -94,8 +94,8 @@ export default {
     },
     shareUrl() {
       return this.route('questions.show', this.question.id)
-    }
-  }
+    },
+  },
 }
 </script>
 
