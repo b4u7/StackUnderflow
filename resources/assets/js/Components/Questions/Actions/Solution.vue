@@ -2,9 +2,9 @@
   <form @submit.prevent="markSolution">
     <button
       :class="{ [classes.active]: active }"
-      :disabled="!canMarkSolution"
-      type="submit"
       class="actions__item actions__solution"
+      type="submit"
+      :disabled="!canMarkSolution"
     >
       <font-awesome-icon icon="fa-solid fa-check" />
     </button>
