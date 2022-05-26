@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -31,7 +27,7 @@ class UserController extends Controller
             ->orderBy('id')
             ->paginate(24);
 
-        return Inertia::render('Users/Index', compact('users'));
+        return Inertia::render('Users/Index', ['users' => $users]);
     }
 
     /**
@@ -52,7 +48,7 @@ class UserController extends Controller
 
         $canEdit = (bool)Auth::user()?->can('update', $user);
 
-        return Inertia::render('Users/Show', compact('user', 'questions', 'answers', 'canEdit'));
+        return Inertia::render('Users/Show', ['user' => $user, 'questions' => $questions, 'answers' => $answers, 'canEdit' => $canEdit]);
     }
 
     /**
@@ -62,7 +58,7 @@ class UserController extends Controller
     {
         $status = $request->session()->get('status');
 
-        return Inertia::render('Users/Edit', compact('user', 'status'));
+        return Inertia::render('Users/Edit', ['user' => $user, 'status' => $status]);
     }
 
     /**

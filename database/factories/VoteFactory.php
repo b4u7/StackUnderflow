@@ -7,6 +7,7 @@ use App\Models\Answer;
 use App\Models\User;
 use App\Models\Vote;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use JetBrains\PhpStorm\ArrayShape;
 
 class VoteFactory extends Factory
 {
@@ -22,17 +23,16 @@ class VoteFactory extends Factory
      *
      * @var string[]
      */
-    private $votables = [
+    private array $votables = [
         Question::class,
         Answer::class,
     ];
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    #[ArrayShape(['user_id' => "\Illuminate\Support\HigherOrderCollectionProxy|int|mixed", 'vote' => "mixed", 'votable_id' => "mixed", 'votable_type' => "mixed"])]
+    public function definition(): array
     {
         $votableType = $this->faker->randomElement($this->votables);
         $votableId = call_user_func($votableType . '::all')->random()->id;

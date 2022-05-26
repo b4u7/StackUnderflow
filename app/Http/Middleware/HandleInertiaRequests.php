@@ -35,16 +35,14 @@ class HandleInertiaRequests extends Middleware
         $user = $request->user();
 
         return array_merge(parent::share($request), [
-            'auth' => function () use ($request, $user) {
-                return [
-                    'user' => optional($user, static fn() => [
-                        'id' => $user->id,
-                        'avatar' => $user->avatar,
-                        'admin' => $user->admin,
-                        'notifications' => $user->unreadNotifications,
-                    ])
-                ];
-            },
+            'auth' => fn() => [
+                'user' => optional($user, static fn() => [
+                    'id' => $user->id,
+                    'avatar' => $user->avatar,
+                    'admin' => $user->admin,
+                    'notifications' => $user->unreadNotifications,
+                ])
+            ],
             'flash' => $request->session()->get('flash', [])
         ]);
     }

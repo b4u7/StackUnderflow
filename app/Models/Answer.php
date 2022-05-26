@@ -40,8 +40,8 @@ class Answer extends Model
 
     public static function boot()
     {
-        static::addGlobalScope(new AdminScope);
         parent::boot();
+        static::addGlobalScope(new AdminScope);
     }
 
     /**

@@ -59,7 +59,7 @@ class QuestionController extends Controller
             ->take(10)
             ->get();
 
-        return Inertia::render('Questions/Index', compact('questions', 'tags'));
+        return Inertia::render('Questions/Index', ['questions' => $questions, 'tags' => $tags]);
     }
 
     /**
@@ -73,7 +73,7 @@ class QuestionController extends Controller
 
         $tagsList = Tag::all();
 
-        return Inertia::render('Questions/Create', compact('tagsList'));
+        return Inertia::render('Questions/Create', ['tagsList' => $tagsList]);
     }
 
     /**
@@ -171,15 +171,7 @@ class QuestionController extends Controller
 
         $isTrashed = $question->trashed();
 
-        return Inertia::render('Questions/Show', compact(
-            'question',
-            'answers',
-            'isTrashed',
-            'bookmarked',
-            'userAnswered',
-            'userQuestionVote',
-            'permissions'
-        ));
+        return Inertia::render('Questions/Show', ['question' => $question, 'answers' => $answers, 'isTrashed' => $isTrashed, 'bookmarked' => $bookmarked, 'userAnswered' => $userAnswered, 'userQuestionVote' => $userQuestionVote, 'permissions' => $permissions]);
     }
 
     /**
@@ -195,7 +187,7 @@ class QuestionController extends Controller
 
         $tagsList = Tag::all();
 
-        return Inertia::render('Questions/Edit', compact('question', 'tagsList'));
+        return Inertia::render('Questions/Edit', ['question' => $question, 'tagsList' => $tagsList]);
     }
 
     /**
