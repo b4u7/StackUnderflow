@@ -6,6 +6,7 @@ use App\Scopes\AdminScope;
 use App\Services\MarkdownRenderer;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
 
 class Question extends Model implements Viewable
@@ -46,6 +48,14 @@ class Question extends Model implements Viewable
     public static function booted()
     {
         static::addGlobalScope(new AdminScope);
+
+        static::addGlobalScope('votes_sum', fn(Builder $query) => $query->selectSub(fn($query) => $query
+            ->selectRaw('coalesce(sum(vote), 0)')
+            ->from('votes')
+            ->where('votable_id', '=', DB::raw('questions.id'))
+            ->where('votable_type', '=', Question::class),
+            'votes_sum_vote'
+        ));
     }
 
     /**

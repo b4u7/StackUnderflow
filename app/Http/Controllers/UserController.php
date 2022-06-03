@@ -21,11 +21,11 @@ class UserController extends Controller
      */
     public function index(Request $request): Response
     {
-        $users = $request->has('query') ? User::search($request->query('query')) : User::query();
+        $users = $request->has('query')
+            ? User::search($request->query('query'))
+            : User::query()->orderByDesc('created_at')->orderByDesc('id');
 
-        $users = $users->orderBy('created_at', 'desc')
-            ->orderBy('id')
-            ->paginate(24);
+        $users = $users->paginate(24);
 
         return Inertia::render('Users/Index', ['users' => $users]);
     }
@@ -36,14 +36,12 @@ class UserController extends Controller
     public function show(User $user): Response
     {
         $questions = $user->questions()
-            ->withSum('votes', 'vote')
-            ->orderByDesc('votes_sum_vote')
+            ->orderByDesc('id')
             ->cursorPaginate(8, cursorName: 'questions_cursor');
 
         $answers = $user->answers()
             ->with('question')
-            ->withSum('votes', 'vote')
-            ->orderByDesc('votes_sum_vote')
+            ->orderByDesc('id')
             ->cursorPaginate(8, cursorName: 'answers_cursor');
 
         $canEdit = (bool)Auth::user()?->can('update', $user);

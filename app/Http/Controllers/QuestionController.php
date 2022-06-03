@@ -42,17 +42,17 @@ class QuestionController extends Controller
                 ->query(
                     fn(Builder $query) => $query
                         ->with(['votes', 'answers', 'user', 'tags'])
-                        ->withSum('votes', 'vote')
                 );
         } else {
             $questions = Question::with(['votes', 'answers', 'user', 'tags'])
-                ->withSum('votes', 'vote');
+                ->orderByDesc('votes_sum_vote');
         }
 
-        // FIXME: Order by vote sum
         $questions = $questions
-            ->when(Auth::user()?->admin, static fn(Builder $query) => $query->withTrashed())
-            ->orderByDesc('votes_sum_vote')
+            ->when(
+                Auth::user()?->admin,
+                static fn(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query) => $query->withTrashed()
+            )
             ->paginate(10);
 
         $tags = Tag::whereHas('questions')

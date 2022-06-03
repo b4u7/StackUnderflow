@@ -13,6 +13,7 @@ class AdminScope implements Scope
      * Apply the scope to a given Eloquent query builder.
      *
      * @param Builder<Model> $builder
+     * @param Model $model
      */
     public function apply(Builder $builder, Model $model): void
     {

@@ -21,6 +21,13 @@ class Vote extends Model
     ];
 
     /**
+     * @var array<string>
+     */
+    protected $touches = [
+        'votable'
+    ];
+
+    /**
      * @return MorphTo<Question|Answer|Model, Vote>
      */
     public function votable(): MorphTo
