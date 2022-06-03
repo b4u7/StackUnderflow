@@ -7,6 +7,7 @@ use App\Models\Question;
 use App\Models\Answer;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use JetBrains\PhpStorm\ArrayShape;
 
 class CommentFactory extends Factory
 {
@@ -22,17 +23,16 @@ class CommentFactory extends Factory
      *
      * @var string[]
      */
-    private $commentables = [
+    private array $commentables = [
         Question::class,
         Answer::class,
     ];
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    #[ArrayShape(['user_id' => "\Illuminate\Support\HigherOrderCollectionProxy|int|mixed", 'commentable_id' => "mixed", 'commentable_type' => "mixed", 'body' => "string"])]
+    public function definition(): array
     {
         $commentableType = $this->faker->randomElement($this->commentables);
         $commentableId = call_user_func($commentableType . '::all')->random()->id;

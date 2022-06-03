@@ -88,7 +88,7 @@ class AnswerPolicy
      */
     public function vote(User $user, Answer $answer): bool
     {
-        return !($answer->trashed() || $answer->question->trashed());
+        return !$answer->trashed() && !$answer->question->trashed();
     }
 
     /**

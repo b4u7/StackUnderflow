@@ -67,7 +67,7 @@ class AnswerController extends Controller
     {
         $this->authorize('update', $answer);
 
-        return Inertia::render('Questions/Answers/Edit', compact('question', 'answer'));
+        return Inertia::render('Questions/Answers/Edit', ['question' => $question, 'answer' => $answer]);
     }
 
     /**

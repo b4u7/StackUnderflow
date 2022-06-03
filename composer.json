@@ -37,6 +37,7 @@
     "nunomaduro/larastan": "^2.0",
     "pestphp/pest": "^1.9",
     "phpunit/phpunit": "^9.0",
+    "rector/rector": "^0.13.0",
     "spatie/laravel-ignition": "^1.0",
     "spatie/laravel-web-tinker": "^1.8",
     "worksome/envy": "^0.3.1"

@@ -16,6 +16,6 @@ class BookmarkController extends Controller
             ->with('user', 'answers', 'tags')
             ->cursorPaginate(8);
 
-        return Inertia::render('Users/Bookmarks/Index', compact('bookmarkedQuestions'));
+        return Inertia::render('Users/Bookmarks/Index', ['bookmarkedQuestions' => $bookmarkedQuestions]);
     }
 }
