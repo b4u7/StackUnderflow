@@ -1,75 +1,101 @@
 # StackUnderflow
 
-StackUnderflow is a Q&A web application based on StackOverflow built using Laravel and Vue for my final course project
-for school.
+StackUnderflow is a Q&A application based on the popular StackOverflow for my final school project. It is build using
+mainly Laravel and Vue.
 
-# Getting Started
-
-This repository contains the PHP application code for StackUnderflow. This application uses the laravel/framework hence
-laravel/laravel can be treated as an upstream of sorts. Before working on the application it is recommended to fully
-read this document and to refer back to and edit throughout development.
-
-# Deploying
-
-# Local Development
-
-## Provisioning
+# Development
 
 We use Laravel Sail for local development.
 
-We need to install our composer dependencies in order to run Sail:
+## Installing dependencies
 
-```
+### Laravel Sail
+
+Laravel Sail is a light-weight command-line interface for interacting with Laravel's default Docker development
+environment.
+
+To start using it, we need to install our composer dependencies first:
+
+```bash
 docker run --rm \
     -u "$(id -u):$(id -g)" \
-    -v $(pwd):/opt \
-    -w /opt \
-    laravelsail/php80-composer:latest \
+    -v $(pwd):/var/www/html \
+    -w /var/www/html \
+    laravelsail/php81-composer:latest \
     composer install --ignore-platform-reqs
 ```
 
-### Starting sail
+### NPM
+
+Before continuing, we need to install our front-end dependencies:
 
 ```
+sail npm install
+```
+
+## Running the project
+
+### .env file
+
+You should first set up your .env file. We already have an example file, so you may just copy that into your own:
+
+```bash
+cp .env.example .env
+```
+
+### Starting Laravel Sail
+
+After everything is installed, we can now initialize sail by running the following command:
+
+```bash
 vendor/bin/sail up -d
 ```
 
-The only thing left is to add `127.0.0.1 stackunderflow.test` to your hosts file.
+#### Aliasing Sail
 
-### Aliasing Sail
+You may wish to set up a Bash alias instead of repeatedely typing `vendor/bin/sail` everytime you want to run a command.
+You can do so with:
 
-Add the following to `~/.bash_aliases`
-
+```bash
+alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 ```
+
+or by adding the following to `~/.bash_aliases`:
+
+```bash
 alias sail='bash vendor/bin/sail'
 ```
 
-## Dependencies
+This way, instead of running `vendor/bin/sail up -d` you can just do `sail up -d`.
 
-Dependencies are automatically handled by Composer, a list of dependencies can be found in `composer.json`. To install
-the current dependencies for a project run `sail composer install`.
+## Algolia
 
-If you wish to update the version of specific dependencies, make your change to `composer.json`, run `composer update`
-and then commit your changes to `composer.json` and `composer.lock`.
+We use Algolia for search. To set it up, simply create an application on the Algolia website, get the app credentials
+and set them in the .env file.
 
-## Database Migrations
+```dotenv
+ALGOLIA_APP_ID=
+ALGOLIA_SECRET=
+```
 
-Database migrations are stored in `database/migrations`, this is a version control for the schema. You can generate new
-migrations using the following command: `sail artisan migrate`.
+## Database
 
-## Database Seeding
+### Database Migrations
 
-You can seed a development database by simply running: `sail artisan db:seed`.
+Database Migrations are like a form of version control for databases. They allow you to easily upgrade to the latest
+version a database without having to do it manually. This is seen especially useful when working as a team or when
+setting up the project again.
 
-## Asset Management
+To generate our migrations you may run the following command:
 
-We use Laravel Mix for asset management, you can rtfm here: https://laravel.com/docs/8.x
+```bash
+sail artisan migrate
+```
 
-## Using an IDE
+You may also wish to seed the development database in order to have some dummy test data. You can do so with:
 
-If you wish to use an IDE, [Jetbrains PHPStorm](https://www.jetbrains.com/phpstorm) is the supported IDE for
-StackUnderflow. We strongly recommended you to use the
-[Laravel Plugin](https://plugins.jetbrains.com/plugin/7532-laravel-plugin).
+```bash
+sail artisan db:seed
+```
 
-The `_ide_helper.php` file is auto generated using the command `artisan ide-helper:generate` - this provides the IDE
-with vastly improved PHPDocs of the Laravel framework. Select `no` when asked to generate model doc-blocks.
+The only thing left to access the website is to add the record `127.0.0.1 stackunderflow.test` to your hosts file.
