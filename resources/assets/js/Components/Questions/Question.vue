@@ -82,7 +82,7 @@ export default {
   },
   computed: {
     lastActionType() {
-      if (this.question.updated_at) {
+      if (this.question.created_at !== this.question.updated_at) {
         return 'Modified'
       }
 
