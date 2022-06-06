@@ -4,7 +4,7 @@
       <tags :tags="selectedTags" removable @tag-remove="removeTag" />
       <input
         @click="openDropdown"
-        @keydown="event => addTag({ name: query, new: true }, event)"
+        @keydown="handleInput"
         class="tag-input__search"
         type="text"
         name="tag-input"
@@ -17,7 +17,7 @@
             :key="index"
             type="button"
             class="tag-input__dropdown__button"
-            @click="event => addTag(tag.item, event)"
+            @click="addTag(tag.item)"
             v-text="tag.item.name"
           />
         </div>
@@ -37,24 +37,24 @@ export default {
   name: 'TagInput',
   model: {
     prop: 'value',
-    event: 'input',
+    event: 'input'
   },
   components: { Tags, Tag },
   props: {
     tagsList: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     value: {
       type: Array,
-      default: () => [],
-    },
+      default: () => []
+    }
   },
   data() {
     return {
       searching: false,
       query: '',
-      fuse: new Fuse([], { keys: ['name'], threshold: 0.2 }),
+      fuse: new Fuse([], { keys: ['name'], threshold: 0.2 })
     }
   },
   watch: {
@@ -62,8 +62,8 @@ export default {
       immediate: true,
       handler(newVal) {
         this.fuse.setCollection(newVal)
-      },
-    },
+      }
+    }
   },
   computed: {
     filteredTagsList() {
@@ -75,8 +75,8 @@ export default {
       },
       get() {
         return this.value
-      },
-    },
+      }
+    }
   },
   methods: {
     openDropdown() {
@@ -85,21 +85,31 @@ export default {
     closeDropdown() {
       this.searching = false
     },
-    addTag(tag, event) {
-      if (this.selectedTags.length >= 5) {
+    handleInput(event) {
+      const keyCode = event.key?.toLowerCase()
+
+      if (this.selectedTags.length >= 5 && keyCode !== 'backspace') {
+        event.preventDefault()
         return
       }
 
-      const allowedKeys = [',', ' ', 'enter', 'delete', 'backspace']
-
-      if (!event.key || !allowedKeys.includes(event.key.toLowerCase())) {
+      const allowedKeys = [',', ' ', 'enter', 'backspace']
+      if (!allowedKeys.includes(keyCode)) {
         return
       }
 
+      if (keyCode === 'backspace' && !isEmpty(this.query)) {
+        return
+      }
+
+      event.preventDefault()
+
+      let tag = { name: this.query, new: true }
       tag.name = trim(tag.name, ' ,\t')
-      if (event.key?.toLowerCase() === 'backspace') {
+
+      if (keyCode === 'backspace') {
         if (isEmpty(tag.name)) {
-          this.removeTag(tag)
+          this.removeTag()
         }
 
         return
@@ -113,6 +123,13 @@ export default {
         tag = this.tagsList.find(t => t.name === tag.name) ?? tag
       }
 
+      this.addTag(tag)
+    },
+    addTag(tag) {
+      if (this.selectedTags.find(t => t.name === tag.name)) {
+        return
+      }
+
       this.selectedTags.push(tag)
       this.query = ''
     },
@@ -123,11 +140,11 @@ export default {
 
       const index = tag
         ? this.selectedTags.findIndex(t => t.id === tag.id)
-        : this.selectedTags[this.selectedTags.length - 1]
+        : this.selectedTags.length - 1
 
       this.selectedTags.splice(index, 1)
-    },
-  },
+    }
+  }
 }
 </script>
 
