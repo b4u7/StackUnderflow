@@ -37,24 +37,24 @@ export default {
   name: 'TagInput',
   model: {
     prop: 'value',
-    event: 'input'
+    event: 'input',
   },
   components: { Tags, Tag },
   props: {
     tagsList: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     value: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
       searching: false,
       query: '',
-      fuse: new Fuse([], { keys: ['name'], threshold: 0.2 })
+      fuse: new Fuse([], { keys: ['name'], threshold: 0.2 }),
     }
   },
   watch: {
@@ -62,8 +62,8 @@ export default {
       immediate: true,
       handler(newVal) {
         this.fuse.setCollection(newVal)
-      }
-    }
+      },
+    },
   },
   computed: {
     filteredTagsList() {
@@ -75,8 +75,8 @@ export default {
       },
       get() {
         return this.value
-      }
-    }
+      },
+    },
   },
   methods: {
     openDropdown() {
@@ -138,13 +138,11 @@ export default {
         return
       }
 
-      const index = tag
-        ? this.selectedTags.findIndex(t => t.id === tag.id)
-        : this.selectedTags.length - 1
+      const index = tag ? this.selectedTags.findIndex(t => t.id === tag.id) : this.selectedTags.length - 1
 
       this.selectedTags.splice(index, 1)
-    }
-  }
+    },
+  },
 }
 </script>
 
