@@ -5,8 +5,6 @@ mainly Laravel and Vue.
 
 # Development
 
-We use Laravel Sail for local development.
-
 ## Installing dependencies
 
 ### Laravel Sail
@@ -21,7 +19,7 @@ docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v $(pwd):/var/www/html \
     -w /var/www/html \
-    laravelsail/php81-composer:latest \
+    laravelsail/php80-composer:latest \
     composer install --ignore-platform-reqs
 ```
 
@@ -60,7 +58,7 @@ You can do so with:
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
 ```
 
-or by adding the following to `~/.bash_aliases`:
+or by manually adding the following to your `~/.bash_aliases`:
 
 ```bash
 alias sail='bash vendor/bin/sail'
