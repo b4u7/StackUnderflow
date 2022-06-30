@@ -1,0 +1,21 @@
+$alert-colours: (
+  'primary': 'primary',
+  'success': 'green',
+  'info': 'sky',
+  'warning': 'amber',
+  'danger': 'red',
+);
+
+.alert {
+  @apply py-3 px-4 flex rounded-md bg-white text-slate-900 max-w-prose mx-auto gap-4;
+
+  @each $type, $colour in $alert-colours {
+    &--#{$type} {
+      @apply bg-#{$colour}-200 text-sm text-#{$colour}-600;
+    }
+  }
+
+  &--fullwidth {
+    @apply w-full;
+  }
+}

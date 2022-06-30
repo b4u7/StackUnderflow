@@ -1,0 +1,16 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    paths:
+        - app
+
+    level: 8
+
+    excludePaths:
+        - app/Actions/Fortify/*
+        - app/Console/*
+        - app/Exceptions/*
+        - app/Http/Middleware/*
+        - app/Http/Kernel.php
+        - app/Providers/*

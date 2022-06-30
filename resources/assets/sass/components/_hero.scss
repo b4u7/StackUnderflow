@@ -1,0 +1,32 @@
+.hero {
+  @apply bg-slate-900 text-white flex flex-col h-64 overflow-hidden;
+
+  &__leading {
+    @apply text-6xl font-bold;
+
+    font-family: 'Epilogue', 'sans-serif';
+  }
+
+  &__body {
+    @apply flex items-center flex-grow flex-shrink-0;
+  }
+
+  &__footer {
+  }
+
+  &--small {
+    @apply h-64;
+  }
+
+  &--medium {
+    @apply h-[60vh];
+  }
+
+  &--large {
+    @apply h-[80vh];
+  }
+
+  &--full {
+    @apply h-screen;
+  }
+}

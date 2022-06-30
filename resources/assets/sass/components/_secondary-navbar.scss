@@ -1,0 +1,23 @@
+.secondary-navbar {
+  @apply bg-slate-800 text-sm;
+
+  .container {
+    @apply relative flex items-center justify-between h-12;
+  }
+
+  &__start {
+    @extend .navbar__start;
+
+    @apply space-x-4;
+  }
+
+  &__item {
+    @extend .navbar__item;
+
+    @apply text-slate-400 hover:text-slate-200;
+
+    &--active {
+      @apply text-slate-50;
+    }
+  }
+}

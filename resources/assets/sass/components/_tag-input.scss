@@ -1,0 +1,31 @@
+.tag-input {
+  &__box {
+    @apply relative;
+    @apply flex flex-row items-center;
+    @apply bg-white rounded-md;
+    @apply mt-1 w-full shadow-sm sm:text-sm border-0 border-transparent ring-1 ring-slate-300 px-2;
+  }
+
+  &__search {
+    @apply appearance-none border-none w-full text-sm rounded-md;
+    @apply focus:border-none focus:outline-none focus:ring-0;
+    @apply active:border-none active:outline-none active:ring-0;
+  }
+
+  &__dropdown {
+    @extend .dropdown;
+
+    @apply origin-top-left left-0 max-h-48 overflow-y-scroll;
+
+    &__container {
+      @extend .dropdown__container;
+    }
+
+    &__button {
+      @extend .dropdown__item;
+
+      @apply w-full;
+      @apply hover:bg-slate-200;
+    }
+  }
+}

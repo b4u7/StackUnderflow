@@ -1,0 +1,69 @@
+.inbox {
+  @extend .dropdown;
+
+  @apply origin-top-right right-4 min-w-[400px] text-slate-800 overflow-x-hidden;
+
+  &__header {
+    @apply flex flex-row items-center min-h-[3rem] py-1 px-2;
+    @apply overflow-hidden shadow-sm;
+
+    &__left {
+      @apply w-16;
+    }
+
+    &__center {
+      @apply inline-flex flex-grow justify-center;
+    }
+
+    &__right {
+      //@apply w-16;
+    }
+  }
+
+  $max-height: 'calc(100vh-12rem)';
+
+  &__content {
+    @apply flex flex-grow flex-col max-h-[400px] max-h-[#{$max-height}] overflow-y-auto;
+  }
+
+  &__footer {
+  }
+
+  &__notification {
+    @apply flex flex-row p-4;
+    @apply hover:bg-slate-50;
+    @apply focus:bg-slate-100;
+    @apply active:bg-slate-100;
+
+    &__subtitle {
+      @apply flex flex-row text-sm items-center space-x-2 text-slate-500;
+    }
+
+    &__icon {
+      @apply text-primary-600 text-sm;
+    }
+
+    &__title {
+      @apply text-slate-800;
+    }
+
+    &__body {
+      @apply text-slate-500;
+    }
+
+    &__time {
+      @apply text-right;
+    }
+
+    &__user {
+      @apply text-slate-900;
+      @apply hover:text-primary-700 hover:underline;
+      @apply focus:text-primary-500 focus:underline;
+      @apply active:text-primary-500 active:underline;
+    }
+  }
+
+  &__empty-state {
+    @apply p-4 text-center;
+  }
+}

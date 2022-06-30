@@ -1,0 +1,11 @@
+.section {
+  @apply py-4 space-y-4;
+
+  &--large {
+    @apply py-48;
+  }
+
+  &--full {
+    @apply h-screen;
+  }
+}

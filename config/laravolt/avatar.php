@@ -22,34 +22,30 @@ return [
     // Initial generator class
     'generator' => \Laravolt\Avatar\Generator\DefaultGenerator::class,
 
-    // Theme implementation
-    'decorator' => \Laravolt\Avatar\Theme\Decorator::class,
-
     // Whether all characters supplied must be replaced with their closest ASCII counterparts
     'ascii' => false,
 
     // Image shape: circle or square
-    'shape' => 'circle',
+    'shape' => 'square',
 
     // Image width, in pixel
-    'width' => 100,
+    'width' => 512,
 
     // Image height, in pixel
-    'height' => 100,
+    'height' => 512,
 
     // Number of characters used as initials. If name consists of single word, the first N character will be used
     'chars' => 1,
 
     // font size
-    'fontSize' => 48,
+    'fontSize' => 256,
 
     // convert initial letter in uppercase
     'uppercase' => true,
 
     // Fonts used to render text.
-    // If contains more than one fonts, randomly selected based on name supplied
-    // 'fonts' => [__DIR__ . '/../fonts/OpenSans-Bold.ttf', __DIR__ . '/../fonts/rockwell.ttf'],
-    'fonts' => [ 'https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap' ],
+    // If it contains more than a font, randomly selected one based on name supplied
+    'fonts' => ['https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap'],
 
     // List of foreground colors to be used, randomly selected based on name supplied
     'foregrounds' => [
@@ -76,7 +72,7 @@ return [
     ],
 
     'border' => [
-        'size' => 1,
+        'size' => 0,
 
         // border color, available value are:
         // 'foreground' (same as foreground color)
@@ -96,14 +92,6 @@ return [
     // Available theme attributes are:
     // shape, chars, backgrounds, foregrounds, fonts, fontSize, width, height, ascii, uppercase, and border.
     'themes' => [
-        'grayscale-light' => [
-            'backgrounds' => ['#edf2f7', '#e2e8f0', '#cbd5e0'],
-            'foregrounds' => ['#a0aec0'],
-        ],
-        'grayscale-dark' => [
-            'backgrounds' => ['#2d3748', '#4a5568', '#718096'],
-            'foregrounds' => ['#e2e8f0'],
-        ],
         'colorful' => [
             'backgrounds' => [
                 '#f44336',
@@ -123,27 +111,6 @@ return [
                 '#FF5722',
             ],
             'foregrounds' => ['#FFFFFF'],
-        ],
-        'pastel' => [
-            'backgrounds' => [
-                '#ef9a9a',
-                '#F48FB1',
-                '#CE93D8',
-                '#B39DDB',
-                '#9FA8DA',
-                '#90CAF9',
-                '#81D4FA',
-                '#80DEEA',
-                '#80CBC4',
-                '#A5D6A7',
-                '#E6EE9C',
-                '#FFAB91',
-                '#FFCCBC',
-                '#D7CCC8',
-            ],
-            'foregrounds' => [
-                '#FFF',
-            ],
         ],
     ],
 ];

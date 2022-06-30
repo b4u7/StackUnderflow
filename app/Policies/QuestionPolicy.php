@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Question;
-use App\User;
+use App\Models\Question;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class QuestionPolicy
@@ -12,110 +12,93 @@ class QuestionPolicy
 
     /**
      * Determine whether the user can view any questions.
-     *
-     * @param User $user
-     * @return mixed
      */
-    public function viewAny(?User $user)
+    public function viewAny(?User $user): bool
     {
         return true;
     }
 
     /**
      * Determine whether the user can view the question.
-     *
-     * @param User $user
-     * @param Question $question
-     * @return mixed
      */
-    public function view(?User $user, Question $question)
+    public function view(?User $user, Question $question): bool
     {
         return true;
     }
 
     /**
      * Determine whether the user can create questions.
-     *
-     * @param User $user
-     * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return true;
     }
 
     /**
      * Determine whether the user can update the question.
-     *
-     * @param User $user
-     * @param Question $question
-     * @return mixed
      */
-    public function update(User $user, Question $question)
+    public function update(User $user, Question $question): bool
     {
-        return $user->id === $question->user_id;
+        return $user->admin || $user->id === $question->user_id;
     }
 
     /**
      * Determine whether the user can delete the question.
-     *
-     * @param User $user
-     * @param Question $question
-     * @return mixed
      */
-    public function delete(User $user, Question $question)
+    public function delete(User $user, Question $question): bool
     {
-        //
+        if ($question->trashed()) {
+            return false;
+        }
+
+        return $user->admin || $user->id === $question->user_id;
     }
 
     /**
      * Determine whether the user can restore the question.
-     *
-     * @param User $user
-     * @param Question $question
-     * @return mixed
      */
-    public function restore(User $user, Question $question)
+    public function restore(User $user, Question $question): bool
     {
-        return false;
+        return $user->admin && $question->trashed();
     }
 
     /**
      * Determine whether the user can permanently delete the question.
-     *
-     * @param User $user
-     * @param Question $question
-     * @return mixed
      */
-    public function forceDelete(User $user, Question $question)
+    public function forceDelete(User $user, Question $question): bool
     {
         return false;
     }
 
-    /**
-     * Determine whether the user can vote on the question.
-     *
-     * @param User $user
-     * @param Question $question
-     * @return bool
+    /*
+     * Determine whether the user can bookmark the question.
      */
-    public function vote(User $user, Question $question)
+    public function bookmark(User $user, Question $question): bool
     {
-        return true;
+        return !$question->trashed();
+    }
+
+    /*
+     * Determine whether the user can unbookmark the question.
+     */
+    public function unbookmark(User $user, Question $question): bool
+    {
+        if ($question->trashed()) {
+            return false;
+        }
+
+        return $question->bookmarkedBy()->whereKey($user->id)->exists();
     }
 
     /**
-     * Determine whether the user is an admin.
-     *
-     * @param User $user
-     * @return bool
+     * Determine whether the user can vote on the question.
      */
-    public function before(User $user, $ability)
+    public function vote(User $user, Question $question): bool
     {
-        if ($user->admin) {
-            return true;
+        if ($question->trashed()) {
+            return false;
         }
 
-        return null;
+        return $user->id !== $question->user_id;
     }
 }

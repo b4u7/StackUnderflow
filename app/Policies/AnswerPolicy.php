@@ -2,10 +2,11 @@
 
 namespace App\Policies;
 
-use App\Answer;
-use App\Question;
-use App\User;
+use App\Models\Answer;
+use App\Models\Question;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class AnswerPolicy
 {
@@ -13,115 +14,92 @@ class AnswerPolicy
 
     /**
      * Determine whether the user can view any answers.
-     *
-     * @param User $user
-     * @return mixed
      */
-    public function viewAny(?User $user)
+    public function viewAny(?User $user): bool
     {
         return true;
     }
 
     /**
      * Determine whether the user can view the answer.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return mixed
      */
-    public function view(?User $user, Answer $answer)
+    public function view(?User $user, Answer $answer): bool
     {
         return true;
     }
 
     /**
      * Determine whether the user can create answers.
-     *
-     * @param User $user
-     * @param Question $question
-     * @return mixed
      */
-    public function create(User $user, Question $question)
+    public function create(User $user, Question $question): Response|bool
     {
-        return Answer::where('user_id', '=', $user->id)
-                ->where('question_id', '=', $question->id)
-                ->where('deleted_at', '=', null)
-                ->count() === 0;
+        if (!$user->hasVerifiedEmail()) {
+            return $this->deny('You must verify your email address before you can answer questions.');
+        }
+
+        if ($question->trashed()) {
+            return false;
+        }
+
+        return $user->hasVerifiedEmail()
+            && $question->answers()
+                ->whereBelongsTo($user)
+                ->doesntExist();
     }
 
     /**
      * Determine whether the user can update the answer.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return mixed
      */
-    public function update(User $user, Answer $answer)
+    public function update(User $user, Answer $answer): bool
     {
-        return $answer->user_id === $user->id;
+        return $user->admin || $answer->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can delete the answer.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return mixed
      */
-    public function delete(User $user, Answer $answer)
+    public function delete(User $user, Answer $answer): bool
     {
-        return $answer->user_id === $user->id;
+        if ($answer->trashed()) {
+            return false;
+        }
+
+        return $user->admin || $answer->user_id === $user->id;
     }
 
     /**
      * Determine whether the user can restore the answer.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return mixed
      */
-    public function restore(User $user, Answer $answer)
+    public function restore(User $user, Answer $answer): bool
     {
-        return false;
+        return $user->admin && $answer->trashed();
     }
 
     /**
      * Determine whether the user can permanently delete the answer.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return mixed
      */
-    public function forceDelete(User $user, Answer $answer)
+    public function forceDelete(User $user, Answer $answer): bool
     {
         return false;
     }
 
     /**
      * Determine whether the user can vote on the answer.
-     *
-     * @param User $user
-     * @param Answer $answer
-     * @return bool
      */
-    public function vote(User $user, Answer $answer)
+    public function vote(User $user, Answer $answer): bool
     {
-        return true;
+        return !$answer->trashed() && !$answer->question->trashed();
     }
 
     /**
-     * Determine whether the user is an admin.
-     *
-     * @param User $user
-     * @param $ability
-     * @return bool
+     * Determine whether the user can select the answer as the solution.
      */
-    public function before(User $user, $ability)
+    public function solution(User $user, Answer $answer): bool
     {
-        if ($user->admin && $ability !== 'create') {
-            return true;
+        if ($answer->trashed() || $answer->question->trashed()) {
+            return false;
         }
 
-        return null;
+        return $user->id === $answer->question->user_id;
     }
 }

@@ -1,0 +1,72 @@
+.actions {
+  @apply text-center font-semibold pr-8;
+
+  $parent: &;
+
+  &__item {
+    @apply text-slate-300;
+
+    &:is([disabled]),
+    &--disabled {
+      @apply cursor-not-allowed;
+    }
+
+    &--active {
+      &#{$parent}__vote-up {
+        @apply text-emerald-500;
+
+        &:not([disabled]) {
+          @apply hover:text-emerald-600;
+        }
+      }
+
+      &#{$parent}__vote-down {
+        @apply text-red-500;
+
+        &:not([disabled]) {
+          @apply hover:text-red-600;
+        }
+      }
+
+      &#{$parent}__bookmark {
+        @apply text-primary-500;
+
+        &:not([disabled]) {
+          @apply hover:text-primary-600;
+        }
+      }
+
+      &#{$parent}__solution {
+        @apply text-emerald-500;
+
+        &:not([disabled]) {
+          @apply hover:text-emerald-600;
+        }
+      }
+    }
+  }
+
+  button.actions__item:not([disabled]) {
+    @apply hover:text-slate-400;
+  }
+
+  &__vote-up {
+    @apply text-4xl;
+  }
+
+  &__vote-count {
+    @apply text-3xl text-slate-500;
+  }
+
+  &__vote-down {
+    @apply text-4xl;
+  }
+
+  &__bookmark {
+    @apply text-3xl mt-2;
+  }
+
+  &__solution {
+    @apply text-3xl mt-2;
+  }
+}

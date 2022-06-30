@@ -2,66 +2,80 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
+use App\Models\Question;
 use Auth;
-use App\Answer;
-use App\Question;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Pagination\CursorPaginator;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class AnswerController extends Controller
 {
+    public function index(Request $request, Question $question): CursorPaginator
+    {
+        $user = $request->user();
+
+        return $question->answers()
+            ->with('user')
+            ->withSum('votes', 'vote')
+            ->when(
+                $user,
+                static fn(Builder $query) => $query->withSum(
+                    ['votes as user_vote' => static fn(Builder $q) => $q->where('user_id', '=', $user?->id)],
+                    'vote'
+                )
+            )
+            ->when($user !== null && $user->admin, static fn(Builder $q) => $q->withTrashed())
+            ->when(
+                $question->solution_id !== null,
+                static fn(Builder $q) => $q->orderByDesc(DB::raw('id = ' . $question->solution_id))
+            )
+            ->cursorPaginate();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @param Question $question
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function store(Request $request, Question $question)
+    public function store(Request $request, Question $question): RedirectResponse
     {
         $this->authorize('create', [Answer::class, $question]);
 
+        // FIXME: Add validation
         Answer::create([
             'user_id' => Auth::id(),
             'question_id' => $question->id,
             'body' => $request->input('body'),
         ]);
 
-        return redirect()->back();
+        return back();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Request $request
-     * @param Question $question
-     * @param Answer $answer
-     * @return Application|Factory|View
      * @throws AuthorizationException
      */
-    public function edit(Request $request, Question $question, Answer $answer)
+    public function edit(Request $request, Question $question, Answer $answer): Response
     {
         $this->authorize('update', $answer);
 
-        return view('questions.answers.edit', compact('question', 'answer'));
+        return Inertia::render('Questions/Answers/Edit', ['question' => $question, 'answer' => $answer]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Question $question
-     * @param Answer $answer
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(Request $request, Question $question, Answer $answer)
+    public function update(Request $request, Question $question, Answer $answer): RedirectResponse
     {
         $this->authorize('update', $answer);
 
@@ -73,47 +87,38 @@ class AnswerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Question $question
-     * @param Answer $answer
-     * @return RedirectResponse
      * @throws AuthorizationException
      * @throws Exception
      */
-    public function destroy(Question $question, Answer $answer)
+    public function destroy(Question $question, Answer $answer): RedirectResponse
     {
         $this->authorize('delete', $answer);
 
         $answer->delete();
 
-        return redirect()->back();
+        return back();
     }
 
     /**
      * Restore the specified resource from storage.
      *
-     * @param Question $question
-     * @param Answer $answer
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function restore(Question $question, Answer $answer)
+    public function restore(Question $question, Answer $answer): RedirectResponse
     {
         $this->authorize('restore', $answer);
 
         $answer->restore();
 
-        return redirect()->back();
+        return back();
     }
 
     /**
      * Upvotes the current answer.
      *
-     * @param Question $question
-     * @param Answer $answer
-     * @return RedirectResponse
      * @throws Exception
      */
-    public function upvote(Question $question, Answer $answer)
+    public function upvote(Question $question, Answer $answer): RedirectResponse
     {
         $this->authorize('vote', $answer);
 
@@ -126,7 +131,7 @@ class AnswerController extends Controller
 
         if ($find) {
             $find->delete();
-            return redirect()->back();
+            return back();
         }
 
         $answer->votes()->updateOrCreate(
@@ -140,18 +145,15 @@ class AnswerController extends Controller
             ]
         );
 
-        return redirect()->back();
+        return back();
     }
 
     /**
      * Downvotes the current answer.
      *
-     * @param Question $question
-     * @param Answer $answer
-     * @return RedirectResponse
      * @throws Exception
      */
-    public function downvote(Question $question, Answer $answer)
+    public function downvote(Question $question, Answer $answer): RedirectResponse
     {
         $this->authorize('vote', $answer);
 
@@ -164,7 +166,7 @@ class AnswerController extends Controller
 
         if ($find) {
             $find->delete();
-            return redirect()->back();
+            return back();
         }
 
         $answer->votes()->updateOrCreate(
@@ -178,6 +180,26 @@ class AnswerController extends Controller
             ]
         );
 
-        return redirect()->back();
+        return back();
+    }
+
+    /**
+     * Sets the current answer as a solution.
+     *
+     * @throws AuthorizationException
+     */
+    public function solution(Question $question, Answer $answer): RedirectResponse
+    {
+        $this->authorize('solution', $answer);
+
+        if ($question->solution()->is($answer)) {
+            $question->solution()->dissociate()->save();
+
+            return back();
+        }
+
+        $question->solution()->associate($answer)->save();
+
+        return back();
     }
 }

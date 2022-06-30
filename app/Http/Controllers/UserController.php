@@ -2,56 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class);
+    }
+
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request): Response
     {
-        $users = User::take(10)->get();
+        $users = $request->has('query')
+            ? User::search($request->query('query'))
+            : User::query()->orderByDesc('created_at')->orderByDesc('id');
 
-        return view('user.index', compact('users'));
+        $users = $users->paginate(24);
+
+        return Inertia::render('Users/Index', ['users' => $users]);
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param User $user
-     * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user): Response
     {
-        return view('user.show', compact('user'));
+        $questions = $user->questions()
+            ->orderByDesc('id')
+            ->cursorPaginate(8, cursorName: 'questions_cursor');
+
+        $answers = $user->answers()
+            ->with('question')
+            ->orderByDesc('id')
+            ->cursorPaginate(8, cursorName: 'answers_cursor');
+
+        $canEdit = (bool)Auth::user()?->can('update', $user);
+
+        return Inertia::render('Users/Show', ['user' => $user, 'questions' => $questions, 'answers' => $answers, 'canEdit' => $canEdit]);
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param User $user
-     * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Request $request, User $user): Response
     {
-        return view('user.edit', compact('user'));
+        $status = $request->session()->get('status');
+
+        return Inertia::render('Users/Edit', ['user' => $user, 'status' => $status]);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param User $user
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): RedirectResponse
     {
-        // update
-
-        return redirect()->back();
+        return back();
     }
 }

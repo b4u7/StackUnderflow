@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
+use App\Models\Answer;
+use App\Models\Question;
+use App\Models\Tag;
+use App\Models\Vote;
 use Auth;
 use Exception;
-use App\Answer;
-use App\Question;
-use App\Vote;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Inertia\Inertia;
+use Inertia\Response;
+use stdClass;
+use Throwable;
 
 class QuestionController extends Controller
 {
@@ -21,48 +26,62 @@ class QuestionController extends Controller
      */
     public function __construct()
     {
-        // $this->authorizeResource(Question::class, 'question');
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return Factory|View
      * @throws AuthorizationException
      */
-    public function index()
+    public function index(Request $request): Response
     {
         $this->authorize('viewAny', Question::class);
 
-        // TODO: Change this to be actual top questions (one day)!!
-        $questions = Question::with(['votes', 'answers', 'user', 'tags'])
-            ->orderByDesc('id')
+        if ($request->has('query')) {
+            $questions = Question::search($request->query('query'))
+                ->query(
+                    fn(Builder $query) => $query
+                        ->with(['votes', 'answers', 'user', 'tags'])
+                );
+        } else {
+            $questions = Question::with(['votes', 'answers', 'user', 'tags'])
+                ->orderByDesc('votes_sum_vote');
+        }
+
+        $questions = $questions
+            ->when(
+                Auth::user()?->admin,
+                static fn(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query) => $query->withTrashed()
+            )
             ->paginate(10);
 
-        return view('questions.index', compact('questions'));
+        $tags = Tag::whereHas('questions')
+            ->take(10)
+            ->get();
+
+        return Inertia::render('Questions/Index', ['questions' => $questions, 'tags' => $tags]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return View
      * @throws AuthorizationException
      */
-    public function create()
+    public function create(): Response
     {
         $this->authorize('create', Question::class);
 
-        return view('questions.create');
+        $tagsList = Tag::all();
+
+        return Inertia::render('Questions/Create', ['tagsList' => $tagsList]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->authorize('create', Question::class);
 
@@ -72,13 +91,9 @@ class QuestionController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        $tagNames = explode(',', $request->input('tags'));
-        foreach ($tagNames as $tagName) {
-            if (empty(trim($tagName))) {
-                continue;
-            }
-
-            $tag = Tag::firstOrCreate(['name' => $tagName]);
+        $tags = $request->input('tags');
+        foreach ($tags as $tag) {
+            $tag = Tag::firstOrCreate(['name' => $tag['name']]);
             $question->tags()->attach($tag);
         }
 
@@ -88,82 +103,116 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $questionId
-     * @return Factory|View
      * @throws AuthorizationException
      */
-    public function show(int $questionId)
+    public function show(int $questionId): Response
     {
-        $question = Question::addSelect([
-            'votes_sum' =>
-                Vote::selectRaw('SUM(vote)')
-                    ->where('votable_type', '=', Question::class)
-                    ->whereColumn('votable_id', 'questions.id')
-        ])->with(['votes', 'user'])
-            ->where('id', '=', $questionId)
-            ->first();
+        $user = Auth::user();
+
+        $question = Question::with([
+            'user',
+            'tags',
+        ])->withSum('votes', 'vote')
+            ->when($user !== null && $user->admin, fn($query) => $query->withTrashed())
+            ->findOrFail($questionId);
 
         views($question)->record();
         $this->authorize('view', $question);
 
-        $answers = Answer::addSelect([
-            'votes_sum' =>
-                Vote::selectRaw('SUM(vote)')
-                    ->where('votable_type', '=', Answer::class)
-                    ->whereColumn('votable_id', 'answers.id')
-        ])->with(['votes', 'user'])
-            ->where('question_id', '=', $questionId)
-            ->get()
-            ->sortByDesc('votes_sum');
+        $answers = $question->answers()
+            ->with('user')
+            ->withSum('votes', 'vote')
+            ->when(
+                $user,
+                static fn(Builder $query) => $query->withSum(
+                    ['votes as user_vote' => static fn(Builder $q) => $q->where('user_id', '=', $user->id)],
+                    'vote'
+                )
+            )
+            ->when($user !== null && $user->admin, fn(Builder $q) => $q->withTrashed())
+            ->when(
+                $question->solution_id !== null,
+                static fn(Builder $q) => $q->orderByDesc(DB::raw('id = ' . $question->solution_id))
+            )
+            ->orderByDesc('votes_sum_vote')
+            ->cursorPaginate(cursorName: 'answersCursor');
 
-        return view('questions.show', compact('question', 'answers'));
+        $userQuestionVote = $user === null ? null : Vote::query()
+            ->where('votable_type', '=', Question::class)
+            ->where('votable_id', '=', $question->id)
+            ->where('user_id', '=', $user->id)
+            ->first();
+
+        $userAnswered = transform($user, fn($u) => $question->answers()->where('user_id', '=', $u->id)->exists(), false);
+
+        $bookmarked = $user?->bookmarkedQuestions()->whereKey($question->id)->exists();
+
+        $permissions = [
+            'question' => [
+                'canCreate' => Gate::check('create', $question),
+                'canAnswer' => Gate::inspect('create', [Answer::class, $question]),
+                'canEdit' => Gate::check('update', $question),
+                'canVote' => Gate::check('vote', $question),
+                'canBookmark' => Gate::check('bookmark', $question),
+                'canUnbookmark' => Gate::check('unbookmark', $question),
+                'canDelete' => Gate::check('delete', $question),
+                'canRestore' => Gate::check('restore', $question),
+            ],
+            'answers' => new stdClass()
+        ];
+
+        foreach ($answers as $answer) {
+            $permissions['answers']->{$answer->id}['canEdit'] = Gate::check('update', $answer);
+            $permissions['answers']->{$answer->id}['canVote'] = Gate::check('vote', $answer);
+            $permissions['answers']->{$answer->id}['canMarkSolution'] = Gate::check('solution', $answer);
+            $permissions['answers']->{$answer->id}['canDelete'] = Gate::check('delete', $answer);
+            $permissions['answers']->{$answer->id}['canRestore'] = Gate::check('restore', $answer);
+        }
+
+        $isTrashed = $question->trashed();
+
+        return Inertia::render('Questions/Show', ['question' => $question, 'answers' => $answers, 'isTrashed' => $isTrashed, 'bookmarked' => $bookmarked, 'userAnswered' => $userAnswered, 'userQuestionVote' => $userQuestionVote, 'permissions' => $permissions]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Question $question
-     * @return View
      * @throws AuthorizationException
      */
-    public function edit(Question $question)
+    public function edit(Question $question): Response
     {
         $this->authorize('update', $question);
 
-        $question->load([
-            'tags' => function ($query) {
-                $query->select('name');
-            }
-        ]);
+        $question->load('tags');
 
-        $tags = array_map(function ($a) {
-            return $a['name'];
-        }, $question->tags->makeHidden('pivot')->toArray());
+        $tagsList = Tag::all();
 
-        return view('questions.edit', compact('question', 'tags'));
+        return Inertia::render('Questions/Edit', ['question' => $question, 'tagsList' => $tagsList]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Question $question
-     * @return RedirectResponse
      * @throws AuthorizationException
+     * @throws Throwable
      */
-    public function update(Request $request, Question $question)
+    public function update(Request $request, Question $question): RedirectResponse
     {
         $this->authorize('update', $question);
 
-        $question->update($request->all());
+        DB::transaction(function () use ($request, $question) {
+            $question->update($request->all());
 
-        $question->tags()->detach();
+            $tags = $request->input('tags');
+            $tagIds = [];
 
-        $tagNames = explode(',', strtolower($request->input('tags')));
-        foreach ($tagNames as $tagName) {
-            $tag = Tag::firstOrCreate(['name' => $tagName]);
-            $question->tags()->attach($tag);
-        }
+            foreach ($tags as $tag) {
+                $tag = Tag::firstOrCreate(['name' => $tag['name']]);
+                $tagIds[] = $tag->id;
+            }
+
+            $question->tags()->sync($tagIds);
+        });
 
         return redirect()->route('questions.show', [$question->id]);
     }
@@ -171,11 +220,9 @@ class QuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Question $question
-     * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(Question $question)
+    public function destroy(Question $question): RedirectResponse
     {
         $this->authorize('delete', $question);
 
@@ -187,27 +234,23 @@ class QuestionController extends Controller
     /**
      * Restore the specified resource from storage.
      *
-     * @param Question $question
-     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function restore(Question $question)
+    public function restore(Question $question): RedirectResponse
     {
         $this->authorize('restore', $question);
 
         $question->restore();
 
-        return redirect()->back();
+        return back();
     }
 
     /**
      * Upvotes the current question.
      *
-     * @param Question $question
-     * @return RedirectResponse
      * @throws Exception
      */
-    public function upvote(Question $question)
+    public function upvote(Question $question): RedirectResponse
     {
         $this->authorize('vote', $question);
 
@@ -220,7 +263,7 @@ class QuestionController extends Controller
 
         if ($find) {
             $find->delete();
-            return redirect()->back();
+            return back();
         }
 
         $question->votes()->updateOrCreate(
@@ -234,17 +277,15 @@ class QuestionController extends Controller
             ]
         );
 
-        return redirect()->back();
+        return back();
     }
 
     /**
      * Downvotes the current question.
      *
-     * @param Question $question
-     * @return RedirectResponse
      * @throws Exception
      */
-    public function downvote(Question $question)
+    public function downvote(Question $question): RedirectResponse
     {
         $this->authorize('vote', $question);
 
@@ -257,7 +298,7 @@ class QuestionController extends Controller
 
         if ($find) {
             $find->delete();
-            return redirect()->back();
+            return back();
         }
 
         $question->votes()->updateOrCreate(
@@ -271,6 +312,6 @@ class QuestionController extends Controller
             ]
         );
 
-        return redirect()->back();
+        return back();
     }
 }

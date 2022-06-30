@@ -1,0 +1,26 @@
+.card {
+  @apply flex flex-col bg-white shadow rounded-md ring-1 ring-transparent;
+
+  &--transparent {
+    @apply bg-transparent shadow-none rounded-none;
+  }
+
+  &__header {
+    @apply flex flex-row py-3 px-4;
+
+    a {
+      @apply font-medium;
+    }
+  }
+
+  &__body {
+    @apply px-4;
+  }
+
+  &__content {
+  }
+
+  &__footer {
+    @apply flex flex-col space-y-8 sm:space-y-0 sm:flex-row py-3 px-4;
+  }
+}

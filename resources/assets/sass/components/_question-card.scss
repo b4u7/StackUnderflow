@@ -1,0 +1,72 @@
+.question-card {
+  @extend .card;
+
+  @apply w-full;
+
+  &--trashed {
+    @apply border border-red-500;
+  }
+
+  &__header {
+    @extend .card__header;
+
+    @apply flex flex-col;
+  }
+
+  &__title {
+    @apply font-semibold text-slate-800 text-2xl;
+  }
+
+  &__stats {
+    @apply flex flex-row space-x-2 text-slate-500 text-sm;
+  }
+
+  &__body {
+    @extend .card__body;
+
+    //@apply flex-grow;
+  }
+
+  &__content {
+    @apply text-slate-600 py-2;
+  }
+
+  &__tags {
+    @extend .tags;
+
+    @apply pt-4 pl-2;
+  }
+
+  &__tag {
+    @extend .tag;
+  }
+
+  &__footer {
+    @extend .card__footer;
+
+    @apply items-center text-slate-500 text-sm;
+  }
+
+  &__menu {
+    @apply flex flex-row -m-2;
+
+    > * {
+      @apply m-2;
+    }
+  }
+
+  &__user {
+    @apply flex flex-row text-sm ml-auto text-right;
+
+    &__avatar {
+      @apply hidden sm:block rounded-full h-10 w-10 ring-2 ring-white sm:ml-4;
+    }
+
+    &__name {
+      @apply text-slate-900 font-medium;
+      @apply hover:text-primary-700 hover:underline;
+      @apply focus:text-primary-600 focus:underline;
+      @apply active:text-primary-600 active:underline;
+    }
+  }
+}

@@ -1,20 +1,26 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Tag;
-use Faker\Generator as Faker;
+use App\Models\Tag;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use JetBrains\PhpStorm\ArrayShape;
 
-$factory->define(Tag::class, function (Faker $faker) {
-    $colours = [
-        '#8cc63f',
-        '#d4145a',
-        '#fbb03b',
-        '#22b573',
-    ];
+class TagFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     */
+    protected $model = Tag::class;
 
-    return [
-        'name' => $faker->word,
-        'colour' => rand(1, 3) === 1 ? $faker->randomElement($colours) : null,
-    ];
-});
+    /**
+     * Define the model's default state.
+     */
+    #[ArrayShape(['name' => "string"])]
+    public function definition(): array
+    {
+        return [
+            'name' => $this->faker->unique()->word
+        ];
+    }
+}

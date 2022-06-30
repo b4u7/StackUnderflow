@@ -1,0 +1,55 @@
+.answer-card {
+  @extend .card;
+
+  @apply w-full;
+
+  &--trashed {
+    @apply border border-red-500;
+  }
+
+  &--solution {
+    @apply border border-green-500;
+  }
+
+  &__body {
+    @extend .card__body;
+
+    @apply py-3 flex-grow;
+  }
+
+  &__content {
+    @apply text-slate-600;
+  }
+
+  &__footer {
+    @apply pb-3 px-4;
+    @apply flex flex-row items-center text-slate-500 text-sm;
+  }
+
+  &__menu {
+    @apply flex flex-row -m-2;
+
+    > * {
+      @apply m-2;
+    }
+  }
+
+  &__user {
+    @apply flex flex-row ml-auto text-right;
+
+    &__avatar {
+      @apply hidden sm:block rounded-full h-10 w-10 ring-2 ring-white sm:ml-4;
+    }
+
+    &__name {
+      @apply text-slate-900 font-medium;
+      @apply hover:text-primary-700 hover:underline;
+      @apply focus:text-primary-600 focus:underline;
+      @apply active:text-primary-600 active:underline;
+    }
+  }
+
+  &:not(:last-of-type) {
+    @apply mb-4;
+  }
+}
