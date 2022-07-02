@@ -14,8 +14,6 @@
 </template>
 
 <script>
-// https://appdividend.com/2018/06/02/laravel-avatar-image-upload-tutorial-with-example/
-// https://flowbite.com/docs/components/forms/
 import Alert from '@/Components/Alert'
 import Tabs from '@/Components/Generic/Tabs'
 import Modal from '@/Components/Generic/Modal'
