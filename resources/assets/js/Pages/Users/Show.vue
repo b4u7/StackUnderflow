@@ -58,8 +58,12 @@
                         </h1>
                       </div>
                     </div>
-                    <button class="button button--primary button--outline button--responsive mt-4 ml-auto">
-                      Load more
+                    <button
+                      v-if="questions.next_page_url"
+                      class="button button--primary button--outline button--responsive mt-4 ml-auto"
+                      @click.prevent="nextPage(questions.next_page_url)"
+                    >
+                      Next page
                     </button>
                   </template>
                   <template v-else>
@@ -85,6 +89,13 @@
                       </div>
                       <div class="qa-card__footer"></div>
                     </div>
+                    <button
+                      v-if="answers.next_page_url"
+                      class="button button--primary button--outline button--responsive mt-4 ml-auto"
+                      @click.prevent="nextPage(answers.next_page_url)"
+                    >
+                      Next page
+                    </button>
                   </template>
                   <template v-else>
                     <p class="text-center">This user hasn't answered any questions.</p>
@@ -109,44 +120,61 @@ export default {
   props: {
     answers: {
       type: Object,
-      required: true,
+      required: true
     },
     canEdit: {
       type: Boolean,
-      required: true,
+      required: true
     },
     questions: {
       type: Object,
-      required: true,
+      required: true
     },
     user: {
       type: Object,
-      required: true,
+      required: true
     },
     errors: {
-      type: Object,
-    },
+      type: Object
+    }
+  },
+  created() {
+    console.log(this.questions, this.questions.data)
   },
   data() {
     return {
-      loadedData: [],
+      loadedData: {},
+      loading: false,
       tabs: [
         { name: 'Questions', key: 'questions' },
-        { name: 'Answers', key: 'answers' },
+        { name: 'Answers', key: 'answers' }
       ],
-      editModalVisible: false,
+      editModalVisible: false
     }
   },
   methods: {
-    nextPage() {
-      // loadedData.push(data)
+    // TODO: Infinite pagination
+    nextPage(url) {
+      if (!url || this.loading) {
+        return
+      }
+
+      this.loading = true
+
+      this.$inertia.visit(url, {
+        preserveScroll: true,
+        preserveState: true,
+        onFinish: () => (this.loading = false)
+      })
+
+      // this.loadedData.push(data)
     },
     visitQuestion(questionId) {
       this.$inertia.visit(`${this.route('questions.show', [questionId])}`)
     },
     visitAnswer(questionId, answerId) {
       this.$inertia.visit(`${this.route('questions.show', [questionId])}#answer-${answerId}`)
-    },
-  },
+    }
+  }
 }
 </script>
