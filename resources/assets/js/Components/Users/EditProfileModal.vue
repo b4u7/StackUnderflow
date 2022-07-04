@@ -45,6 +45,15 @@
                   />
                 </div>
               </div>
+              <!-- TODO: Temporary -->
+              <ul v-if="errors.header || errors.avatar" class="mt-4 mb-4 space-y-2 text-sm text-red-500">
+                <li v-if="errors.header">
+                  <p v-text="errors.header" />
+                </li>
+                <li v-if="errors.avatar">
+                  <p v-text="errors.avatar" />
+                </li>
+              </ul>
               <div :class="{ 'form__group--error': errors.name }" class="form__group mt-4">
                 <div class="form__group">
                   <label for="name" class="form__group__label"> Name </label>
@@ -102,26 +111,30 @@
 
 <script>
 import Modal from '@/Components/Generic/Modal'
+import Alert from '@/Components/Alert'
 
 export default {
   name: 'EditProfileModal',
   model: {
     prop: 'visible',
-    event: 'toggle',
+    event: 'toggle'
   },
-  components: { Modal },
+  components: { Alert, Modal },
   props: {
     user: {
       type: Object,
-      required: true,
+      required: true
     },
     errors: {
-      type: Object,
+      type: Object
     },
     visible: {
       type: Boolean,
-      default: false,
+      default: false
     },
+    status: {
+      type: String
+    }
   },
   computed: {
     visibleProxy: {
@@ -130,8 +143,8 @@ export default {
       },
       set(newVal) {
         this.$emit('toggle', newVal)
-      },
-    },
+      }
+    }
   },
   data() {
     return {
@@ -142,8 +155,8 @@ export default {
         name: this.user.name,
         biography: this.user.biography,
         company: this.user.company,
-        email: this.user.email,
-      }),
+        email: this.user.email
+      })
     }
   },
   methods: {
@@ -159,7 +172,7 @@ export default {
         .transform(data => {
           const newData = {
             ...data,
-            _method: 'PUT',
+            _method: 'PUT'
           }
 
           if (this.form.header) {
@@ -169,9 +182,9 @@ export default {
           return newData
         })
         .post(this.route('user-profile-information.update'), {
-          onSuccess: () => (this.visibleProxy = false),
+          onSuccess: () => (this.visibleProxy = false)
         })
-    },
-  },
+    }
+  }
 }
 </script>
