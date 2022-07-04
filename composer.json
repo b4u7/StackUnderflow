@@ -9,6 +9,7 @@
   "license": "MIT",
   "require": {
     "php": "^8.0",
+    "ext-gd": "*",
     "ext-json": "*",
     "algolia/algoliasearch-client-php": "^3.0.0",
     "algolia/scout-extended": "^2.0",
