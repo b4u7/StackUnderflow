@@ -80,22 +80,27 @@ class QuestionController extends Controller
      * Store a newly created resource in storage.
      *
      * @throws AuthorizationException
+     * @throws Throwable
      */
     public function store(Request $request): RedirectResponse
     {
         $this->authorize('create', Question::class);
 
-        $question = Question::create([
-            'title' => $request->input('title'),
-            'body' => $request->input('body'),
-            'user_id' => Auth::id()
-        ]);
+        $question = DB::transaction(function () use ($request) {
+            $question = Question::create($request->all());
 
-        $tags = $request->input('tags');
-        foreach ($tags as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag['name']]);
-            $question->tags()->attach($tag);
-        }
+            $tags = $request->input('tags');
+            $tagIds = [];
+
+            foreach ($tags as $tag) {
+                $tag = Tag::firstOrCreate(['name' => $tag['name']]);
+                $tagIds[] = $tag->id;
+            }
+
+            $question->tags()->sync($tagIds);
+
+            return $question;
+        });
 
         return redirect()->route('questions.show', [$question]);
     }
