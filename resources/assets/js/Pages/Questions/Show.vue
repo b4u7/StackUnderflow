@@ -6,7 +6,9 @@
           <template #icon>
             <i class="fas fa-exclamation-triangle"></i>
           </template>
-          <template #default> This question was deleted, only admins can see it. </template>
+          <template #default>
+            <p>This question was deleted, only admins can see it.</p>
+          </template>
         </alert>
         <div class="mr-0 mb-4 text-right">
           <a class="button button--primary button--outline" :href="route('home')"> Go back </a>

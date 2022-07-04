@@ -4,9 +4,7 @@
       <slot name="icon"></slot>
     </div>
     <div>
-      <p>
-        <slot></slot>
-      </p>
+      <slot></slot>
     </div>
   </div>
 </template>

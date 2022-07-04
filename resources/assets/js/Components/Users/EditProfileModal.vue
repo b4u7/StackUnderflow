@@ -45,6 +45,15 @@
                   />
                 </div>
               </div>
+              <!-- TODO: Temporary -->
+              <ul v-if="errors.header || errors.avatar" class="mt-4 mb-4 space-y-2 text-sm text-red-500">
+                <li v-if="errors.header">
+                  <p v-text="errors.header" />
+                </li>
+                <li v-if="errors.avatar">
+                  <p v-text="errors.avatar" />
+                </li>
+              </ul>
               <div :class="{ 'form__group--error': errors.name }" class="form__group mt-4">
                 <div class="form__group">
                   <label for="name" class="form__group__label"> Name </label>
@@ -102,6 +111,7 @@
 
 <script>
 import Modal from '@/Components/Generic/Modal'
+import Alert from '@/Components/Alert'
 
 export default {
   name: 'EditProfileModal',
@@ -109,7 +119,7 @@ export default {
     prop: 'visible',
     event: 'toggle',
   },
-  components: { Modal },
+  components: { Alert, Modal },
   props: {
     user: {
       type: Object,
@@ -121,6 +131,9 @@ export default {
     visible: {
       type: Boolean,
       default: false,
+    },
+    status: {
+      type: String,
     },
   },
   computed: {

@@ -2,7 +2,7 @@
   <form class="form" @submit.prevent="submit">
     <h1 class="text-xl font-medium mt-8 mb-4">Change password</h1>
     <alert class="my-8" v-if="status && status === 'password-updated'" kind="success" fullwidth>
-      Your password was successfully updated.
+      <p>Your password was successfully updated.</p>
     </alert>
     <div :class="{ 'form__group--error': errors.current_password }" class="form__group">
       <label for="current-password" class="form__group__label"> Current password </label>

@@ -12,7 +12,7 @@
               A community-based space to find and contribute answers to technical challenges, and one of the most
               popular websites in the world.
             </p>
-            <Link class="button button--primary button--xl" as="button" :href="route('register')">
+            <Link :href="route('register')" class="button button--primary button--xl">
               Join the community
               <font-awesome-icon class="ml-1.5" icon="fa-solid fa-arrow-right" />
             </Link>
@@ -74,8 +74,8 @@
 
 <script>
 import Hero from '@/Components/Home/Hero'
-import { Link } from '@inertiajs/inertia-vue'
 import Navbar from '@/Components/Navbar/Navbar'
+import { Link } from '@inertiajs/inertia-vue'
 
 export default {
   name: 'Index',

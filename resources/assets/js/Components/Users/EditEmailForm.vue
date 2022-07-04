@@ -2,7 +2,7 @@
   <form class="form" @submit.prevent="submit">
     <h1 class="text-xl font-medium mt-8 mb-4">Change email address</h1>
     <alert class="my-8" v-if="status && status === 'profile-information-updated'" kind="success" fullwidth>
-      A fresh verification link has been sent to your email address.
+      <p>A fresh verification link has been sent to your email address.</p>
     </alert>
     <div :class="{ 'form__group--error': errors.email }" class="form__group">
       <label for="email-address" class="form__group__label"> Email address </label>

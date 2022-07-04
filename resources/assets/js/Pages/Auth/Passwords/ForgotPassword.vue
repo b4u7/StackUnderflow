@@ -2,7 +2,9 @@
   <section>
     <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
       <alert v-if="status" class="mb-8" kind="success" :fullwidth="true">
-        {{ status }}
+        <p>
+          {{ status }}
+        </p>
       </alert>
       <h1 class="text-xl font-medium mb-4">Forgot your password?</h1>
       <form class="form" @submit.prevent="submit">
