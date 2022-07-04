@@ -117,24 +117,24 @@ export default {
   name: 'EditProfileModal',
   model: {
     prop: 'visible',
-    event: 'toggle'
+    event: 'toggle',
   },
   components: { Alert, Modal },
   props: {
     user: {
       type: Object,
-      required: true
+      required: true,
     },
     errors: {
-      type: Object
+      type: Object,
     },
     visible: {
       type: Boolean,
-      default: false
+      default: false,
     },
     status: {
-      type: String
-    }
+      type: String,
+    },
   },
   computed: {
     visibleProxy: {
@@ -143,8 +143,8 @@ export default {
       },
       set(newVal) {
         this.$emit('toggle', newVal)
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -155,8 +155,8 @@ export default {
         name: this.user.name,
         biography: this.user.biography,
         company: this.user.company,
-        email: this.user.email
-      })
+        email: this.user.email,
+      }),
     }
   },
   methods: {
@@ -172,7 +172,7 @@ export default {
         .transform(data => {
           const newData = {
             ...data,
-            _method: 'PUT'
+            _method: 'PUT',
           }
 
           if (this.form.header) {
@@ -182,9 +182,9 @@ export default {
           return newData
         })
         .post(this.route('user-profile-information.update'), {
-          onSuccess: () => (this.visibleProxy = false)
+          onSuccess: () => (this.visibleProxy = false),
         })
-    }
-  }
+    },
+  },
 }
 </script>

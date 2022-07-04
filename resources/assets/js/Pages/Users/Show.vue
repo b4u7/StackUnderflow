@@ -120,23 +120,23 @@ export default {
   props: {
     answers: {
       type: Object,
-      required: true
+      required: true,
     },
     canEdit: {
       type: Boolean,
-      required: true
+      required: true,
     },
     questions: {
       type: Object,
-      required: true
+      required: true,
     },
     user: {
       type: Object,
-      required: true
+      required: true,
     },
     errors: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   created() {
     console.log(this.questions, this.questions.data)
@@ -147,9 +147,9 @@ export default {
       loading: false,
       tabs: [
         { name: 'Questions', key: 'questions' },
-        { name: 'Answers', key: 'answers' }
+        { name: 'Answers', key: 'answers' },
       ],
-      editModalVisible: false
+      editModalVisible: false,
     }
   },
   methods: {
@@ -164,7 +164,7 @@ export default {
       this.$inertia.visit(url, {
         preserveScroll: true,
         preserveState: true,
-        onFinish: () => (this.loading = false)
+        onFinish: () => (this.loading = false),
       })
 
       // this.loadedData.push(data)
@@ -174,7 +174,7 @@ export default {
     },
     visitAnswer(questionId, answerId) {
       this.$inertia.visit(`${this.route('questions.show', [questionId])}#answer-${answerId}`)
-    }
-  }
+    },
+  },
 }
 </script>

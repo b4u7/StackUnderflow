@@ -7,9 +7,7 @@
             <i class="fas fa-exclamation-triangle"></i>
           </template>
           <template #default>
-            <p>
-              This question was deleted, only admins can see it.
-            </p>
+            <p>This question was deleted, only admins can see it.</p>
           </template>
         </alert>
         <div class="mr-0 mb-4 text-right">
@@ -63,42 +61,42 @@ export default {
   props: {
     question: {
       type: Object,
-      required: true
+      required: true,
     },
     answers: {
       type: Object,
-      required: true
+      required: true,
     },
     isTrashed: {
       type: Boolean,
-      required: true
+      required: true,
     },
     userQuestionVote: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     bookmarked: {
       type: Boolean,
-      required: true
+      required: true,
     },
     userAnswered: {
       type: Boolean,
-      required: true
+      required: true,
     },
     permissions: {
       type: Object,
-      required: true
+      required: true,
     },
     errors: {
       type: Object,
-      required: false
-    }
+      required: false,
+    },
   },
   data() {
     return {
       form: this.$inertia.form({
-        body: ''
-      })
+        body: '',
+      }),
     }
   },
   computed: {
@@ -107,12 +105,12 @@ export default {
     },
     canAnswer() {
       return this.permissions.question.canAnswer
-    }
+    },
   },
   methods: {
     submitAnswer() {
       this.form.post(this.route('questions.answers.store', this.question))
-    }
-  }
+    },
+  },
 }
 </script>

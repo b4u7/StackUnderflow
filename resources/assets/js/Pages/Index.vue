@@ -79,6 +79,6 @@ import { Link } from '@inertiajs/inertia-vue'
 
 export default {
   name: 'Index',
-  components: { Navbar, Hero, Link }
+  components: { Navbar, Hero, Link },
 }
 </script>

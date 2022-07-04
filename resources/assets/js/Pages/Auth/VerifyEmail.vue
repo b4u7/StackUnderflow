@@ -2,9 +2,7 @@
   <section>
     <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
       <alert v-if="status && status === 'verification-link-sent'" class="mb-8" kind="success" fullwidth>
-        <p>
-          A fresh verification link has been sent to your email address.
-        </p>
+        <p>A fresh verification link has been sent to your email address.</p>
       </alert>
       <h1 class="text-xl font-medium mb-4">Verify your email address</h1>
       <form class="form" @submit.prevent="submit">
