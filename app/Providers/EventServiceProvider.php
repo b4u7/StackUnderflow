@@ -33,12 +33,4 @@ class EventServiceProvider extends ServiceProvider
             SoftDeleteDisreputableVotable::class
         ]
     ];
-
-    /**
-     * Register any events for your application.
-     */
-    public function boot(): void
-    {
-        parent::boot();
-    }
 }
