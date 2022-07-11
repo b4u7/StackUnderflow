@@ -25,6 +25,6 @@ class GenerateUserAvatar
     {
         $avatar = Avatar::create($event->user->name)->getImageObject()->stream('jpeg');
 
-        Storage::disk('cloud')->put("users/avatars/{$event->user->id}.jpeg", $avatar);
+        Storage::cloud()->put("users/avatars/{$event->user->id}.jpeg", $avatar);
     }
 }

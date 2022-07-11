@@ -57,7 +57,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         }
 
         if (!empty($input['avatar'])) {
-            Storage::disk('cloud')->putFileAs('users/avatars', $input['avatar'], "$user->id.jpeg");
+            Storage::cloud()->putFileAs('users/avatars', $input['avatar'], "$user->id.jpeg");
         }
 
         if (!array_key_exists('header', $input)) {
@@ -66,14 +66,14 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
         $header = $input['header'];
         if ($header === null) {
-            Storage::disk('cloud')->delete("users/headers/$user->id.jpeg");
+            Storage::cloud()->delete("users/headers/$user->id.jpeg");
 
             $user->update(['has_header' => false]);
 
             return;
         }
 
-        Storage::disk('cloud')->putFileAs('users/headers', $header, "$user->id.jpeg");
+        Storage::cloud()->putFileAs('users/headers', $header, "$user->id.jpeg");
         $user->update(['has_header' => true]);
     }
 
