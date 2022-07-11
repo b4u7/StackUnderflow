@@ -46,4 +46,5 @@ jobs:
           DB_PASSWORD: secret
           MAIL_DRIVER: log
           SCOUT_DRIVER: database
+          FILESYSTEM_CLOUD: public
         run: php artisan test
