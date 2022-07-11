@@ -99,12 +99,12 @@ class User extends Authenticatable implements MustVerifyEmail
                 return null;
             }
 
-            return Storage::disk('public')->url("users/headers/$this->id.jpeg");
+            return Storage::disk('cloud')->url("users/headers/$this->id.jpeg");
         });
     }
 
     protected function avatar(): Attribute
     {
-        return Attribute::get(fn() => Storage::disk('public')->url("users/avatars/$this->id.jpeg"));
+        return Attribute::get(fn() => Storage::disk('cloud')->url("users/avatars/$this->id.jpeg"));
     }
 }

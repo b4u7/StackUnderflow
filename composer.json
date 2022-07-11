@@ -22,6 +22,7 @@
     "laravel/scout": "^v9.0.0",
     "laravel/tinker": "^2.0",
     "laravolt/avatar": "^4.0.0",
+    "league/flysystem-aws-s3-v3": "^3.0",
     "parsedown/laravel": "^1.2.1",
     "pusher/pusher-php-server": "^7.0.0",
     "sentry/sentry-laravel": "^2.6.0",
