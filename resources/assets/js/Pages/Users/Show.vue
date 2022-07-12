@@ -115,7 +115,7 @@ import Tabs from '@/Components/Generic/Tabs'
 import EditProfileModal from '@/Components/Users/EditProfileModal'
 
 export default {
-  name: 'Index',
+  name: 'Show',
   components: { EditProfileModal, Tabs },
   props: {
     answers: {
@@ -139,6 +139,7 @@ export default {
     },
   },
   created() {
+    // TODO: Remove
     console.log(this.questions, this.questions.data)
   },
   data() {

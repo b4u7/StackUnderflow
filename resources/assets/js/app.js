@@ -97,7 +97,9 @@ createInertiaApp({
 
     return page
   },
-  setup({ el, app, props }) {
+  setup({ el, app, props, plugin }) {
+    Vue.use(plugin)
+
     new Vue({
       i18n,
       provide: { axios: window.axios, echo: window.Echo },
