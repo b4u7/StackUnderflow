@@ -35,7 +35,7 @@ import {
   faSort,
   faTrashCanArrowUp,
   faTrashCan,
-  faXmark,
+  faXmark
 } from '@fortawesome/free-solid-svg-icons'
 
 import { faBookmark as faBookmarkRegular } from '@fortawesome/free-regular-svg-icons'
@@ -78,7 +78,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 const i18n = new VueI18n({
   locale: 'en',
-  en,
+  en
 })
 
 let pages = ['Index', 'Auth/']
@@ -97,15 +97,17 @@ createInertiaApp({
 
     return page
   },
-  setup({ el, app, props }) {
+  setup({ el, app, props, plugin }) {
+    Vue.use(plugin)
+
     new Vue({
       i18n,
       provide: { axios: window.axios, echo: window.Echo },
-      render: h => h(app, props),
+      render: h => h(app, props)
     }).$mount(el)
-  },
+  }
 })
 
 InertiaProgress.init({
-  color: '#FBBF24',
+  color: '#FBBF24'
 })

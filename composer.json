@@ -16,7 +16,7 @@
     "cyrildewit/eloquent-viewable": "^6.0",
     "doctrine/dbal": "^3.3",
     "fakerphp/faker": "^1.14",
-    "inertiajs/inertia-laravel": "^v0.5.0",
+    "inertiajs/inertia-laravel": "^v0.6.3",
     "laravel/fortify": "^1.7",
     "laravel/framework": "^v9.0.0",
     "laravel/scout": "^v9.0.0",
