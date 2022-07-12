@@ -13,6 +13,7 @@ class TrustProxies extends Middleware
      * @var array|string|null
      */
     protected $proxies = [
+        // Cloudflare IPv4
         '173.245.48.0/20',
         '103.21.244.0/22',
         '103.22.200.0/22',
@@ -28,6 +29,7 @@ class TrustProxies extends Middleware
         '104.24.0.0/14',
         '172.64.0.0/13',
         '131.0.72.0/22',
+        // Cloudflare IPv6
         '2400:cb00::/32',
         '2606:4700::/32',
         '2803:f800::/32',
@@ -35,6 +37,8 @@ class TrustProxies extends Middleware
         '2405:8100::/32',
         '2a06:98c0::/29',
         '2c0f:f248::/32',
+        // RFC 1918
+        '10.0.0.0/8'
     ];
 
     /**
