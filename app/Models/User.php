@@ -27,7 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<string>
      */
     protected $fillable = [
-        'name', 'username', 'has_header', 'email', 'biography', 'company', 'password',
+        'name', 'username', 'has_header', 'email', 'biography', 'company', 'password', 'header_hash', 'avatar_hash'
     ];
 
     /**
@@ -99,12 +99,12 @@ class User extends Authenticatable implements MustVerifyEmail
                 return null;
             }
 
-            return Storage::cloud()->url("users/headers/$this->id.jpeg");
+            return Storage::cloud()->url("users/headers/$this->id.jpeg") . "?$this->header_hash";
         });
     }
 
     protected function avatar(): Attribute
     {
-        return Attribute::get(fn() => Storage::cloud()->url("users/avatars/$this->id.jpeg"));
+        return Attribute::get(fn() => Storage::cloud()->url("users/avatars/$this->id.jpeg") . "?$this->avatar_hash");
     }
 }

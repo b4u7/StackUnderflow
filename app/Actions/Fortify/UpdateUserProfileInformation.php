@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use Safe\Exceptions\UrlException;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
     /**
      * Validate and update the given user's profile information.
+     * @throws UrlException
      */
     public function update(mixed $user, array $input): void
     {
@@ -56,8 +58,12 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             )->save();
         }
 
-        if (!empty($input['avatar'])) {
-            Storage::cloud()->putFileAs('users/avatars', $input['avatar'], "$user->id.jpeg", 'public');
+        $avatar = $input['avatar'];
+        if ($avatar) {
+            $avatarHash = md5_file($avatar);
+
+            Storage::cloud()->putFileAs('users/avatars', $avatar, "$user->id.jpeg", 'public');
+            $user->update(['avatar_hash' => $avatarHash]);
         }
 
         if (!array_key_exists('header', $input)) {
@@ -73,8 +79,10 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             return;
         }
 
+        $headerHash = md5_file($header);
+
         Storage::cloud()->putFileAs('users/headers', $header, "$user->id.jpeg", 'public');
-        $user->update(['has_header' => true]);
+        $user->update(['header_hash' => $headerHash, 'has_header' => true]);
     }
 
     /**
