@@ -87,7 +87,7 @@ class QuestionController extends Controller
         $this->authorize('create', Question::class);
 
         $question = DB::transaction(function () use ($request) {
-            $question = Question::create($request->all());
+            $question = $request->user()->questions()->create($request->all());
 
             $tags = $request->input('tags');
             $tagIds = [];
