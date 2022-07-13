@@ -8,10 +8,11 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Events\Dispatchable;
 use JetBrains\PhpStorm\ArrayShape;
 
-class BroadcastableNoticationEvent implements ShouldBroadcast
+class BroadcastableNoticationEvent implements ShouldBroadcast, ShouldQueue
 {
     use Dispatchable, InteractsWithSockets, Queueable;
 
