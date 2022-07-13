@@ -11,7 +11,7 @@
           </template>
         </alert>
         <div class="mr-0 mb-4 text-right">
-          <a class="button button--primary button--outline" :href="route('home')"> Go back </a>
+          <a :href="route('questions.create')" class="button button--primary button--responsive"> Ask question </a>
         </div>
         <question-section
           :question="question"
