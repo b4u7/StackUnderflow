@@ -14,17 +14,12 @@
 </template>
 
 <script>
-// https://appdividend.com/2018/06/02/laravel-avatar-image-upload-tutorial-with-example/
-// https://flowbite.com/docs/components/forms/
-import Alert from '@/Components/Alert'
 import Tabs from '@/Components/Generic/Tabs'
-import Modal from '@/Components/Generic/Modal'
 import EditEmailForm from '@/Components/Users/EditEmailForm'
 import EditPasswordForm from '@/Components/Users/EditPasswordForm'
 
 export default {
-  name: 'Edit',
-  components: { EditPasswordForm, EditEmailForm, Modal, Tabs },
+  components: { EditPasswordForm, EditEmailForm, Tabs },
   props: {
     user: {
       type: Object,
