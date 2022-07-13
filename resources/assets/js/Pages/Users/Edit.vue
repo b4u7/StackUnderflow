@@ -19,6 +19,7 @@ import EditEmailForm from '@/Components/Users/EditEmailForm'
 import EditPasswordForm from '@/Components/Users/EditPasswordForm'
 
 export default {
+  name: 'Edit',
   components: { EditPasswordForm, EditEmailForm, Tabs },
   props: {
     user: {
