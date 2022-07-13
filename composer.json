@@ -25,7 +25,7 @@
     "league/flysystem-aws-s3-v3": "^3.0",
     "parsedown/laravel": "^1.2.1",
     "pusher/pusher-php-server": "^7.0.0",
-    "sentry/sentry-laravel": "^2.6.0",
+    "sentry/sentry-laravel": "^2.12",
     "spatie/commonmark-highlighter": "^3.0",
     "spatie/laravel-cookie-consent": "^3.2",
     "tightenco/ziggy": "^1.3"
