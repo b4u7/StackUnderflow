@@ -2,7 +2,7 @@
   <nav :class="`navbar--${dark ? 'dark' : 'primary'}`" class="navbar">
     <ul class="navbar__start">
       <li class="navbar__item">
-        <a class="navbar__logo" :href="route('home')"> StackUnderflow </a>
+        <a class="navbar__logo" :href="route('home')"> Stack Underflow </a>
       </li>
     </ul>
     <ul class="navbar__center">
