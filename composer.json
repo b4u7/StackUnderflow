@@ -11,6 +11,7 @@
     "php": "^8.0",
     "ext-gd": "*",
     "ext-json": "*",
+    "ext-redis": "*",
     "algolia/algoliasearch-client-php": "^3.0.0",
     "algolia/scout-extended": "^2.0",
     "cyrildewit/eloquent-viewable": "^6.0",
