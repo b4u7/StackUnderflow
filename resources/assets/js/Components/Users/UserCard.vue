@@ -30,8 +30,8 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>
