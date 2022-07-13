@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ config('app.name', 'StackUnderflow') }}</title>
+
+    <meta name="description" content="Empowering the world to develop technology through collective knowledge." />
+    <meta name="robots" content="noindex, nofollow">
+
+    <meta property="og:site_name" content="Stack Underflow" />
+    <meta property="og:url" content="{{ config('app.url') }}" />
+    <meta property="og:image" content="{{ asset('img/su_1200.png') }}" />
+
+    <title>{{ config('app.name', 'Stack Underflow') }}</title>
+
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,6 +20,7 @@
         href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/github.min.css"
         rel="stylesheet"
     >
+
     {{-- highlightjs github dark theme
     <link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/github-dark.min.css" rel="stylesheet">
     --}}
@@ -18,9 +28,13 @@
         href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/github.min.css"
         rel="stylesheet"
     >
+
     <script src="https://kit.fontawesome.com/011810e4a7.js" crossorigin="anonymous"></script>
+
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+
     @routes
+
     <script src="{{ mix('/js/app.js') }}" defer></script>
 
     @inertiaHead
