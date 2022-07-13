@@ -26,12 +26,12 @@
 
 <script>
 export default {
-  name: "UserCard",
+  name: 'UserCard',
   props: {
     user: {
       type: Object,
-      required: true
-    }
-  }
-};
+      required: true,
+    },
+  },
+}
 </script>
