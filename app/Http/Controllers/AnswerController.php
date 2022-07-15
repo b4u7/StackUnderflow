@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnswerStoreRequest;
+use App\Http\Requests\AnswerUpdateRequest;
 use App\Models\Answer;
 use App\Models\Question;
 use Auth;
@@ -44,7 +46,7 @@ class AnswerController extends Controller
      *
      * @throws AuthorizationException
      */
-    public function store(Request $request, Question $question): RedirectResponse
+    public function store(AnswerStoreRequest $request, Question $question): RedirectResponse
     {
         $this->authorize('create', [Answer::class, $question]);
 
@@ -75,7 +77,7 @@ class AnswerController extends Controller
      *
      * @throws AuthorizationException
      */
-    public function update(Request $request, Question $question, Answer $answer): RedirectResponse
+    public function update(AnswerUpdateRequest $request, Question $question, Answer $answer): RedirectResponse
     {
         $this->authorize('update', $answer);
 
@@ -94,7 +96,13 @@ class AnswerController extends Controller
     {
         $this->authorize('delete', $answer);
 
-        $answer->delete();
+        DB::transaction(function () use ($question, $answer) {
+            $answer->delete();
+
+            $question->update([
+                'solution_id' => null
+            ]);
+        });
 
         return back();
     }

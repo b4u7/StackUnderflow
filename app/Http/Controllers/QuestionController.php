@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QuestionStoreRequest;
+use App\Http\Requests\QuestionUpdateRequest;
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Tag;
@@ -82,7 +84,7 @@ class QuestionController extends Controller
      * @throws AuthorizationException
      * @throws Throwable
      */
-    public function store(Request $request): RedirectResponse
+    public function store(QuestionStoreRequest $request): RedirectResponse
     {
         $this->authorize('create', Question::class);
 
@@ -201,7 +203,7 @@ class QuestionController extends Controller
      * @throws AuthorizationException
      * @throws Throwable
      */
-    public function update(Request $request, Question $question): RedirectResponse
+    public function update(QuestionUpdateRequest $request, Question $question): RedirectResponse
     {
         $this->authorize('update', $question);
 

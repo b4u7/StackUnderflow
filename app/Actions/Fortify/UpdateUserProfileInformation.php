@@ -23,13 +23,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'header' => [
                 'image',
                 'max:8192',
-                'dimensions:min_width=1024,min_height=1024',
             ],
             'avatar' => [
                 'nullable',
                 'image',
                 'max:4096',
-                'dimensions:min_width=256,min_height=256',
             ],
             'email' => [
                 'required',
