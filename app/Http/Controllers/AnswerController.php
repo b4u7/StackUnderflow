@@ -94,7 +94,13 @@ class AnswerController extends Controller
     {
         $this->authorize('delete', $answer);
 
-        $answer->delete();
+        DB::transaction(function () use ($question, $answer) {
+            $answer->delete();
+
+            $question->update([
+                'solution_id' => null
+            ]);
+        });
 
         return back();
     }
