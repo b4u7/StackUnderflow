@@ -13,8 +13,8 @@ it('registers new users', function () {
         'name' => 'Test',
         'username' => 'test_user',
         'email' => 'test@example.com',
-        'password' => 'password',
-        'password_confirmation' => 'password'
+        'password' => 'P@ssw0rd',
+        'password_confirmation' => 'P@ssw0rd'
     ]);
 
     $response->assertRedirect('/email/verify');

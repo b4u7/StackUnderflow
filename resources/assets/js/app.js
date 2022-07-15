@@ -33,6 +33,7 @@ import {
   faPencilAlt,
   faPlus,
   faSort,
+  faSpinner,
   faTrashCanArrowUp,
   faTrashCan,
   faXmark,
@@ -69,6 +70,7 @@ library.add(
   faPencilAlt,
   faPlus,
   faSort,
+  faSpinner,
   faTrashCan,
   faTrashCanArrowUp,
   faXmark

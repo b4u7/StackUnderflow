@@ -14,7 +14,10 @@
         />
       </div>
       <div class="py-8 text-center">
-        <p>
+        <p v-if="loading" class="text-4xl">
+          <font-awesome-icon icon="fa-solid fa-spinner" class="animate-spin" />
+        </p>
+        <p v-else>
           You've reached the end. Please consider
           <Link class="font-medium hover:text-primary-700" :href="route('questions.create')">
             <span class="underline">asking a question</span>
@@ -29,11 +32,10 @@
 <script>
 import { Link } from '@inertiajs/inertia-vue'
 import QuestionsFeedCard from '@/Components/QuestionsFeedCard'
-import Tags from '@/Components/Tags'
 
 export default {
   name: 'Index',
-  components: { Link, Tags, QuestionsFeedCard },
+  components: { Link, QuestionsFeedCard },
   props: {
     questions: {
       type: Object,
