@@ -6,6 +6,7 @@ use App\Models\Question;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 use JetBrains\PhpStorm\ArrayShape;
 
 class QuestionFactory extends Factory
@@ -26,7 +27,7 @@ class QuestionFactory extends Factory
     {
         return [
             'user_id' => User::all()->random()->id,
-            'title' => $this->faker->sentence,
+            'title' => Str::limit($this->faker->sentence, 150, ''),
             'body' => implode(PHP_EOL, $this->faker->paragraphs(random_int(1, 15))),
         ];
     }
