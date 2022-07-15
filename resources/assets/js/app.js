@@ -73,7 +73,7 @@ library.add(
   faSpinner,
   faTrashCan,
   faTrashCanArrowUp,
-  faXmark,
+  faXmark
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
