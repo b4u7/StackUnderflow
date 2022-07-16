@@ -75,7 +75,11 @@ class QuestionPolicy
      */
     public function bookmark(User $user, Question $question): bool
     {
-        return !$question->trashed();
+        if ($question->trashed()) {
+            return false;
+        }
+
+        return !$question->bookmarkedBy()->whereKey($user->id)->exists();
     }
 
     /*
@@ -87,7 +91,7 @@ class QuestionPolicy
             return false;
         }
 
-        return $question->bookmarkedBy()->whereKey($user->id)->exists();
+        return !$question->trashed() && $question->bookmarkedBy()->whereKey($user->id)->exists();
     }
 
     /**

@@ -26,16 +26,4 @@ class BookmarkPolicy
     {
         return $user->id === $bookmark->user_id;
     }
-
-    /**
-     * Determine whether the user is an admin.
-     */
-    public function before(User $user): ?bool
-    {
-        if ($user->admin) {
-            return true;
-        }
-
-        return null;
-    }
 }
