@@ -152,7 +152,7 @@ class QuestionController extends Controller
 
         $userAnswered = transform($user, fn($u) => $question->answers()->where('user_id', '=', $u->id)->exists(), false);
 
-        $bookmarked = $user?->bookmarkedQuestions()->whereKey($question->id)->exists();
+        $bookmarked = $user?->bookmarkedQuestions()->whereKey($question->id)->exists() ?? false;
 
         $permissions = [
             'question' => [

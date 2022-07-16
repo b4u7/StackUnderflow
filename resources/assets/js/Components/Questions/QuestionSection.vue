@@ -29,7 +29,7 @@ import Bookmark from '@/Components/Questions/Actions/Bookmark'
 
 export default {
   name: 'QuestionSection',
-  components: { Bookmark, Alert, Votes, QuestionCard },
+  components: { Bookmark, Votes, QuestionCard },
   props: {
     question: {
       type: Object,
@@ -76,13 +76,13 @@ export default {
   },
   methods: {
     bookmarkAction(value) {
-      value ? this.addBookmark() : this.removeBookmark()
+      value ? this.removeBookmark() : this.addBookmark()
     },
     addBookmark() {
       this.$inertia.post(route('questions.bookmark', this.question))
     },
     removeBookmark() {
-      this.$inertia.post(route('questions.bookmark', this.question))
+      this.$inertia.post(route('questions.unbookmark', this.question))
     },
     addVote() {
       this.$inertia.post(route('questions.upvote', this.question))
