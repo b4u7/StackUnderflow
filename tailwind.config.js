@@ -2,7 +2,7 @@ const colors = require('tailwindcss/colors')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  content: ['./views/app.blade.php', './resources/assets/**/*.{scss,js,vue}'],
+  content: ['./views/app.blade.php', './views/errors/**/*.blade.php', './resources/assets/**/*.{scss,js,vue}'],
   darkMode: 'class',
   theme: {
     fontFamily: {
