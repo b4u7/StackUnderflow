@@ -50,11 +50,10 @@ class AnswerController extends Controller
     {
         $this->authorize('create', [Answer::class, $question]);
 
-        // FIXME: Add validation
         Answer::create([
             'user_id' => Auth::id(),
             'question_id' => $question->id,
-            'body' => $request->input('body'),
+            ...$request->validated()
         ]);
 
         return back();
@@ -81,7 +80,7 @@ class AnswerController extends Controller
     {
         $this->authorize('update', $answer);
 
-        $answer->update($request->all());
+        $answer->update($request->validated());
 
         return redirect()->route('questions.show', [$question]);
     }
@@ -99,9 +98,7 @@ class AnswerController extends Controller
         DB::transaction(function () use ($question, $answer) {
             $answer->delete();
 
-            $question->update([
-                'solution_id' => null
-            ]);
+            $question->solution()->dissociate()->save();
         });
 
         return back();

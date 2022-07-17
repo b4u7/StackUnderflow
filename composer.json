@@ -1,14 +1,14 @@
 {
-  "name": "laravel/laravel",
+  "name": "b4u7/stackunderflow",
   "type": "project",
-  "description": "The Laravel Framework.",
+  "description": "StackUnderflow is a Q&A web application based on StackOverflow.",
   "keywords": [
     "framework",
     "laravel"
   ],
   "license": "MIT",
   "require": {
-    "php": "^8.0",
+    "php": "^8.1",
     "ext-gd": "*",
     "ext-json": "*",
     "ext-redis": "*",
