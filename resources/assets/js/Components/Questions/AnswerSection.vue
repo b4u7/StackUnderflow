@@ -10,7 +10,7 @@
       />
       <!-- FIXME: Temporary solution -->
       <solution
-        v-if="(permissions.canMarkSolution) || !permissions.canMarkSolution && isSolution"
+        v-if="permissions.canMarkSolution || (!permissions.canMarkSolution && isSolution)"
         :can-mark-solution="permissions.canMarkSolution"
         :active="isSolution"
         @mark-solution="markSolution"
