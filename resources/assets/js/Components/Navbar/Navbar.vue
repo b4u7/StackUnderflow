@@ -4,9 +4,7 @@
       <li class="navbar__item">
         <a class="navbar__logo" :href="route('home')">
           <font-awesome-icon icon="fa-solid fa-layer-group" class="rotate-180" />
-          <span class="ml-2 hidden sm:inline">
-            Stack Underflow
-          </span>
+          <span class="ml-2 hidden sm:inline"> Stack Underflow </span>
         </a>
       </li>
     </ul>
@@ -140,8 +138,8 @@ export default {
           {
             preserveScroll: true,
             preserveState: true,
-          },
-        ),
+          }
+        )
       )
     },
   },
