@@ -62,7 +62,7 @@
       <button class="button button--primary button--fullwidth mb-4" type="submit" :disabled="form.processing">
         Change password
       </button>
-      <p class="text-center">You will be logged out all of your other devices</p>
+      <p class="text-center">You will be logged out from all other devices</p>
     </div>
   </form>
 </template>
