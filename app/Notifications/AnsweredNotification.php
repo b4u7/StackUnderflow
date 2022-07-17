@@ -59,7 +59,7 @@ class AnsweredNotification extends Notification
     }
 
     /**
-     * @return array<string, array<string>|string>
+     * @return array<string, array<string, string|null>|string|null>
      */
     #[ArrayShape(['title' => "mixed|string", 'author' => "array", 'body' => "\mixed|string", 'url' => "string"])]
     public function toPusher(): array
