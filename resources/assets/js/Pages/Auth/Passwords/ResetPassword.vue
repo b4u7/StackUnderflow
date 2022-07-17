@@ -2,10 +2,8 @@
   <section>
     <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
       <h1 class="text-xl font-medium mb-4">Reset your password</h1>
-
       <form class="form" @submit.prevent="submit">
         <input type="hidden" name="token" :value="token" />
-
         <div class="form__group">
           <label for="email-address" class="form__group__label">Email address</label>
           <input
@@ -73,11 +71,8 @@
 </template>
 
 <script>
-import Alert from '@/Components/Alert'
-
 export default {
   name: 'Reset',
-  components: { Alert },
   props: {
     token: {
       type: String,
