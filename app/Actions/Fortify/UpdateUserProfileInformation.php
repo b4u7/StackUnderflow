@@ -56,8 +56,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             )->save();
         }
 
-        $avatar = $input['avatar'];
-        if ($avatar) {
+        if (array_key_exists('avatar', $input)) {
+            $avatar = $input['avatar'];
             $avatarHash = md5_file($avatar);
 
             Storage::cloud()->putFileAs('users/avatars', $avatar, "$user->id.jpeg", 'public');
