@@ -2,7 +2,10 @@
   <nav :class="`navbar--${dark ? 'dark' : 'primary'}`" class="navbar">
     <ul class="navbar__start">
       <li class="navbar__item">
-        <a class="navbar__logo" :href="route('home')"> Stack Underflow </a>
+        <a class="navbar__logo" :href="route('home')">
+          <font-awesome-icon icon="fa-solid fa-layer-group" class="rotate-180" />
+          <span class="ml-2 hidden sm:inline"> Stack Underflow </span>
+        </a>
       </li>
     </ul>
     <ul class="navbar__center">
