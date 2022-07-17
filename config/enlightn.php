@@ -146,6 +146,7 @@ return [
     // flagged by the License Analyzer.
     'commercial_packages' => [
         'enlightn/enlightnpro',
+        'phpmyadmin/sql-parser: GPL-2.0-or-later'
     ],
 
     'allowed_permissions' => [
