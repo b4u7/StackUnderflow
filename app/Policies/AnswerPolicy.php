@@ -41,10 +41,9 @@ class AnswerPolicy
             return false;
         }
 
-        return $user->hasVerifiedEmail()
-            && $question->answers()
-                ->whereBelongsTo($user)
-                ->doesntExist();
+        return $question->answers()
+            ->whereBelongsTo($user)
+            ->doesntExist();
     }
 
     /**
