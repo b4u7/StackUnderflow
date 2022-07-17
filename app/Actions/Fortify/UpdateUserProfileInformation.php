@@ -56,7 +56,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             )->save();
         }
 
-        if (array_key_exists('avatar', $input)) {
+        if (array_key_exists('avatar', $input) && $input['avatar'] !== null) {
             $avatar = $input['avatar'];
             $avatarHash = md5_file($avatar);
 
