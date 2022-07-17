@@ -14,15 +14,17 @@
         autocomplete="password"
         required
       />
-      <p v-if="!errors.current_password" class="form__group__description">
+      <p v-if="errors.curent_password" class="form__group__description">
+        <font-awesome-icon icon="fa-solid fa-circle-exclamation" />
+        {{ errors.current_password }}
+      </p>
+      <!-- FIXME: Temporarily remove this
+      <p class="form__group__description">
         Forgot your password? Click
         <a class="text-primary-600 underline" :href="route('password.request')">here</a>
         to reset it
       </p>
-      <p v-else class="form__group__description">
-        <font-awesome-icon icon="fa-solid fa-circle-exclamation" />
-        {{ errors.current_password }}
-      </p>
+       -->
     </div>
     <div :class="{ 'form__group--error': errors.password }" class="form__group">
       <label for="password" class="form__group__label"> New password </label>
@@ -97,6 +99,9 @@ export default {
       this.form.put(this.route('user-password.update'), {
         onFinish: () => this.form.reset('current_password', 'password', 'password_confirmation'),
       })
+    },
+    sendResetPasswordLink() {
+      this.$inertia.post(this.route('password.email', [this.user.email]))
     },
   },
 }
