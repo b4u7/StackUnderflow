@@ -89,9 +89,9 @@ class QuestionController extends Controller
         $this->authorize('create', Question::class);
 
         $question = DB::transaction(function () use ($request) {
-            $question = $request->user()->questions()->create($request->all());
+            $question = $request->user()->questions()->create($request->validated());
 
-            $tags = $request->input('tags');
+            $tags = $request->validated('tags');
             $tagIds = [];
 
             foreach ($tags as $tag) {
@@ -208,9 +208,9 @@ class QuestionController extends Controller
         $this->authorize('update', $question);
 
         DB::transaction(function () use ($request, $question) {
-            $question->update($request->all());
+            $question->update($request->validated());
 
-            $tags = $request->input('tags');
+            $tags = $request->validated('tags');
             $tagIds = [];
 
             foreach ($tags as $tag) {
