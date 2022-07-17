@@ -12,10 +12,22 @@
               A community-based space to find and contribute answers to technical challenges, and one of the most
               popular websites in the world.
             </p>
-            <Link :href="route('register')" class="button button--primary button--xl">
-              Join the community
-              <font-awesome-icon class="ml-1.5" icon="fa-solid fa-arrow-right" />
-            </Link>
+            <div class="flex flex-col xl:flex-row space-y-6 md:space-y-4 xl:space-x-4">
+              <p>
+                <Link :href="route('register')" class="button button--primary button--xl">
+                  Join the community
+                  <font-awesome-icon class="ml-1.5" icon="fa-solid fa-arrow-right" />
+                </Link>
+              </p>
+              <p>
+                <Link
+                  :href="route('questions.index')"
+                  class="md:text-sm underline hover:text-yellow-400 focus:text-primary-500 active:text-yellow-500"
+                >
+                  or continue browsing the website
+                </Link>
+              </p>
+            </div>
           </div>
           <img class="hidden lg:inline rounded-lg shadow" src="img/index/small.png" alt="test" />
         </div>

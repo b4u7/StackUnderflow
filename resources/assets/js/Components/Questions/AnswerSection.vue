@@ -8,8 +8,9 @@
         @upvoted="addVote"
         @downvoted="removeVote"
       />
+      <!-- FIXME: Temporary solution -->
       <solution
-        v-if="permissions.canMarkSolution"
+        v-if="permissions.canMarkSolution || (!permissions.canMarkSolution && isSolution)"
         :can-mark-solution="permissions.canMarkSolution"
         :active="isSolution"
         @mark-solution="markSolution"
@@ -63,6 +64,8 @@ export default {
       } else if (voteSum < 0) {
         return this.classes.danger
       }
+
+      return ''
     },
     userVote() {
       return this.userQuestionVote?.vote ?? 0

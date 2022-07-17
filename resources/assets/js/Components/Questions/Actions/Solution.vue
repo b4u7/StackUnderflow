@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="markSolution">
     <button
-      :class="{ [classes.active]: active }"
+      :class="{ 'actions__item--active': active }"
       class="actions__item actions__solution"
       type="submit"
       :disabled="!canMarkSolution"
@@ -23,13 +23,6 @@ export default {
       type: Boolean,
       required: true,
     },
-  },
-  data() {
-    return {
-      classes: {
-        active: 'actions__item--active',
-      },
-    }
   },
   methods: {
     markSolution() {
