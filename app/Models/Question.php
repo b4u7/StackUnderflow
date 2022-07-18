@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Scopes\AdminScope;
 use App\Services\MarkdownRenderer;
+use App\Traits\HasVotes;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,7 +21,7 @@ use Laravel\Scout\Searchable;
 
 class Question extends Model implements Viewable
 {
-    use Searchable, SoftDeletes, InteractsWithViews, HasFactory;
+    use Searchable, SoftDeletes, InteractsWithViews, HasFactory, HasVotes;
 
     public bool $removeViewsOnDelete = false;
 
@@ -45,17 +46,11 @@ class Question extends Model implements Viewable
      */
     protected $withCount = ['views'];
 
-    public static function booted()
+    public static function boot()
     {
-        static::addGlobalScope(new AdminScope);
+        parent::boot();
 
-        static::addGlobalScope('votes_sum', fn(Builder $query) => $query->selectSub(fn($query) => $query
-            ->selectRaw('coalesce(sum(vote), 0)')
-            ->from('votes')
-            ->where('votable_id', '=', DB::raw('questions.id'))
-            ->where('votable_type', '=', Question::class),
-            'votes_sum_vote'
-        ));
+        static::addGlobalScope(new AdminScope);
     }
 
     /**
