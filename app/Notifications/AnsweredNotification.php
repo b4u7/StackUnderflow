@@ -7,6 +7,7 @@ use App\Models\Answer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Str;
 use JetBrains\PhpStorm\ArrayShape;
 
 class AnsweredNotification extends Notification
@@ -53,7 +54,7 @@ class AnsweredNotification extends Notification
                 'name' => $this->answer->user?->name,
                 'url' => route('users.show', $this->answer->user)
             ],
-            'body' => $this->answer->body,
+            'body' => Str::limit($this->answer->stripped_body, 100, '...'),
             'url' => route('questions.show', $this->answer->question)
         ];
     }
