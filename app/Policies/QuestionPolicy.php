@@ -23,7 +23,7 @@ class QuestionPolicy
      */
     public function view(?User $user, Question $question): bool
     {
-        return $user->admin || !$question->trashed();
+        return ($user?->admin ?? false) || !$question->trashed();
     }
 
     /**

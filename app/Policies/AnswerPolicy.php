@@ -25,7 +25,7 @@ class AnswerPolicy
      */
     public function view(?User $user, Answer $answer): bool
     {
-        return $user->admin || !$answer->trashed();
+        return ($user?->admin ?? false) || !$answer->trashed();
     }
 
     /**
