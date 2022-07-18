@@ -19,13 +19,13 @@ Route::get('/', 'HomeController@index')
  */
 Route::resource('questions', 'QuestionController')
     ->except('index', 'show')
-    ->middleware('verified');
+    ->middleware(['auth', 'verified']);
 
 Route::resource('questions', 'QuestionController')
     ->only('index', 'show');
 
 Route::group(['prefix' => 'questions', 'as' => 'questions.'], static function () {
-    Route::group(['prefix' => '{question}', 'middleware' => 'verified'], static function () {
+    Route::group(['prefix' => '{question}', 'middleware' => ['auth', 'verified']], static function () {
         Route::post('upvote', 'QuestionController@upvote')
             ->name('upvote');
 
@@ -65,7 +65,7 @@ Route::group(['prefix' => 'questions', 'as' => 'questions.'], static function ()
 
 Route::resource('questions.answers', 'AnswerController')
     ->only('store', 'edit', 'update')
-    ->middleware('verified');
+    ->middleware(['auth', 'verified']);
 
 Route::resource('questions.answers', 'AnswerController')
     ->only('index');
