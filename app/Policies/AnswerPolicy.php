@@ -31,8 +31,12 @@ class AnswerPolicy
     /**
      * Determine whether the user can create answers.
      */
-    public function create(User $user, Question $question): Response|bool
+    public function create(?User $user, Question $question): Response|bool
     {
+        if ($user === null) {
+            return $this->deny('You must create an account before you can answer questions.');
+        }
+
         if (!$user->hasVerifiedEmail()) {
             return $this->deny('You must verify your email address before you can answer questions.');
         }
