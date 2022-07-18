@@ -14,9 +14,7 @@
       </button>
     </form>
     <p class="actions__item actions__vote-count">
-      <span :class="voteSumColour">
-        {{ totalVotes }}
-      </span>
+      <span :class="voteSumColour" v-text="totalVotes" />
     </p>
     <form @submit.prevent="removeVote">
       <button
@@ -68,6 +66,8 @@ export default {
       if (this.totalVotes < 0) {
         return this.classes.danger
       }
+
+      return ''
     },
   },
   methods: {
