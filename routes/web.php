@@ -87,6 +87,12 @@ Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => 'auth'], st
 /**
  * Notifications
  */
-Route::get('notifications/{id:uuid}', 'NotificationController@show')
-    ->name('notifications.show')
-    ->middleware('auth');
+Route::group(['prefix' => 'notifications', 'as' => 'notifications.', 'middleware' => 'auth'], static function () {
+    Route::get('{id:uuid}', 'NotificationController@show')
+        ->name('show');
+
+    Route::post('mark-all-read', 'NotificationController@markAllRead')
+        ->name('mark-all-read');
+});
+
+

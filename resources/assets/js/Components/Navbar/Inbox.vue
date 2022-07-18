@@ -129,9 +129,9 @@ export default {
     toggleInbox() {
       this.visible = !this.visible
     },
-    // TODO: Implement Inbox -> Mark all as read
-    markAllRead() {},
-    // TODO: Implement user settings page
+    markAllRead() {
+      this.$inertia.post(route('notifications.mark-all-read'))
+    },
     settingsClick() {
       this.$inertia.post(route('users.show'))
     },
