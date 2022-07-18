@@ -82,16 +82,24 @@ export default {
   },
   methods: {
     async addVote() {
-      await this.$inertia.post(route('questions.answers.upvote', [this.mutableAnswer.question_id, this.mutableAnswer]), null, {
-        preserveScroll: true,
-      })
+      await this.$inertia.post(
+        route('questions.answers.upvote', [this.mutableAnswer.question_id, this.mutableAnswer]),
+        null,
+        {
+          preserveScroll: true,
+        }
+      )
 
       this.updateVotes(1)
     },
     async removeVote() {
-      await this.$inertia.post(route('questions.answers.downvote', [this.mutableAnswer.question_id, this.mutableAnswer]), null, {
-        preserveScroll: true,
-      })
+      await this.$inertia.post(
+        route('questions.answers.downvote', [this.mutableAnswer.question_id, this.mutableAnswer]),
+        null,
+        {
+          preserveScroll: true,
+        }
+      )
 
       this.updateVotes(-1)
     },
