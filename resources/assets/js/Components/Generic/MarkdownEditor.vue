@@ -24,6 +24,15 @@ export default {
         placeholder: this.placeholder,
         indentWithTabs: false,
         spellChecker: false,
+        previewClass: [
+          'editor-preview',
+          'prose',
+          'prose-slate',
+          'hover:prose-a:text-primary-600',
+          'dark:hover:prose-a:text-primary-500',
+          'dark:prose-invert',
+          'max-w-none',
+        ],
       },
     }
   },
