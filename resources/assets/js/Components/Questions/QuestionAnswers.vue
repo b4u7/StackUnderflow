@@ -18,12 +18,11 @@
 </template>
 
 <script>
-import AnswerCard from './Answer'
 import AnswerSection from './AnswerSection'
 
 export default {
   name: 'QuestionAnswers',
-  components: { AnswerSection, AnswerCard },
+  components: { AnswerSection },
   props: {
     questionId: {
       type: Number,
