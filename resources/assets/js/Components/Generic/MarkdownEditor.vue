@@ -23,6 +23,7 @@ export default {
         autofocus: false,
         placeholder: this.placeholder,
         indentWithTabs: false,
+        spellChecker: false,
       },
     }
   },
