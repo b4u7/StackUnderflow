@@ -67,17 +67,15 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      classes: {
-        'qa-card--solution': !!this.isSolution,
-        'qa-card--trashed': this.isTrashed,
-      },
-    }
-  },
   computed: {
     shareUrl() {
       return `${this.route('questions.show', [this.answer.question_id])}#answer-${this.answer.id}`
+    },
+    classes() {
+      return {
+        'qa-card--solution': !!this.isSolution,
+        'qa-card--trashed': this.isTrashed,
+      }
     },
   },
 }

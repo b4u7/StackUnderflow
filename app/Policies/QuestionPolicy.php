@@ -23,7 +23,7 @@ class QuestionPolicy
      */
     public function view(?User $user, Question $question): bool
     {
-        return true;
+        return $user->admin || !$question->trashed();
     }
 
     /**
@@ -31,7 +31,7 @@ class QuestionPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->hasVerifiedEmail();
     }
 
     /**
@@ -39,7 +39,7 @@ class QuestionPolicy
      */
     public function update(User $user, Question $question): bool
     {
-        return $user->admin || $user->id === $question->user_id;
+        return $user->admin || $question->user()->is($user);
     }
 
     /**
@@ -51,7 +51,7 @@ class QuestionPolicy
             return false;
         }
 
-        return $user->admin || $user->id === $question->user_id;
+        return $user->admin || $question->user()->is($user);
     }
 
     /**
@@ -103,6 +103,6 @@ class QuestionPolicy
             return false;
         }
 
-        return $user->id !== $question->user_id;
+        return $question->user()->is($user);
     }
 }

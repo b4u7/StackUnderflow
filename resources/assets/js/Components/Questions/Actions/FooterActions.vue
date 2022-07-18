@@ -2,8 +2,7 @@
   <div class="w-full sm:w-auto buttons space-x-4">
     <tippy :message="shareMessage" :hideOnClick="false" :open.sync="showShareTippy" trigger="manual" placement="top">
       <Link
-        :class="classes"
-        class="hover:text-primary-600 focus:text-primary-800 active:text-primary-800"
+        class="transition-all font-semibold hover:text-primary-600 focus:text-primary-800 active:text-primary-800"
         as="button"
         @mouseenter="showShareTippy = true"
         @mouseleave="showShareTippy = false"
@@ -15,9 +14,8 @@
     </tippy>
     <Link
       v-if="canEdit"
-      :class="classes"
       :href="editRoute"
-      class="hover:text-primary-600 focus:text-primary-800 active:text-primary-800"
+      class="transition-all font-semibold hover:text-primary-600 focus:text-primary-800 active:text-primary-800"
       as="button"
     >
       <font-awesome-icon icon="fa-solid fa-pen-to-square" />
@@ -25,9 +23,8 @@
     </Link>
     <Link
       v-if="canDelete"
-      :class="classes"
       :href="deleteRoute"
-      class="hover:text-red-600 focus:text-red-800 active:text-red-800"
+      class="transition-all font-semibold hover:text-red-600 focus:text-red-800 active:text-red-800"
       method="delete"
       as="button"
     >
@@ -36,9 +33,8 @@
     </Link>
     <Link
       v-if="canRestore"
-      :class="classes"
       :href="restoreRoute"
-      class="hover:text-green-600 focus:text-green-800 active:text-green-800"
+      class="transition-all font-semibold hover:text-green-600 focus:text-green-800 active:text-green-800"
       method="post"
       as="button"
     >
@@ -97,7 +93,7 @@ export default {
   },
   data() {
     return {
-      classes: ['transition-all', 'font-semibold'],
+      classes: [''],
       shareMessage: SHARE_MESSAGE,
       showShareTippy: false,
     }

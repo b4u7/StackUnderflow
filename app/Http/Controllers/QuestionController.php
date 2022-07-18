@@ -119,16 +119,14 @@ class QuestionController extends Controller
         $question = Question::with([
             'user',
             'tags',
-        ])->withSum('votes', 'vote')
-            ->when($user !== null && $user->admin, fn($query) => $query->withTrashed())
+        ])->when($user !== null && $user->admin, fn($query) => $query->withTrashed())
             ->findOrFail($questionId);
 
-        views($question)->record();
         $this->authorize('view', $question);
+        views($question)->record();
 
         $answers = $question->answers()
             ->with('user')
-            ->withSum('votes', 'vote')
             ->when(
                 $user,
                 static fn(Builder $query) => $query->withSum(
@@ -141,7 +139,7 @@ class QuestionController extends Controller
                 $question->solution_id !== null,
                 static fn(Builder $q) => $q->orderByDesc(DB::raw('id = ' . $question->solution_id))
             )
-            ->orderByDesc('votes_sum_vote')
+            ->orderByDesc(DB::raw('votes_sum_vote'))
             ->cursorPaginate(cursorName: 'answersCursor');
 
         $userQuestionVote = $user === null ? null : Vote::query()
@@ -229,13 +227,13 @@ class QuestionController extends Controller
      *
      * @throws Exception
      */
-    public function destroy(Question $question): RedirectResponse
+    public function destroy(Request $request, Question $question): RedirectResponse
     {
         $this->authorize('delete', $question);
 
         $question->delete();
 
-        return redirect()->route('questions.index');
+        return $request->user()->can('view', $question) ? back() : redirect()->route('questions.index');
     }
 
     /**

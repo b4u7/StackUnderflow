@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\AnswerCreated;
 use App\Scopes\AdminScope;
 use App\Services\MarkdownRenderer;
+use App\Traits\HasVotes;
 use App\Traits\ResolvesWithTrashed;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Answer extends Model
 {
-    use SoftDeletes, ResolvesWithTrashed, HasFactory;
+    use SoftDeletes, ResolvesWithTrashed, HasFactory, HasVotes;
 
     /**
      * @var array<string>
@@ -41,6 +42,7 @@ class Answer extends Model
     public static function boot()
     {
         parent::boot();
+
         static::addGlobalScope(new AdminScope);
     }
 

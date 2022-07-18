@@ -3,8 +3,8 @@
     <div class="actions">
       <votes
         :can-vote="permissions.canVote"
-        :total-votes="answer.votes_sum_vote || 0"
-        :user-vote="answer.user_vote || 0"
+        :total-votes="mutableAnswer.votes_sum_vote || 0"
+        :user-vote="mutableAnswer.user_vote || 0"
         @upvoted="addVote"
         @downvoted="removeVote"
       />
@@ -17,10 +17,10 @@
       />
     </div>
     <answer-card
-      :answer="answer"
+      :answer="mutableAnswer"
       :is-solution="isSolution"
       :permissions="permissions"
-      :is-trashed="!!this.answer.deleted_at"
+      :is-trashed="!!mutableAnswer.deleted_at"
     />
   </div>
 </template>
@@ -53,11 +53,20 @@ export default {
         success: 'text-emerald-600',
         danger: 'text-red-600',
       },
+      mutableAnswer: null,
     }
+  },
+  watch: {
+    answer: {
+      immediate: true,
+      handler(newVal) {
+        this.mutableAnswer = newVal
+      },
+    },
   },
   computed: {
     voteSumColour() {
-      let voteSum = this.answer.votes_sum_vote
+      let voteSum = this.mutableAnswer.votes_sum_vote
 
       if (voteSum > 0) {
         return this.classes.success
@@ -73,41 +82,49 @@ export default {
   },
   methods: {
     async addVote() {
-      await this.$inertia.post(route('questions.answers.upvote', [this.answer.question_id, this.answer]), {
-        preserveScroll: true,
-      })
+      await this.$inertia.post(
+        route('questions.answers.upvote', [this.mutableAnswer.question_id, this.mutableAnswer]),
+        null,
+        {
+          preserveScroll: true,
+        }
+      )
 
       this.updateVotes(1)
     },
     async removeVote() {
-      await this.$inertia.post(route('questions.answers.downvote', [this.answer.question_id, this.answer]), {
-        preserveScroll: true,
-      })
+      await this.$inertia.post(
+        route('questions.answers.downvote', [this.mutableAnswer.question_id, this.mutableAnswer]),
+        null,
+        {
+          preserveScroll: true,
+        }
+      )
 
       this.updateVotes(-1)
     },
     updateVotes(newUserVote) {
-      if (this.answer.user_vote !== -1 && !this.answer.user_vote) {
-        this.answer.user_vote = newUserVote
-        this.answer.votes_sum_vote += newUserVote
+      if (this.mutableAnswer.user_vote !== -1 && !this.mutableAnswer.user_vote) {
+        this.mutableAnswer.user_vote = newUserVote
+        this.mutableAnswer.votes_sum_vote += newUserVote
 
         return
       }
 
-      const curVote = this.answer.user_vote
-      this.answer.votes_sum_vote -= curVote
+      const curVote = this.mutableAnswer.user_vote
+      this.mutableAnswer.votes_sum_vote -= curVote
 
       if (curVote !== newUserVote) {
-        this.answer.votes_sum_vote += newUserVote
-        this.answer.user_vote = newUserVote
+        this.mutableAnswer.votes_sum_vote += newUserVote
+        this.mutableAnswer.user_vote = newUserVote
 
         return
       }
 
-      this.answer.user_vote = null
+      this.mutableAnswer.user_vote = null
     },
     markSolution() {
-      this.$inertia.post(route('questions.answers.solution', [this.answer.question_id, this.answer]))
+      this.$inertia.post(route('questions.answers.solution', [this.mutableAnswer.question_id, this.mutableAnswer]))
     },
   },
 }

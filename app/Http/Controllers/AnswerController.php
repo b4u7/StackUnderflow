@@ -25,7 +25,6 @@ class AnswerController extends Controller
 
         return $question->answers()
             ->with('user')
-            ->withSum('votes', 'vote')
             ->when(
                 $user,
                 static fn(Builder $query) => $query->withSum(
@@ -197,13 +196,12 @@ class AnswerController extends Controller
     {
         $this->authorize('solution', $answer);
 
-        if ($question->solution()->is($answer)) {
-            $question->solution()->dissociate()->save();
+        $question->solution()->is($answer)
+            ? $question->solution()->dissociate()
+            : $question->solution()->associate($answer);
 
-            return back();
-        }
-
-        $question->solution()->associate($answer)->save();
+        $question->timestamps = false;
+        $question->save();
 
         return back();
     }

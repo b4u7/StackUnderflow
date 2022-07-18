@@ -19,13 +19,13 @@ Route::get('/', 'HomeController@index')
  */
 Route::resource('questions', 'QuestionController')
     ->except('index', 'show')
-    ->middleware('verified');
+    ->middleware(['auth', 'verified']);
 
 Route::resource('questions', 'QuestionController')
     ->only('index', 'show');
 
 Route::group(['prefix' => 'questions', 'as' => 'questions.'], static function () {
-    Route::group(['prefix' => '{question}', 'middleware' => 'verified'], static function () {
+    Route::group(['prefix' => '{question}', 'middleware' => ['auth', 'verified']], static function () {
         Route::post('upvote', 'QuestionController@upvote')
             ->name('upvote');
 
@@ -65,7 +65,7 @@ Route::group(['prefix' => 'questions', 'as' => 'questions.'], static function ()
 
 Route::resource('questions.answers', 'AnswerController')
     ->only('store', 'edit', 'update')
-    ->middleware('verified');
+    ->middleware(['auth', 'verified']);
 
 Route::resource('questions.answers', 'AnswerController')
     ->only('index');
@@ -87,6 +87,12 @@ Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => 'auth'], st
 /**
  * Notifications
  */
-Route::get('notifications/{id:uuid}', 'NotificationController@show')
-    ->name('notifications.show')
-    ->middleware('auth');
+Route::group(['prefix' => 'notifications', 'as' => 'notifications.', 'middleware' => 'auth'], static function () {
+    Route::get('{id:uuid}', 'NotificationController@show')
+        ->name('show');
+
+    Route::post('mark-all-read', 'NotificationController@markAllRead')
+        ->name('mark-all-read');
+});
+
+

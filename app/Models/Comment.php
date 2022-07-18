@@ -11,8 +11,10 @@ class Comment extends Model
 {
     use HasFactory;
 
-    public static function booted()
+    public static function boot()
     {
+        parent::boot();
+
         static::addGlobalScope(new AdminScope());
     }
 
