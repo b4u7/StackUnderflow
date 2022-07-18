@@ -79,16 +79,24 @@ export default {
       value ? this.removeBookmark() : this.addBookmark()
     },
     addBookmark() {
-      this.$inertia.post(route('questions.bookmark', this.question))
+      this.$inertia.post(route('questions.bookmark', this.question), null, {
+        preserveScroll: true,
+      })
     },
     removeBookmark() {
-      this.$inertia.post(route('questions.unbookmark', this.question))
+      this.$inertia.post(route('questions.unbookmark', this.question), null, {
+        preserveScroll: true,
+      })
     },
     addVote() {
-      this.$inertia.post(route('questions.upvote', this.question))
+      this.$inertia.post(route('questions.upvote', this.question), null, {
+        preserveScroll: true,
+      })
     },
     removeVote() {
-      this.$inertia.post(route('questions.downvote', this.question))
+      this.$inertia.post(route('questions.downvote', this.question), null, {
+        preserveScroll: true,
+      })
     },
   },
 }
