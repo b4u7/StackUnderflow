@@ -25,7 +25,7 @@ class AnswerPolicy
      */
     public function view(?User $user, Answer $answer): bool
     {
-        return true;
+        return $user->admin || !$answer->trashed();
     }
 
     /**
@@ -51,7 +51,7 @@ class AnswerPolicy
      */
     public function update(User $user, Answer $answer): bool
     {
-        return $user->admin || $answer->user_id === $user->id;
+        return $user->admin || $answer->user()->is($user);
     }
 
     /**
@@ -63,7 +63,7 @@ class AnswerPolicy
             return false;
         }
 
-        return $user->admin || $answer->user_id === $user->id;
+        return $user->admin || $answer->user()->is($user);
     }
 
     /**
@@ -87,6 +87,10 @@ class AnswerPolicy
      */
     public function vote(User $user, Answer $answer): bool
     {
+        if ($answer->question === null) {
+            dd($answer);
+        }
+
         return !$answer->trashed() && !$answer->question->trashed();
     }
 
