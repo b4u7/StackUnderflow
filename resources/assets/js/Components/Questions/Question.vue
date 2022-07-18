@@ -5,7 +5,7 @@
       <div class="qa-card__metadata">
         <p>
           {{ lastActionType }}
-          <span class="text-slate-700 font-medium">{{ lastActionTime.toRelative() }}</span>
+          <span class="text-slate-700 font-medium" v-text="lastActionTime.toRelative()" />
         </p>
         <p>
           viewed
