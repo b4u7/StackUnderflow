@@ -9,13 +9,6 @@
     </br>
     <span font-size="16px">A Q&A web application built for programmers.</span>
     <br />
-    <span>
-      <a href="https://discordapp.com/invite/63GvpMh">Discord</a> | <a href="https://github.com/sponsors/tek256">
-        Support
-      </a>
-    </span>
-    <br />
-    <br />
   </p>
 </div>
 
