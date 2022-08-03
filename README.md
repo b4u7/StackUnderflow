@@ -1,13 +1,34 @@
-# StackUnderflow
+<div>
+  <!--
+  <h1 align="center">
+    StackUnderflow
+  </h1>
+  -->
+  <p align="center">
+    <b>Stack Underflow</b>
+    </br>
+    <span font-size="16px">A Q&A web application built for programmers.</span>
+    <br />
+    <span>
+      <a href="https://discordapp.com/invite/63GvpMh">Discord</a> | <a href="https://github.com/sponsors/tek256">
+        Support
+      </a>
+    </span>
+    <br />
+    <br />
+  </p>
+</div>
 
 StackUnderflow is a Q&A application based on the popular StackOverflow for my final school project. It is build using
 mainly Laravel and Vue.
 
 # Development
 
-## Installing dependencies
+## Getting Started
 
-### Laravel Sail
+### Installing dependencies
+
+#### Laravel Sail
 
 Laravel Sail is a light-weight command-line interface for interacting with Laravel's default Docker development
 environment.
@@ -23,7 +44,7 @@ docker run --rm \
     composer install --ignore-platform-reqs
 ```
 
-### NPM
+#### NPM
 
 Before continuing, we need to install our front-end dependencies:
 
@@ -31,9 +52,9 @@ Before continuing, we need to install our front-end dependencies:
 sail npm install
 ```
 
-## Running the project
+### Running the project
 
-### .env file
+#### .env file
 
 You should first set up your .env file. We already have an example file, so you may just copy that into your own:
 
@@ -41,7 +62,7 @@ You should first set up your .env file. We already have an example file, so you 
 cp .env.example .env
 ```
 
-### Starting Laravel Sail
+#### Starting Laravel Sail
 
 After everything is installed, we can now initialize sail by running the following command:
 
@@ -66,7 +87,7 @@ alias sail='bash vendor/bin/sail'
 
 This way, instead of running `vendor/bin/sail up -d` you can just do `sail up -d`.
 
-## Algolia
+### Algolia
 
 We use Algolia for search. To set it up, simply create an application on the Algolia website, get the app credentials
 and set them in the .env file.
@@ -76,9 +97,9 @@ ALGOLIA_APP_ID=
 ALGOLIA_SECRET=
 ```
 
-## Database
+### Database
 
-### Database Migrations
+#### Database Migrations
 
 Database Migrations are like a form of version control for databases. They allow you to easily upgrade to the latest
 version a database without having to do it manually. This is seen especially useful when working as a team or when
