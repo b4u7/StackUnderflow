@@ -4,13 +4,11 @@
   </p>
   <p align="center">
     <b>Stack Underflow</b>
-    </br>
+    <br />
     <span font-size="16px">A Q&A web application built for programmers.</span>
     <br />
   </p>
 </div>
-
-<hr />
 
 StackUnderflow is a Q&A application based on the popular StackOverflow for my final school project. It is build using
 mainly Laravel and Vue.
