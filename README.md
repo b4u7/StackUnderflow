@@ -1,9 +1,7 @@
 <div>
-  <!--
-  <h1 align="center">
-    StackUnderflow
-  </h1>
-  -->
+  <p align="center">
+      <img src="../assets/stackunderflow_logo.png?raw=true" alt="The Stack Underflow Logo">
+  </p>
   <p align="center">
     <b>Stack Underflow</b>
     </br>
@@ -11,6 +9,8 @@
     <br />
   </p>
 </div>
+
+<hr />
 
 StackUnderflow is a Q&A application based on the popular StackOverflow for my final school project. It is build using
 mainly Laravel and Vue.
