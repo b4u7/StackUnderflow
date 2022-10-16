@@ -1,5 +1,5 @@
 <template>
-  <textarea ref="editor"></textarea>
+  <textarea ref="markdownEditor"></textarea>
 </template>
 
 <script>
