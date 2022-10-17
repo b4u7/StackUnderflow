@@ -1,7 +1,7 @@
 <template>
   <section class="section mt-8">
     <div class="container sm:max-w-screen-lg">
-      <h1 class="text-2xl font-medium mb-4">Edit your answer</h1>
+      <h1 class="mb-4 text-2xl font-medium">Edit your answer</h1>
       <form class="form" @submit.prevent="submit">
         <div class="form__group">
           <label class="form__group__label"> Body </label>

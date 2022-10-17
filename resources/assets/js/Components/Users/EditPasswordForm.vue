@@ -1,6 +1,6 @@
 <template>
   <form class="form" @submit.prevent="submit">
-    <h1 class="text-xl font-medium mt-8 mb-4">Change password</h1>
+    <h1 class="mt-8 mb-4 text-xl font-medium">Change password</h1>
     <alert class="my-8" v-if="status && status === 'password-updated'" kind="success" fullwidth>
       <p>Your password was successfully updated.</p>
     </alert>

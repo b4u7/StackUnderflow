@@ -1,7 +1,7 @@
 <template>
   <section class="section mt-8">
     <div class="container sm:max-w-screen-lg">
-      <h1 class="text-2xl font-medium mb-4">Edit your question</h1>
+      <h1 class="mb-4 text-2xl font-medium">Edit your question</h1>
       <form class="form" @submit.prevent="submit">
         <div :class="{ 'form__group--error': errors.title }" class="form__grou">
           <label for="title" class="form__group__label"> Title </label>

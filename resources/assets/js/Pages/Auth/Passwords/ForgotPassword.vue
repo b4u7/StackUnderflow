@@ -1,12 +1,12 @@
 <template>
   <section>
-    <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
+    <div class="container mx-auto flex min-h-screen flex-col items-center sm:max-w-lg sm:justify-center">
       <alert v-if="status" class="mb-8" kind="success" :fullwidth="true">
         <p>
           {{ status }}
         </p>
       </alert>
-      <h1 class="text-xl font-medium mb-4">Forgot your password?</h1>
+      <h1 class="mb-4 text-xl font-medium">Forgot your password?</h1>
       <form class="form" @submit.prevent="submit">
         <div class="form__group">
           <label for="email-address" class="form__group__label">Email address</label>

@@ -12,7 +12,7 @@
   }
 
   .CodeMirror {
-    @apply border-0 ring-1 ring-slate-300 text-sm shadow-sm;
+    @apply border-0 text-sm shadow-sm ring-1 ring-slate-300;
 
     &:not(.CodeMirror-fullscreen) {
       @apply rounded-md;

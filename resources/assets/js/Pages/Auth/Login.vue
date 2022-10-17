@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
-      <h1 class="text-xl font-medium mb-4">Login</h1>
+    <div class="container mx-auto flex min-h-screen flex-col items-center sm:max-w-lg sm:justify-center">
+      <h1 class="mb-4 text-xl font-medium">Login</h1>
 
       <form class="form" @submit.prevent="submit">
         <div class="form__group">
@@ -38,7 +38,7 @@
         </div>
         <div class="grid grid-cols-2">
           <div class="form__checkbox">
-            <div class="flex items-center h-6">
+            <div class="flex h-6 items-center">
               <input id="remember" class="form__checkbox__control" type="checkbox" v-model:checked="form.remember" />
             </div>
             <label for="remember" class="form__checkbox__label">Remember me</label>

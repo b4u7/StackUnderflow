@@ -2,7 +2,7 @@
   @apply bg-slate-800 text-sm;
 
   .container {
-    @apply relative flex items-center justify-between h-12;
+    @apply relative flex h-12 items-center justify-between;
   }
 
   &__start {

@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
-      <h1 class="text-xl font-medium mb-4">Reset your password</h1>
+    <div class="container mx-auto flex min-h-screen flex-col items-center sm:max-w-lg sm:justify-center">
+      <h1 class="mb-4 text-xl font-medium">Reset your password</h1>
       <form class="form" @submit.prevent="submit">
         <input type="hidden" name="token" :value="token" />
         <div class="form__group">

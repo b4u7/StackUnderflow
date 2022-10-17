@@ -1,5 +1,5 @@
 .navbar {
-  @apply z-0 h-16 flex items-center justify-between px-4;
+  @apply z-0 flex h-16 items-center justify-between px-4;
 
   &--primary {
     @apply bg-primary-600;
@@ -10,19 +10,19 @@
   }
 
   &__start {
-    @apply h-full flex flex-shrink-2 flex-grow justify-start;
+    @apply flex h-full flex-shrink-2 flex-grow justify-start;
   }
 
   &__center {
-    @apply h-full flex flex-shrink flex-grow-2 justify-center;
+    @apply flex h-full flex-shrink flex-grow-2 justify-center;
   }
 
   &__end {
-    @apply h-full flex flex-shrink-2 flex-grow justify-end space-x-4;
+    @apply flex h-full flex-shrink-2 flex-grow justify-end space-x-4;
   }
 
   &__item {
-    @apply relative h-full inline-flex items-center text-white font-medium;
+    @apply relative inline-flex h-full items-center font-medium text-white;
   }
 
   &__icon {
@@ -36,16 +36,16 @@
   }
 
   &__search {
-    @apply relative hidden md:inline-flex md:flex-shrink md:flex-grow w-80 max-w-2xl;
+    @apply relative hidden w-80 max-w-2xl md:inline-flex md:flex-shrink md:flex-grow;
     @apply transition duration-200;
-    @apply bg-primary-500 text-sm placeholder-primary-300 text-white font-medium;
+    @apply bg-primary-500 text-sm font-medium text-white placeholder-primary-300;
     @apply rounded-md border-2 border-transparent;
     @apply hover:border-primary-400;
-    @apply focus:outline-none focus:bg-white focus:border-slate-200 focus:placeholder-slate-400 focus:text-slate-600 focus:font-medium focus:ring-transparent;
-    @apply active:outline-none active:bg-white active:border-slate-200 active:placeholder-slate-400 active:font-medium active:ring-transparent;
+    @apply focus:border-slate-200 focus:bg-white focus:font-medium focus:text-slate-600 focus:placeholder-slate-400 focus:outline-none focus:ring-transparent;
+    @apply active:border-slate-200 active:bg-white active:font-medium active:placeholder-slate-400 active:outline-none active:ring-transparent;
 
     &--dark {
-      @apply bg-slate-800 placeholder-slate-400 text-slate-300;
+      @apply bg-slate-800 text-slate-300 placeholder-slate-400;
       @apply hover:border-slate-500;
       @apply focus:border-slate-200;
     }
@@ -54,7 +54,7 @@
   &__dropdown {
     @extend .dropdown;
 
-    @apply origin-top-right right-4;
+    @apply right-4 origin-top-right;
 
     &__container {
       @extend .dropdown__container;
@@ -68,8 +68,8 @@
   }
 
   &__user {
-    @apply h-9 w-9 rounded-full overflow-hidden;
-    @apply focus:outline-none ring-2 ring-white;
+    @apply h-9 w-9 overflow-hidden rounded-full;
+    @apply ring-2 ring-white focus:outline-none;
 
     img {
       @apply h-full w-full object-cover object-center;

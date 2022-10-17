@@ -16,6 +16,7 @@
         <question-section
           :question="question"
           :is-trashed="isTrashed"
+          :comments="comments"
           :user-question-vote="userQuestionVote"
           :bookmarked="bookmarked"
           :permissions="permissions.question"
@@ -52,14 +53,17 @@
 import QuestionSection from '@/Components/Questions/QuestionSection'
 import QuestionAnswers from '@/Components/Questions/QuestionAnswers'
 import MarkdownEditor from '@/Components/Generic/MarkdownEditor'
-import Tippy from '@/Components/Tippy'
 import Alert from '@/Components/Alert'
 
 export default {
   name: 'Show',
-  components: { Alert, QuestionAnswers, Tippy, MarkdownEditor, QuestionSection },
+  components: { Alert, QuestionAnswers, MarkdownEditor, QuestionSection },
   props: {
     question: {
+      type: Object,
+      required: true,
+    },
+    comments: {
       type: Object,
       required: true,
     },

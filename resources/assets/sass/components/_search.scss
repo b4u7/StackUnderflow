@@ -4,19 +4,19 @@
   &__input {
     @apply relative;
 
-    @apply relative hidden sm:inline-flex sm:flex-shrink sm:flex-grow w-80 max-w-2xl;
+    @apply relative hidden w-80 max-w-2xl sm:inline-flex sm:flex-shrink sm:flex-grow;
     @apply transition duration-200;
-    @apply bg-primary-500 text-sm placeholder-primary-300 text-white font-medium;
+    @apply bg-primary-500 text-sm font-medium text-white placeholder-primary-300;
     @apply rounded-md border-2 border-transparent;
     @apply hover:border-primary-400;
-    @apply focus:outline-none focus:bg-white focus:border-slate-200 focus:placeholder-slate-400 focus:text-slate-600 focus:font-medium focus:ring-transparent;
-    @apply active:outline-none active:bg-white active:border-slate-200 active:placeholder-slate-400 active:font-medium active:ring-transparent;
+    @apply focus:border-slate-200 focus:bg-white focus:font-medium focus:text-slate-600 focus:placeholder-slate-400 focus:outline-none focus:ring-transparent;
+    @apply active:border-slate-200 active:bg-white active:font-medium active:placeholder-slate-400 active:outline-none active:ring-transparent;
   }
 
   &__dropdown {
     @extend .dropdown;
 
-    @apply origin-top-left left-0 max-h-48 overflow-y-scroll;
+    @apply left-0 max-h-48 origin-top-left overflow-y-scroll;
 
     &__container {
       @extend .dropdown__container;
@@ -32,7 +32,7 @@
 
   &--dark {
     &__input {
-      @apply bg-slate-800 placeholder-slate-400 text-slate-300;
+      @apply bg-slate-800 text-slate-300 placeholder-slate-400;
       @apply hover:border-slate-500;
       @apply focus:border-slate-200;
     }

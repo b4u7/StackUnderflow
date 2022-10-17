@@ -18,7 +18,7 @@
           :share-url="shareUrl"
         />
       </div>
-      <div class="qa-card__user w-full sm:w-auto sm:ml-auto sm:text-right">
+      <div class="qa-card__user w-full sm:ml-auto sm:w-auto sm:text-right">
         <div>
           <p>
             <a class="qa-card__user__name" :href="route('users.show', answer.user)">

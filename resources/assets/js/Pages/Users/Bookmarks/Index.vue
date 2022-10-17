@@ -1,7 +1,7 @@
 <template>
   <section class="section mt-8">
     <div class="container">
-      <h1 class="text-xl font-semibold mb-4">Your bookmarks</h1>
+      <h1 class="mb-4 text-xl font-semibold">Your bookmarks</h1>
       <div v-if="loadedQuestions.length" class="questions-feed">
         <questions-feed-card
           v-for="bookmark in loadedQuestions"

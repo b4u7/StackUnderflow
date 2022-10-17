@@ -1,10 +1,10 @@
 .inbox {
   @extend .dropdown;
 
-  @apply origin-top-right right-4 min-w-[400px] text-slate-800 overflow-x-hidden;
+  @apply right-4 min-w-[400px] origin-top-right overflow-x-hidden text-slate-800;
 
   &__header {
-    @apply flex flex-row items-center min-h-[3rem] py-1 px-2;
+    @apply flex min-h-[3rem] flex-row items-center py-1 px-2;
     @apply overflow-hidden shadow-sm;
 
     &__left {
@@ -23,7 +23,7 @@
   $max-height: 'calc(100vh-12rem)';
 
   &__content {
-    @apply flex flex-grow flex-col max-h-[400px] max-h-[#{$max-height}] overflow-y-auto;
+    @apply max-h-[#{$max-height}] flex max-h-[400px] flex-grow flex-col overflow-y-auto;
   }
 
   &__footer {
@@ -36,11 +36,11 @@
     @apply active:bg-slate-100;
 
     &__subtitle {
-      @apply flex flex-row text-sm items-center space-x-2 text-slate-500;
+      @apply flex flex-row items-center space-x-2 text-sm text-slate-500;
     }
 
     &__icon {
-      @apply text-primary-600 text-sm;
+      @apply text-sm text-primary-600;
     }
 
     &__title {

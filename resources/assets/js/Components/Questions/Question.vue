@@ -5,11 +5,11 @@
       <div class="qa-card__metadata">
         <p>
           {{ lastActionType }}
-          <span class="text-slate-700 font-medium" v-text="lastActionTime.toRelative()" />
+          <span class="font-medium text-slate-700" v-text="lastActionTime.toRelative()" />
         </p>
         <p>
           viewed
-          <span class="text-slate-700 font-medium"> {{ question.views_count }} times </span>
+          <span class="font-medium text-slate-700"> {{ question.views_count }} times </span>
         </p>
       </div>
     </div>
@@ -33,7 +33,7 @@
         :share-url="shareUrl"
         class="qa-card__menu"
       />
-      <div class="qa-card__user w-full sm:w-auto sm:ml-auto sm:text-right">
+      <div class="qa-card__user w-full sm:ml-auto sm:w-auto sm:text-right">
         <div>
           <p>
             <a class="qa-card__user__name" :href="route('users.show', question.user)">

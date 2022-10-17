@@ -26,7 +26,7 @@
     <ul class="navbar__end">
       <template v-if="user">
         <inbox />
-        <li class="relative navbar__item" ref="dropdown" @click="toggleDropdown">
+        <li class="navbar__item relative" ref="dropdown" @click="toggleDropdown">
           <button type="button" class="navbar__user">
             <img :src="user.avatar" alt="Your user avatar" />
           </button>

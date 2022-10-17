@@ -29,7 +29,7 @@ $colours: (
 
 .tag {
   @apply bg-sky-50 text-sky-600;
-  @apply inline-flex whitespace-nowrap text-sm leading-relaxed rounded-full cursor-pointer;
+  @apply inline-flex cursor-pointer whitespace-nowrap rounded-full text-sm leading-relaxed;
   @apply hover:bg-sky-100;
   @apply focus:bg-sky-200;
   @apply active:bg-sky-200;
