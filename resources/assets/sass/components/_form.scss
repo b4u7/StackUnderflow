@@ -3,15 +3,15 @@
 
   &__group {
     &__label {
-      @apply block text-sm font-medium text-slate-700 mb-1;
+      @apply mb-1 block text-sm font-medium text-slate-700;
     }
 
     &__control {
-      @apply appearance-none block w-full rounded-md text-sm shadow-sm;
+      @apply block w-full appearance-none rounded-md text-sm shadow-sm;
       @apply border-0 border-transparent ring-1 ring-slate-300;
       @apply text-slate-900 placeholder-slate-400;
-      @apply focus:ring-2 focus:ring-primary-600 focus:outline-none;
-      @apply focus:invalid:ring-red-500 focus:invalid:text-red-500;
+      @apply focus:outline-none focus:ring-2 focus:ring-primary-600;
+      @apply focus:invalid:text-red-500 focus:invalid:ring-red-500;
       @apply disabled:cursor-not-allowed disabled:opacity-50;
     }
 
@@ -48,7 +48,7 @@
     }
 
     &__control {
-      @apply h-4 w-4 text-primary-600 border-slate-300 rounded cursor-pointer;
+      @apply h-4 w-4 cursor-pointer rounded border-slate-300 text-primary-600;
       @apply focus:ring-primary-600;
       @apply active:ring-primary-600;
     }

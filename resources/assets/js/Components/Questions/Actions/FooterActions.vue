@@ -1,8 +1,8 @@
 <template>
-  <div class="w-full sm:w-auto buttons space-x-4">
+  <div class="buttons w-full space-x-4 sm:w-auto">
     <tippy :message="shareMessage" :hideOnClick="false" :open.sync="showShareTippy" trigger="manual" placement="top">
       <Link
-        class="transition-all font-semibold hover:text-primary-600 focus:text-primary-800 active:text-primary-800"
+        class="font-semibold transition-all hover:text-primary-600 focus:text-primary-800 active:text-primary-800"
         as="button"
         @mouseenter="showShareTippy = true"
         @mouseleave="showShareTippy = false"
@@ -15,7 +15,7 @@
     <Link
       v-if="canEdit"
       :href="editRoute"
-      class="transition-all font-semibold hover:text-primary-600 focus:text-primary-800 active:text-primary-800"
+      class="font-semibold transition-all hover:text-primary-600 focus:text-primary-800 active:text-primary-800"
       as="button"
     >
       <font-awesome-icon icon="fa-solid fa-pen-to-square" />
@@ -24,7 +24,7 @@
     <Link
       v-if="canDelete"
       :href="deleteRoute"
-      class="transition-all font-semibold hover:text-red-600 focus:text-red-800 active:text-red-800"
+      class="font-semibold transition-all hover:text-red-600 focus:text-red-800 active:text-red-800"
       method="delete"
       as="button"
     >
@@ -34,7 +34,7 @@
     <Link
       v-if="canRestore"
       :href="restoreRoute"
-      class="transition-all font-semibold hover:text-green-600 focus:text-green-800 active:text-green-800"
+      class="font-semibold transition-all hover:text-green-600 focus:text-green-800 active:text-green-800"
       method="post"
       as="button"
     >

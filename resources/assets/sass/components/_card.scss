@@ -1,8 +1,8 @@
 .card {
-  @apply flex flex-col bg-white shadow rounded-md ring-1 ring-transparent;
+  @apply flex flex-col rounded-md bg-white shadow ring-1 ring-transparent;
 
   &--transparent {
-    @apply bg-transparent shadow-none rounded-none;
+    @apply rounded-none bg-transparent shadow-none;
   }
 
   &__header {
@@ -21,6 +21,6 @@
   }
 
   &__footer {
-    @apply flex flex-col space-y-8 sm:space-y-0 sm:flex-row py-3 px-4;
+    @apply flex flex-col space-y-8 py-3 px-4 sm:flex-row sm:space-y-0;
   }
 }

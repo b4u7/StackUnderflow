@@ -1,8 +1,8 @@
 .pagination {
-  @apply flex rounded-md -space-x-px overflow-hidden;
+  @apply flex -space-x-px overflow-hidden rounded-md;
 
   &__list {
-    @apply flex shadow rounded-md overflow-hidden;
+    @apply flex overflow-hidden rounded-md shadow;
   }
 
   &__item:first-child .pagination__link {
@@ -14,6 +14,6 @@
   }
 
   &__link {
-    @apply bg-white border-slate-300 text-slate-500 hover:bg-slate-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium;
+    @apply relative inline-flex items-center border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-500 hover:bg-slate-50;
   }
 }

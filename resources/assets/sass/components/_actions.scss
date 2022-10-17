@@ -1,5 +1,5 @@
 .actions {
-  @apply text-center font-semibold pr-8;
+  @apply pr-8 text-center font-semibold;
 
   $parent: &;
 
@@ -63,10 +63,10 @@
   }
 
   &__bookmark {
-    @apply text-3xl mt-2;
+    @apply mt-2 text-3xl;
   }
 
   &__solution {
-    @apply text-3xl mt-2;
+    @apply mt-2 text-3xl;
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <section>
-    <div class="container mx-auto sm:max-w-lg min-h-screen flex flex-col sm:justify-center items-center">
-      <h1 class="text-xl font-medium mb-4">Register an account</h1>
+    <div class="container mx-auto flex min-h-screen flex-col items-center sm:max-w-lg sm:justify-center">
+      <h1 class="mb-4 text-xl font-medium">Register an account</h1>
       <p>Join the Stack Underflow community to collaborate and share knowledge without any limitations.</p>
-      <form class="mt-4 form" @submit.prevent="submit">
+      <form class="form mt-4" @submit.prevent="submit">
         <div class="form__group">
           <label for="name" class="form__group__label">Name</label>
           <input

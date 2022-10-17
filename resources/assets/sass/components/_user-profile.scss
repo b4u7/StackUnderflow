@@ -10,7 +10,7 @@
     }
 
     &__background {
-      @apply object-cover object-center w-full h-full;
+      @apply h-full w-full object-cover object-center;
     }
   }
 
@@ -22,7 +22,7 @@
     @apply absolute;
 
     &__button {
-      @apply z-10 relative rounded-full text-white p-2 bg-slate-900 bg-opacity-50;
+      @apply relative z-10 rounded-full bg-slate-900 bg-opacity-50 p-2 text-white;
       @apply hover:bg-opacity-70;
 
       svg {
@@ -34,13 +34,13 @@
     }
 
     &__input {
-      @apply absolute opacity-0 w-[1px] h-[1px] top-0 bottom-0 left-0 right-0 mx-auto;
+      @apply absolute top-0 bottom-0 left-0 right-0 mx-auto h-[1px] w-[1px] opacity-0;
     }
   }
 
   &__avatar {
     @apply flex items-center justify-center;
-    @apply z-10 relative -mt-20 border-4 border-slate-100 rounded-full h-32 w-32 overflow-hidden;
+    @apply relative z-10 -mt-20 h-32 w-32 overflow-hidden rounded-full border-4 border-slate-100;
 
     img {
       @apply h-full w-full object-cover object-center;
@@ -60,7 +60,7 @@
   }
 
   &__name {
-    @apply text-2xl text-slate-700 font-semibold mt-2;
+    @apply mt-2 text-2xl font-semibold text-slate-700;
   }
 
   &__username {

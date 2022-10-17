@@ -5,14 +5,14 @@
         <navbar dark />
       </template>
       <template #body>
-        <div class="lg:grid lg:grid-cols-2 lg:gap-4 lg:content-center">
-          <div class="text-center lg:text-left lg:flex lg:flex-col lg:justify-center lg:items-start space-y-7">
+        <div class="lg:grid lg:grid-cols-2 lg:content-center lg:gap-4">
+          <div class="space-y-7 text-center lg:flex lg:flex-col lg:items-start lg:justify-center lg:text-left">
             <h1 class="hero__leading">Learn. Share. Build</h1>
             <p class="max-w-prose opacity-80">
               A community-based space to find and contribute answers to technical challenges, and one of the most
               popular websites in the world.
             </p>
-            <div class="flex flex-col xl:flex-row space-y-6 md:space-y-4 xl:space-x-4">
+            <div class="flex flex-col space-y-6 md:space-y-4 xl:flex-row xl:space-x-4">
               <p>
                 <Link :href="route('register')" class="button button--primary button--xl">
                   Join the community
@@ -22,18 +22,18 @@
               <p>
                 <Link
                   :href="route('questions.index')"
-                  class="md:text-sm underline hover:text-yellow-400 focus:text-primary-500 active:text-yellow-500"
+                  class="underline hover:text-yellow-400 focus:text-primary-500 active:text-yellow-500 md:text-sm"
                 >
                   or continue browsing the website
                 </Link>
               </p>
             </div>
           </div>
-          <img class="hidden lg:inline rounded-lg shadow" src="img/index/small.png" alt="test" />
+          <img class="hidden rounded-lg shadow lg:inline" src="img/index/small.png" alt="test" />
         </div>
       </template>
       <template #footer>
-        <p class="text-5xl text-center text-primary-100 opacity-50 mb-8 animate-bounce">
+        <p class="mb-8 animate-bounce text-center text-5xl text-primary-100 opacity-50">
           <font-awesome-icon icon="fa-solid fa-circle-arrow-down" />
         </p>
       </template>

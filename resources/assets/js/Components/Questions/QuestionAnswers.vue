@@ -1,6 +1,6 @@
 <template>
   <section class="section">
-    <p class="mt-12 mb-4 text-slate-800 text-xl font-medium">
+    <p class="mt-12 mb-4 text-xl font-medium text-slate-800">
       <span>
         <font-awesome-icon icon="fa-solid fa-message" />
         {{ answers.length }}

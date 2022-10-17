@@ -20,7 +20,7 @@
             <p v-if="user.biography" class="user-profile__bio" v-text="user.biography" />
             <a
               v-if="canEdit"
-              class="mt-4 button button--primary button--fullwidth"
+              class="button button--primary button--fullwidth mt-4"
               :href="route('users.edit', user.id)"
               @click.prevent="editModalVisible = true"
             >

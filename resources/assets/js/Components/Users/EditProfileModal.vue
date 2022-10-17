@@ -1,7 +1,7 @@
 <template>
   <modal title="user-profile-edit" v-model="visibleProxy">
     <template #header-left>
-      <h1 class="font-medium pl-2 text-slate-800">Edit your profile</h1>
+      <h1 class="pl-2 font-medium text-slate-800">Edit your profile</h1>
     </template>
     <template #body>
       <form class="form">

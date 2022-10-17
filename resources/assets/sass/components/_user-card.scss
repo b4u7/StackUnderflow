@@ -1,14 +1,14 @@
 .user-card {
   @extend .card;
 
-  @apply w-full border border-transparent overflow-hidden motion-safe:transition;
-  @apply hover:border-primary-600 hover:-translate-y-1;
+  @apply w-full overflow-hidden border border-transparent motion-safe:transition;
+  @apply hover:-translate-y-1 hover:border-primary-600;
 
   &__header {
-    @apply overflow-hidden bg-slate-100 h-28 max-h-28;
+    @apply h-28 max-h-28 overflow-hidden bg-slate-100;
 
     &__background {
-      @apply object-cover object-center origin-center w-full h-full;
+      @apply h-full w-full origin-center object-cover object-center;
     }
   }
 
@@ -22,7 +22,7 @@
 
   &__user {
     &__avatar {
-      @apply z-10 relative -mt-8 border-4 border-white rounded-full h-20 w-20 overflow-hidden;
+      @apply relative z-10 -mt-8 h-20 w-20 overflow-hidden rounded-full border-4 border-white;
 
       img {
         @apply h-full w-full object-cover object-center;
@@ -38,7 +38,7 @@
     }
 
     &__bio {
-      @apply mt-4 text-slate-600 text-sm;
+      @apply mt-4 text-sm text-slate-600;
     }
   }
 

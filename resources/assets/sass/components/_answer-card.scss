@@ -14,7 +14,7 @@
   &__body {
     @extend .card__body;
 
-    @apply py-3 flex-grow;
+    @apply flex-grow py-3;
   }
 
   &__content {
@@ -22,12 +22,12 @@
   }
 
   &__footer {
-    @apply pb-3 px-4;
-    @apply flex flex-row items-center text-slate-500 text-sm;
+    @apply px-4 pb-3;
+    @apply flex flex-row items-center text-sm text-slate-500;
   }
 
   &__menu {
-    @apply flex flex-row -m-2;
+    @apply -m-2 flex flex-row;
 
     > * {
       @apply m-2;
@@ -35,14 +35,14 @@
   }
 
   &__user {
-    @apply flex flex-row ml-auto text-right;
+    @apply ml-auto flex flex-row text-right;
 
     &__avatar {
-      @apply hidden sm:block rounded-full h-10 w-10 ring-2 ring-white sm:ml-4;
+      @apply hidden h-10 w-10 rounded-full ring-2 ring-white sm:ml-4 sm:block;
     }
 
     &__name {
-      @apply text-slate-900 font-medium;
+      @apply font-medium text-slate-900;
       @apply hover:text-primary-700 hover:underline;
       @apply focus:text-primary-600 focus:underline;
       @apply active:text-primary-600 active:underline;

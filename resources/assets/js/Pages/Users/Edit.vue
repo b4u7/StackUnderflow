@@ -1,6 +1,6 @@
 <template>
   <section class="section mt-8">
-    <div class="container mx-auto sm:max-w-lg flex flex-col sm:justify-center items-center">
+    <div class="container mx-auto flex flex-col items-center sm:max-w-lg sm:justify-center">
       <tabs :tabs="tabs">
         <template #email>
           <edit-email-form :user="user" :errors="errors" :status="status" />

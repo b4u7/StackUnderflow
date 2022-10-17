@@ -1,10 +1,10 @@
 .dropdown {
   //@apply origin-top-right right-4;
   @apply absolute top-14 min-w-[200px];
-  @apply bg-white text-sm shadow-lg rounded-md block z-10;
+  @apply z-10 block rounded-md bg-white text-sm shadow-lg;
 
   &__container {
-    @apply p-2 flex flex-col;
+    @apply flex flex-col p-2;
   }
 
   &__divider {
@@ -12,37 +12,37 @@
   }
 
   &__heading {
-    @apply uppercase my-1.5 px-2 font-semibold text-slate-600;
+    @apply my-1.5 px-2 font-semibold uppercase text-slate-600;
   }
 
   &__item {
-    @apply flex py-1.5 px-2 text-slate-900 rounded-md;
+    @apply flex rounded-md py-1.5 px-2 text-slate-900;
     @apply hover:bg-slate-200;
   }
 
   &-transition {
     &-enter-active {
-      @apply transition ease-out duration-100;
+      @apply transition duration-100 ease-out;
     }
 
     &-enter-from {
-      @apply transform opacity-0 scale-95;
+      @apply scale-95 transform opacity-0;
     }
 
     &-enter-to {
-      @apply transform opacity-100 scale-100;
+      @apply scale-100 transform opacity-100;
     }
 
     &-leave-active {
-      @apply transition ease-in duration-75;
+      @apply transition duration-75 ease-in;
     }
 
     &-leave-from {
-      @apply transform opacity-100 scale-100;
+      @apply scale-100 transform opacity-100;
     }
 
     &-leave-to {
-      @apply transform opacity-0 scale-95;
+      @apply scale-95 transform opacity-0;
     }
   }
 }

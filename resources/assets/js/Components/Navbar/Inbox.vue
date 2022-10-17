@@ -1,5 +1,5 @@
 <template>
-  <li class="relative navbar__item" ref="dropdown">
+  <li class="navbar__item relative" ref="dropdown">
     <tippy message="Notifications">
       <button class="button button--primary button--icon" type="button" @click.prevent="toggleInbox">
         <span class="relative inline-block">
