@@ -1,67 +1,75 @@
 <template>
-  <nav :class="`navbar--${dark ? 'dark' : 'primary'}`" class="navbar">
-    <ul class="navbar__start">
-      <li class="navbar__item">
-        <a class="navbar__logo" :href="route('home')">
+  <nav :class="[dark ? 'bg-slate-900' : 'bg-primary-600']" class="z-0 flex h-16 items-center justify-between px-4">
+    <ul class="flex h-full flex-shrink-2 flex-grow justify-start">
+      <NavbarItem>
+        <a class="font-epilogue text-xl font-semibold" :href="route('home')">
           <font-awesome-icon icon="fa-solid fa-layer-group" class="rotate-180" />
-          <span class="ml-2 hidden sm:inline"> Stack Underflow </span>
+          <span class="ml-2 hidden sm:inline">Stack Underflow</span>
         </a>
-      </li>
+      </NavbarItem>
     </ul>
-    <ul class="navbar__center">
-      <li class="navbar__item">
+    <ul class="flex h-full flex-shrink flex-grow-2 justify-center">
+      <NavbarItem>
         <form @submit.prevent="search">
           <input
-            :class="{ 'navbar__search--dark': dark }"
-            class="navbar__search"
+            :class="[
+              dark
+                ? 'bg-slate-800 text-slate-300 placeholder-slate-400 hover:border-slate-500 focus:border-slate-200'
+                : 'bg-primary-500 text-white placeholder-primary-300 hover:border-primary-400',
+            ]"
+            class="relative hidden w-80 max-w-2xl rounded-md border-2 border-transparent text-sm font-medium transition duration-200 focus:border-slate-200 focus:bg-white focus:font-medium focus:text-slate-600 focus:placeholder-slate-400 focus:outline-none focus:ring-transparent active:border-slate-200 active:bg-white active:font-medium active:placeholder-slate-400 active:outline-none active:ring-transparent md:inline-flex md:flex-shrink md:flex-grow"
             type="text"
+            autocomplete="off"
             placeholder="Search questions"
             spellcheck="false"
-            autocomplete="off"
             v-model="searchQuery"
           />
         </form>
-      </li>
+      </NavbarItem>
     </ul>
-    <ul class="navbar__end">
+    <ul class="flex h-full flex-shrink-2 flex-grow justify-end space-x-4">
       <template v-if="user">
-        <inbox />
-        <li class="navbar__item relative" ref="dropdown" @click="toggleDropdown">
-          <button type="button" class="navbar__user">
-            <img :src="user.avatar" alt="Your user avatar" />
-          </button>
-          <transition name="dropdown-transition">
-            <div v-if="dropdownMenuVisible" class="navbar__dropdown">
-              <div class="navbar__dropdown__container">
-                <Link :href="route('users.show', user)" class="navbar__dropdown__item">Profile</Link>
-                <Link :href="route('users.bookmarks.index', user)" class="navbar__dropdown__item">My bookmarks</Link>
-                <Link :href="route('users.edit', user)" class="navbar__dropdown__item">Account settings</Link>
-                <Link as="button" class="navbar__dropdown__item" @click.prevent="logout">Logout</Link>
+        <Inbox />
+        <NavbarItem>
+          <Dropdown origin="origin-top-right" position="top-14 right-4">
+            <template #button>
+              <button type="button" class="appearance-none">
+                <img :src="user.avatar" class="h-8 w-8 rounded-full border-2 border-white" alt="Your user avatar" />
+              </button>
+            </template>
+            <template #content>
+              <div class="flex flex-col p-2">
+                <DropdownButton type="Link" :href="route('users.show', user)">Profile</DropdownButton>
+                <DropdownButton type="Link" :href="route('users.bookmarks.index', user)">My bookmarks</DropdownButton>
+                <DropdownButton type="Link" :href="route('users.edit', user)">Account settings</DropdownButton>
+                <hr class="my-2" />
+                <DropdownButton type="button" @click.prevent="logout">Logout</DropdownButton>
               </div>
-            </div>
-          </transition>
-        </li>
+            </template>
+          </Dropdown>
+        </NavbarItem>
       </template>
       <template v-else>
-        <li class="navbar__item">
-          <a :href="route('login')" class="button button--primary"> Login </a>
-        </li>
-        <li class="navbar__item">
-          <a :href="route('register')" class="button button--white"> Register </a>
-        </li>
+        <NavbarItem>
+          <a :href="route('login')" class="button button--primary">Login</a>
+        </NavbarItem>
+        <NavbarItem>
+          <a :href="route('register')" class="button button--white">Register</a>
+        </NavbarItem>
       </template>
     </ul>
   </nav>
 </template>
 
 <script>
-import { Link } from '@inertiajs/inertia-vue'
 import Inbox from '@/Components/Navbar/Inbox'
-import Tippy from '@/Components/Tippy'
+import NavbarItem from '@/Components/Navbar/NavbarItem'
+import Dropdown from '@/Components/Navbar/Dropdown'
+import DropdownButton from '@/Components/Navbar/DropdownButton'
 
 export default {
-  name: 'Navbar',
-  components: { Link, Tippy, Inbox },
+  name: 'NavbarComponent',
+  components: { Inbox, NavbarItem, Dropdown, DropdownButton },
   props: {
     dark: {
       type: Boolean,
@@ -73,20 +81,6 @@ export default {
       pendingSearch: null,
       searchQuery: '',
     }
-  },
-  mounted() {
-    if (!this.$refs.dropdown) {
-      return
-    }
-
-    document.addEventListener('click', this.onDocumentClick)
-  },
-  beforeDestroy() {
-    if (!this.$refs.dropdown) {
-      return
-    }
-
-    document.removeEventListener('click', this.onDocumentClick)
   },
   // watch: {
   //   searchQuery(newVal) {
@@ -115,19 +109,8 @@ export default {
     },
   },
   methods: {
-    onDocumentClick(e) {
-      if (!this.$refs.dropdown) {
-        return
-      }
-
-      if (!this.$refs.dropdown.contains(e.target)) {
-        this.dropdownMenuVisible = false
-      }
-    },
-    toggleDropdown() {
-      this.dropdownMenuVisible = !this.dropdownMenuVisible
-    },
     logout() {
+      console.log('logout')
       this.$inertia.post(this.route('logout'))
     },
     search() {

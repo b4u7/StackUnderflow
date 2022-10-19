@@ -1,27 +1,25 @@
 <template>
-  <section class="section mt-8">
-    <div class="container">
-      <h1 class="mb-4 text-xl font-semibold">Your bookmarks</h1>
-      <div v-if="loadedQuestions.length" class="questions-feed">
-        <questions-feed-card
-          v-for="bookmark in loadedQuestions"
-          :key="bookmark.id"
-          :question="bookmark"
-          :id="`question-${bookmark.id}`"
-        />
-      </div>
-      <template v-else>
-        <p class="text-center">Questions you have bookmarked will appear here.</p>
-      </template>
+  <div class="mx-auto mt-8 max-w-6xl px-4 xl:px-0">
+    <h1 class="mb-4 text-xl font-semibold">Your bookmarks</h1>
+    <div v-if="loadedQuestions.length" class="space-y-4">
+      <QuestionsFeedCard
+        v-for="bookmark in loadedQuestions"
+        :key="bookmark.id"
+        :question="bookmark"
+        :id="`question-${bookmark.id}`"
+      />
     </div>
-  </section>
+    <template v-else>
+      <p class="text-center">Questions you have bookmarked will appear here.</p>
+    </template>
+  </div>
 </template>
 
 <script>
 import QuestionsFeedCard from '@/Components/QuestionsFeedCard'
 
 export default {
-  name: 'Index',
+  name: 'UserBookmarksIndexPage',
   components: { QuestionsFeedCard },
   props: {
     bookmarkedQuestions: {

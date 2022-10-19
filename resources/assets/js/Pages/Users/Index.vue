@@ -1,27 +1,20 @@
 <template>
-  <section class="section mt-8">
-    <div class="container">
-      <form class="mb-8" @submit.prevent="search">
-        <input class="form__group__control" type="text" placeholder="Search for users" v-model="searchQuery" />
-      </form>
-      <div class="mb-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <user-card v-for="user of users.data" :key="user.id" :user="user" />
-      </div>
-      <div v-if="users.prev_page_url || users.next_page_url" class="flex justify-between">
-        <button v-if="users.prev_page_url" class="button button--primary" type="button" @click.prevent="prevPage">
-          Previous
-        </button>
-        <button
-          v-if="users.next_page_url"
-          class="button button--primary ml-auto"
-          type="button"
-          @click.prevent="nextPage"
-        >
-          Next
-        </button>
-      </div>
+  <div class="container mt-8">
+    <form class="mb-8" @submit.prevent="search">
+      <input class="form__group__control" type="text" placeholder="Search for users" v-model="searchQuery" />
+    </form>
+    <div class="mb-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <user-card v-for="user of users.data" :key="user.id" :user="user" />
     </div>
-  </section>
+    <div v-if="users.prev_page_url || users.next_page_url" class="flex justify-between">
+      <button v-if="users.prev_page_url" class="button button--primary" type="button" @click.prevent="prevPage">
+        Previous
+      </button>
+      <button v-if="users.next_page_url" class="button button--primary ml-auto" type="button" @click.prevent="nextPage">
+        Next
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -1,8 +1,8 @@
 <template>
   <form @submit.prevent="markSolution">
     <button
-      :class="{ 'actions__item--active': active }"
-      class="actions__item actions__solution"
+      :class="{ 'text-emerald-500 hover:text-emerald-600': active }"
+      class="mt-2 text-3xl text-slate-300 hover:text-slate-400"
       type="submit"
       :disabled="!canMarkSolution"
     >
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'Solution',
+  name: 'SolutionComponent',
   props: {
     active: {
       type: Boolean,

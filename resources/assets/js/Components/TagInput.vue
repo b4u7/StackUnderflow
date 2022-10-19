@@ -1,26 +1,29 @@
 <template>
-  <div :class="{ 'tag-input--selected': searching && filteredTagsList.length > 0 }" class="tag-input">
-    <div class="tag-input__box">
-      <tags :tags="selectedTags" removable @tag-remove="removeTag" />
-      <input
-        @click="openDropdown"
-        @keydown="handleInput"
-        class="tag-input__search"
-        type="text"
-        name="tag-input"
-        v-model="query"
-      />
-      <div v-if="searching && filteredTagsList.length > 0" class="tag-input__dropdown">
-        <div class="tag-input__dropdown__container">
-          <button
-            v-for="(tag, index) in filteredTagsList"
-            :key="index"
-            type="button"
-            class="tag-input__dropdown__button"
-            @click="addTag(tag.item)"
-            v-text="tag.item.name"
-          />
-        </div>
+  <div
+    class="relative mt-1 flex w-full flex-row items-center rounded-md border-0 border-transparent bg-white px-2 shadow-sm ring-1 ring-slate-300 sm:text-sm"
+  >
+    <TagsList :tags="selectedTags" removable @tag-remove="removeTag" />
+    <input
+      class="w-full appearance-none rounded-md border-none text-sm focus:border-none focus:outline-none focus:ring-0 active:border-none active:outline-none active:ring-0"
+      type="text"
+      name="tag-input"
+      @click="openDropdown"
+      @keydown="handleInput"
+      v-model="query"
+    />
+    <div
+      v-if="selected"
+      class="absolute top-16 left-0 z-10 block max-h-48 min-w-[200px] origin-top-left overflow-y-scroll rounded-md bg-white text-sm shadow-lg"
+    >
+      <div class="flex flex-col p-2">
+        <DropdownButton
+          v-for="(tag, index) in filteredTagsList"
+          :key="index"
+          type="button"
+          @click.prevent="addTag(tag.item)"
+        >
+          {{ tag.item.name }}
+        </DropdownButton>
       </div>
     </div>
   </div>
@@ -28,18 +31,18 @@
 
 <script>
 import Fuse from 'fuse.js'
-import Tags from '@/Components/Tags'
-import Tag from '@/Components/Tag'
+import DropdownButton from '@/Components/Navbar/DropdownButton'
+import TagsList from '@/Components/TagsList'
 
 import { includes, isEmpty, trim } from 'lodash'
 
 export default {
-  name: 'TagInput',
+  name: 'TagInputComponent',
   model: {
     prop: 'value',
     event: 'input',
   },
-  components: { Tags, Tag },
+  components: { DropdownButton, TagsList },
   props: {
     tagsList: {
       type: Array,
@@ -76,6 +79,9 @@ export default {
       get() {
         return this.value
       },
+    },
+    selected() {
+      return this.searching && this.filteredTagsList.length > 0
     },
   },
   methods: {

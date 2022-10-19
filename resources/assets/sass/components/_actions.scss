@@ -28,14 +28,6 @@
         }
       }
 
-      &#{$parent}__bookmark {
-        @apply text-primary-500;
-
-        &:not([disabled]) {
-          @apply hover:text-primary-600;
-        }
-      }
-
       &#{$parent}__solution {
         @apply text-emerald-500;
 
