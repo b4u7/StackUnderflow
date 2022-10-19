@@ -1,16 +1,14 @@
-<div>
-  <p align="center">
-      <img src="../assets/stackunderflow_logo.png?raw=true" alt="The Stack Underflow Logo">
-  </p>
-  <h2 align="center">
-    A Q&A web application built for programmers.
-  </h2>
-  <p align="center">
-    <a href="https://github.com/prettier/prettier">
-      <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat" alt="Prettier">
-    </a>
-  </p>
-</div>
+<p align="center">
+    <img src="../assets/stackunderflow_logo.png?raw=true" alt="The Stack Underflow Logo">
+</p>
+<h1 align="center">
+  A Q&A web application built for programmers.
+</h1>
+<p align="center">
+  <a href="https://github.com/prettier/prettier">
+    <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat" alt="Prettier">
+  </a>
+</p>
 
 # Introduction
 
