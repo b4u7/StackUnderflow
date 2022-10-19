@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'Tag',
+  name: 'TagComponent',
   props: {
     tag: {
       type: Object,
@@ -19,11 +19,16 @@ export default {
     return h(
       this.inline ? 'span' : 'li',
       {
-        class: ['tag', this.tag.colour && `tag--${this.tag.colour}`],
+        class: [
+          'inline-flex cursor-pointer whitespace-nowrap rounded-full text-sm leading-relaxed',
+          this.tag.colour
+            ? `tag-${this.tag.colour}`
+            : 'bg-sky-50 text-sky-600 hover:bg-sky-100 focus:bg-sky-200 active:bg-sky-200',
+        ],
       },
       [
         h('span', {
-          class: 'tag__title',
+          class: 'mx-4',
           domProps: {
             innerHTML: this.tag.name,
           },
@@ -32,7 +37,7 @@ export default {
           h(
             'span',
             {
-              class: 'tag__close',
+              class: 'w-6 text-center bg-blend-darken ml-1',
               on: {
                 click: this.remove,
               },

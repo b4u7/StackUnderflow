@@ -1,35 +1,32 @@
 <template>
-  <section>
-    <div class="flex flex-row">
-      <div class="actions">
-        <votes
-          :total-votes="question.votes_sum_vote || 0"
-          :can-vote="permissions.canVote"
-          :user-vote="userVote"
-          @upvoted="addVote"
-          @downvoted="removeVote"
-        />
-        <bookmark
-          :bookmarked="bookmarked"
-          :can-bookmark="permissions.canBookmark"
-          :can-unbookmark="permissions.canUnbookmark"
-          @bookmark="bookmarkAction"
-        />
-      </div>
-      <question-card :question="question" :isTrashed="isTrashed" :permissions="permissions" />
+  <div class="flex flex-row">
+    <div class="pr-8 text-center font-semibold">
+      <Votes
+        :total-votes="question.votes_sum_vote || 0"
+        :can-vote="permissions.canVote"
+        :user-vote="userVote"
+        @upvoted="addVote"
+        @downvoted="removeVote"
+      />
+      <Bookmark
+        :bookmarked="bookmarked"
+        :can-bookmark="permissions.canBookmark"
+        :can-unbookmark="permissions.canUnbookmark"
+        @bookmark="bookmarkAction"
+      />
     </div>
-  </section>
+    <QuestionCard :question="question" :isTrashed="isTrashed" :permissions="permissions" />
+  </div>
 </template>
 
 <script>
-import QuestionCard from '@/Components/Questions/Question'
+import Bookmark from '@/Components/Questions/Bookmark'
+import QuestionCard from '@/Components/Questions/QuestionCard'
 import Votes from '@/Components/Questions/Actions/Votes'
-import Alert from '@/Components/Alert'
-import Bookmark from '@/Components/Questions/Actions/Bookmark'
 
 export default {
   name: 'QuestionSection',
-  components: { Bookmark, Votes, QuestionCard },
+  components: { Bookmark, QuestionCard, Votes },
   props: {
     question: {
       type: Object,
@@ -69,6 +66,8 @@ export default {
       } else if (voteSum < 0) {
         return this.classes.danger
       }
+
+      return ''
     },
     userVote() {
       return this.userQuestionVote?.vote ?? 0

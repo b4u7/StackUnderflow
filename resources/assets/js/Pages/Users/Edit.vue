@@ -1,16 +1,14 @@
 <template>
-  <section class="section mt-8">
-    <div class="container mx-auto flex flex-col items-center sm:max-w-lg sm:justify-center">
-      <tabs :tabs="tabs">
-        <template #email>
-          <edit-email-form :user="user" :errors="errors" :status="status" />
-        </template>
-        <template #password>
-          <edit-password-form :user="user" :errors="errors" :status="status" />
-        </template>
-      </tabs>
-    </div>
-  </section>
+  <div class="container mx-auto mt-8 flex flex-col items-center sm:max-w-lg sm:justify-center">
+    <tabs :tabs="tabs">
+      <template #email>
+        <edit-email-form :user="user" :errors="errors" :status="status" />
+      </template>
+      <template #password>
+        <edit-password-form :user="user" :errors="errors" :status="status" />
+      </template>
+    </tabs>
+  </div>
 </template>
 
 <script>

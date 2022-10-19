@@ -1,13 +1,13 @@
 <template>
   <div>
-    <hero class="hero--full">
+    <hero class="h-screen">
       <template #header>
         <navbar dark />
       </template>
       <template #body>
         <div class="lg:grid lg:grid-cols-2 lg:content-center lg:gap-4">
           <div class="space-y-7 text-center lg:flex lg:flex-col lg:items-start lg:justify-center lg:text-left">
-            <h1 class="hero__leading">Learn. Share. Build</h1>
+            <h1 class="font-epilogue text-6xl font-bold">Learn. Share. Build</h1>
             <p class="max-w-prose opacity-80">
               A community-based space to find and contribute answers to technical challenges, and one of the most
               popular websites in the world.
@@ -39,7 +39,7 @@
       </template>
     </hero>
     <!--
-    <section class="section">
+    <div>
       <div class="container space-y-8">
         <div class="card">
           <div class="card__header"></div>
@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </div>
     -->
   </div>
 </template>
@@ -90,7 +90,7 @@ import Navbar from '@/Components/Navbar/Navbar'
 import { Link } from '@inertiajs/inertia-vue'
 
 export default {
-  name: 'Index',
+  name: 'HomePage',
   components: { Navbar, Hero, Link },
 }
 </script>

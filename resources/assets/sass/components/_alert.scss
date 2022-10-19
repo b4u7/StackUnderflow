@@ -7,15 +7,9 @@ $alert-colours: (
 );
 
 .alert {
-  @apply mx-auto flex max-w-prose gap-4 rounded-md bg-white py-3 px-4 text-slate-900;
-
   @each $type, $colour in $alert-colours {
     &--#{$type} {
       @apply bg-#{$colour}-200 text-#{$colour}-600 text-sm;
     }
-  }
-
-  &--fullwidth {
-    @apply w-full;
   }
 }

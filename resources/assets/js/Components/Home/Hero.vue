@@ -1,30 +1,28 @@
 <template>
-  <section class="hero">
-    <div class="hero__header">
-      <slot name="header"></slot>
+  <div class="flex flex-col overflow-hidden bg-slate-900 text-white">
+    <div>
+      <slot name="header" />
     </div>
-    <div class="hero__body">
+    <div class="flex flex-shrink-0 flex-grow items-center">
       <div class="container">
-        <slot name="body"></slot>
+        <slot name="body" />
       </div>
     </div>
-    <div class="hero__footer">
-      <slot name="footer"></slot>
+    <div>
+      <slot name="footer" />
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Hero',
+  name: 'HeroComponent',
   props: {
     leading: {
       type: String,
-      required: false,
     },
     subtitle: {
       type: String,
-      required: false,
     },
   },
 }

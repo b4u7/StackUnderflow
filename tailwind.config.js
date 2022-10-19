@@ -2,9 +2,16 @@ const colors = require('tailwindcss/colors')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  content: ['./views/app.blade.php', './views/errors/**/*.blade.php', './resources/assets/**/*.{scss,js,vue}'],
+  content: [
+    './resources/views/app.blade.php',
+    './resources/views/errors/**/*.blade.php',
+    './resources/assets/**/*.{scss,js,vue}',
+  ],
   darkMode: 'class',
   theme: {
+    container: {
+      center: true,
+    },
     fontFamily: {
       sans: ['Inter', ...defaultTheme.fontFamily.sans],
     },
@@ -18,6 +25,9 @@ module.exports = {
       },
       flexGrow: {
         2: '2',
+      },
+      fontFamily: {
+        epilogue: ['Epilogue', 'sans-serif'],
       },
       typography: theme => ({
         DEFAULT: {

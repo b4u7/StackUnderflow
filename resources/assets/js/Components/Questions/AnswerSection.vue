@@ -1,22 +1,21 @@
 <template>
-  <div class="answer-section">
+  <div class="flex flex-row">
     <div class="actions">
-      <votes
+      <Votes
         :can-vote="permissions.canVote"
         :total-votes="mutableAnswer.votes_sum_vote || 0"
         :user-vote="mutableAnswer.user_vote || 0"
         @upvoted="addVote"
         @downvoted="removeVote"
       />
-      <!-- FIXME: Temporary solution -->
-      <solution
+      <Solution
         v-if="permissions.canMarkSolution || (!permissions.canMarkSolution && isSolution)"
         :can-mark-solution="permissions.canMarkSolution"
         :active="isSolution"
         @mark-solution="markSolution"
       />
     </div>
-    <answer-card
+    <AnswerCard
       :answer="mutableAnswer"
       :is-solution="isSolution"
       :permissions="permissions"
@@ -26,7 +25,7 @@
 </template>
 
 <script>
-import AnswerCard from '@/Components/Questions/Answer'
+import AnswerCard from '@/Components/Questions/AnswerCard'
 import Votes from '@/Components/Questions/Actions/Votes'
 import Solution from '@/Components/Questions/Actions/Solution'
 

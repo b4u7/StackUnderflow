@@ -1,13 +1,13 @@
 <template>
-  <nav class="secondary-navbar">
-    <div class="container">
-      <div class="secondary-navbar__start">
+  <nav class="bg-slate-800 text-sm">
+    <div class="container relative mx-auto flex h-12 items-center justify-between">
+      <div class="flex h-full flex-shrink-2 flex-grow justify-start space-x-4">
         <Link
           v-for="link in links"
           :key="link.title"
           :href="link.route"
-          :class="{ 'secondary-navbar__item--active': link.isActive() }"
-          class="secondary-navbar__item"
+          :class="[link.isActive() ? 'text-slate-50' : 'text-slate-400']"
+          class="relative inline-flex h-full items-center font-medium hover:text-slate-200"
           v-text="link.title"
         />
       </div>

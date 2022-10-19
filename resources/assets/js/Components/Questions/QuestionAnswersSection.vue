@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <div>
     <p class="mt-12 mb-4 text-xl font-medium text-slate-800">
       <span>
         <font-awesome-icon icon="fa-solid fa-message" />
@@ -14,14 +14,14 @@
       :is-solution="answer.id === solutionId"
       :permissions="permissions[answer.id]"
     />
-  </section>
+  </div>
 </template>
 
 <script>
 import AnswerSection from './AnswerSection'
 
 export default {
-  name: 'QuestionAnswers',
+  name: 'QuestionAnswersSection',
   components: { AnswerSection },
   props: {
     questionId: {

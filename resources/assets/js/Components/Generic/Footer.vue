@@ -1,15 +1,15 @@
 <template>
-  <footer class="footer">
+  <footer class="bg-slate-800 pt-24 pb-8 text-slate-500">
     <div class="container">
-      <div class="footer__menu">
-        <h6 class="footer__title footer__logo">Stack Underflow</h6>
+      <div class="space-y-4">
+        <h6 class="text-xl font-semibold text-slate-300">Stack Underflow</h6>
         <ul>
-          <li class="footer__list">
+          <li class="text-slate-400 hover:text-slate-300 focus:text-slate-200 active:text-slate-200">
             <Link :href="route('questions.index')"> Questions </Link>
           </li>
         </ul>
       </div>
-      <hr class="footer__divider" />
+      <hr class="my-8 border-slate-600" />
       <div class="text-center">Copyright © 2020 - {{ currentYear }} Stack Underflow, All Rights Reserved.</div>
     </div>
   </footer>
@@ -19,7 +19,7 @@
 import { Link } from '@inertiajs/inertia-vue'
 
 export default {
-  name: 'MainFooter',
+  name: 'FooterComponent',
   components: { Link },
   computed: {
     currentYear() {

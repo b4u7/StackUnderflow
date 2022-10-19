@@ -1,5 +1,5 @@
 <template>
-  <ul class="tags">
+  <ul class="flex space-x-2">
     <tag
       v-for="(tag, index) in tags"
       :key="index"
@@ -15,7 +15,7 @@
 import Tag from '@/Components/Tag'
 
 export default {
-  name: 'Tags',
+  name: 'TagsListComponent',
   components: { Tag },
   props: {
     tags: {

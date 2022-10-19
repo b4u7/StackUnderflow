@@ -1,5 +1,5 @@
 <template>
-  <div class="buttons w-full space-x-4 sm:w-auto">
+  <div class="w-full space-x-6 text-sm sm:w-auto">
     <tippy :message="shareMessage" :hideOnClick="false" :open.sync="showShareTippy" trigger="manual" placement="top">
       <Link
         class="font-semibold transition-all hover:text-primary-600 focus:text-primary-800 active:text-primary-800"
@@ -93,7 +93,6 @@ export default {
   },
   data() {
     return {
-      classes: [''],
       shareMessage: SHARE_MESSAGE,
       showShareTippy: false,
     }
