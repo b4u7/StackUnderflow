@@ -12,7 +12,7 @@ This document describes the process for running this application on your local c
 
 ## Getting started
 
-Stack Underflow is powered by [Laravel](https://laravel.com/), [Vue.js 2](https://v2.vuejs.org/) and [Inertia](https://inertiajs.com/). You should read their respective documentation before proceeding to make changes to this project.
+Stack Underflow is powered by [Laravel](https://laravel.com/), [Vue.js 2](https://v2.vuejs.org/) and [Inertia](https://inertiajs.com/). You it highly recommended that you read their respective documentation before proceeding to make changes to this project.
 
 ### Requirements
 
@@ -20,7 +20,7 @@ Stack Underflow is powered by [Laravel](https://laravel.com/), [Vue.js 2](https:
 
 ### Installing dependencies
 
-Before running the project, we need to install our dependencies first.
+We need to install our dependencies first before running the project.
 
 #### Composer
 
@@ -37,7 +37,7 @@ docker run --rm \
     composer install --ignore-platform-reqs
 ```
 
-You may wish to setup a Bash alias for sail:
+You may wish to setup a Bash alias for sail using:
 
 ```bash
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
@@ -116,4 +116,15 @@ You may also wish to seed the development database in order to have some dummy t
 sail artisan db:seed
 ```
 
+> **Warning**
+> Before seeding, you must fill in the pusher env keys on your .env file. This is temporary.
+
 The only thing left to access the website is to add the record `127.0.0.1 stackunderflow.test` to your hosts file.
+
+## Assets
+
+You may notice that some assets aren't working correctly. This is because we still have to link our `public/storage` folder to `storage/app/public`. This is easy:
+
+```bash
+sail artisan storage:link
+```
