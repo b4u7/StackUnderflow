@@ -5,7 +5,9 @@ This document describes the process for running this application on your local c
 ## Table of Contents
 
 [Getting Started](#getting-started)
+
 [Running the project](#running-the-project)
+
 [Database](#database)
 
 ## Getting started
