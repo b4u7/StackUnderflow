@@ -18,7 +18,7 @@ It's highly recommended that you read their respective documentation before proc
 
 ### Requirements
 
-* Docker
+- Docker
 
 ### Installing dependencies
 
